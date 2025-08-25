@@ -24,7 +24,16 @@ export function Header() {
               pathname.startsWith('/survey') && 'text-blue-600 font-medium',
             )}
           >
-            설문
+            설문조사
+          </Link>
+          <Link
+            href="/mysurvey"
+            className={cn(
+              'hover:text-blue-600',
+              pathname.startsWith('/my') && 'text-blue-600 font-medium',
+            )}
+          >
+            내 설문
           </Link>
           <Link
             href="/reward"
@@ -34,15 +43,6 @@ export function Header() {
             )}
           >
             리워드샵
-          </Link>
-          <Link
-            href="/my"
-            className={cn(
-              'hover:text-blue-600',
-              pathname.startsWith('/my') && 'text-blue-600 font-medium',
-            )}
-          >
-            마이페이지
           </Link>
         </div>
       </nav>
