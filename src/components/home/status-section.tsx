@@ -7,8 +7,8 @@ export function StatusSection({
   newResponseCount,
   newResponseSurveyTitle,
   weeklyPoints,
-  responseHref = '/mysurvey',
-  pointsHref = '/mypage',
+  responseHref = '/my-surveys',
+  pointsHref = '/my-page',
   cardHeightClass = 'h-28 md:h-32',
 }: {
   newResponseCount: number
