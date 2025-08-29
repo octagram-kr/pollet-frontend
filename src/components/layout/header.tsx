@@ -7,7 +7,7 @@ import ProfilePanel from '@/components/layout/profile-panel'
 
 function NavLink({ href, label }: { href: string; label: string }) {
   const pathname = usePathname()
-  const isActive = pathname.startsWith(href)
+  const isActive = pathname === href || pathname.startsWith(`${href}/`)
   return (
     <Link
       href={href}

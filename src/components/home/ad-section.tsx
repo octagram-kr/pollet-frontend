@@ -28,6 +28,7 @@ export function AdSection({
 
   const go = useCallback(
     (next: number) => {
+      if (max <= 0) return
       const wrapped = ((next % max) + max) % max
       setIdx(wrapped)
     },
