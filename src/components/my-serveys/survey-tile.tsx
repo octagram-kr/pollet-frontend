@@ -28,7 +28,7 @@ export default function SurveyTile({ item, extras }: Props) {
       : 0
 
   return (
-    <li className="rounded-md border bg-white overflow-hidden">
+    <li className="rounded-md border bg-white hover:bg-gray-100 overflow-hidden">
       <button className="w-full text-left">
         {/* 썸네일 영역 */}
         <div className="relative aspect-[16/9] bg-gray-200">

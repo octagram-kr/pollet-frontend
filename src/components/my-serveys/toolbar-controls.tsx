@@ -50,6 +50,9 @@ export default function ToolbarControls({
         className={`inline-flex items-center gap-2 rounded-md px-3 py-2 hover:bg-gray-100 ${isGrid ? 'text-gray-900' : 'text-gray-700'}`}
       >
         {/* <Grid2X2 className="size-5" /> */}
+        <span className="hidden whitespace-nowrap sm:inline">
+          {isGrid ? '리스트 보기' : '바둑판 보기'}
+        </span>
       </Link>
 
       {/* 2) 전체 보기 (필터 제거) */}

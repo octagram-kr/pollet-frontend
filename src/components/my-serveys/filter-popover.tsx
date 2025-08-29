@@ -34,7 +34,7 @@ export default function FilterPopover({ path, q, view, status }: Props) {
         ? '필터: 종료'
         : '필터'
   return (
-    <details className="relative inline-block">
+    <details className="relative inline-block z-10">
       <summary className="list-none cursor-pointer inline-flex items-center gap-2 rounded-md px-3 py-2 hover:bg-gray-100 whitespace-nowrap">
         {/* <Filter className="size-5" /> */}
         <span className="hidden sm:inline">{label}</span>
