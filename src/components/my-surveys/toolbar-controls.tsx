@@ -17,12 +17,13 @@ function buildHref(
     status,
   }: { q?: string; view?: 'list' | 'grid'; status?: 'ongoing' | 'closed' },
 ) {
-  const sp = new URLSearchParams()
+  const [base, existing] = path.split('?')
+  const sp = new URLSearchParams(existing)
   if (q) sp.set('q', q)
   if (view === 'grid') sp.set('view', 'grid')
   if (status) sp.set('status', status)
   const qs = sp.toString()
-  return qs ? `${path}?${qs}` : path
+  return qs ? `${base}?${qs}` : base
 }
 
 export default function ToolbarControls({

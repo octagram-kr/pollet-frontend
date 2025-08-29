@@ -53,7 +53,10 @@ export function AdSection({
     const el = containerRef.current
     if (!el || !canAuto) return
     const pause = () => timer.current && clearInterval(timer.current)
-    const resume = () => (timer.current = window.setInterval(next, intervalMs))
+    const resume = () => {
+      if (timer.current) clearInterval(timer.current)
+      timer.current = window.setInterval(next, intervalMs)
+    }
     el.addEventListener('mouseenter', pause)
     el.addEventListener('mouseleave', resume)
     return () => {
@@ -63,7 +66,9 @@ export function AdSection({
   }, [intervalMs, canAuto, next])
 
   const current = useMemo(() => items[idx], [items, idx])
-
+  if (max === 0) {
+    return null
+  }
   return (
     <section
       className={cn('relative', className)}
@@ -120,14 +125,14 @@ export function AdSection({
         <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-2">
           {items.map((_, i) => (
             <button
-              key={i}
+              key={items[i]?.id ?? i}
               onClick={() => go(i)}
               className={cn(
                 'h-2 w-2 rounded-full bg-white/60',
                 i === idx && 'w-5 bg-white',
               )}
               aria-label={`${i + 1}번째 배너로 이동`}
-              aria-current={i === idx}
+              aria-current={i === idx ? 'true' : undefined}
             />
           ))}
         </div>
