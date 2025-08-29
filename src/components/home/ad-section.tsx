@@ -26,16 +26,18 @@ export function AdSection({
   const timer = useRef<number | null>(null)
   const canAuto = max > 1
 
-  const go = useCallback(
-    (next: number) => {
-      if (max <= 0) return
-      const wrapped = ((next % max) + max) % max
-      setIdx(wrapped)
-    },
-    [max],
+  const go = useCallback((next: number) => setIdx(next), [])
+  const next = useCallback(() => setIdx((v) => v + 1), [])
+  const prev = useCallback(() => setIdx((v) => v - 1), [])
+  const safeIdx = useMemo(
+    () => (max > 0 ? ((idx % max) + max) % max : 0),
+    [idx, max],
   )
-  const next = useCallback(() => go(idx + 1), [go, idx])
-  const prev = useCallback(() => go(idx - 1), [go, idx])
+  const current = useMemo(
+    () => (max > 0 ? items[safeIdx] : undefined),
+    [items, safeIdx, max],
+  )
+  const containerRef = useRef<HTMLDivElement>(null)
 
   // auto-play
   useEffect(() => {
@@ -45,10 +47,9 @@ export function AdSection({
     return () => {
       if (timer.current) clearInterval(timer.current)
     }
-  }, [idx, intervalMs, canAuto, next])
+  }, [canAuto, intervalMs, next])
 
   // pause on hover
-  const containerRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const el = containerRef.current
     if (!el || !canAuto) return
@@ -63,12 +64,9 @@ export function AdSection({
       el.removeEventListener('mouseenter', pause)
       el.removeEventListener('mouseleave', resume)
     }
-  }, [intervalMs, canAuto, next])
+  }, [canAuto, intervalMs, next])
+  if (max === 0) return null
 
-  const current = useMemo(() => items[idx], [items, idx])
-  if (max === 0) {
-    return null
-  }
   return (
     <section
       className={cn('relative', className)}
@@ -91,8 +89,8 @@ export function AdSection({
           </Link>
         ) : (
           <Image
-            src={current.image}
-            alt={current.alt}
+            src={current!.image}
+            alt={current!.alt}
             fill
             className="object-cover"
             priority

@@ -19,9 +19,17 @@ function buildHref(
 ) {
   const [base, existing] = path.split('?')
   const sp = new URLSearchParams(existing)
-  if (q) sp.set('q', q)
+  // q 명시 시 동기화, 비어있으면 제거
+  if (q !== undefined) {
+    if (q) sp.set('q', q)
+    else sp.delete('q')
+  }
+  // view 기본값(list)이면 제거, grid면 설정
   if (view === 'grid') sp.set('view', 'grid')
+  else sp.delete('view')
+  // status 미지정이면 제거
   if (status) sp.set('status', status)
+  else sp.delete('status')
   const qs = sp.toString()
   return qs ? `${base}?${qs}` : base
 }
