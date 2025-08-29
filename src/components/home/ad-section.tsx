@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
 
 export interface BannerItem {
@@ -26,19 +26,25 @@ export function AdSection({
   const timer = useRef<number | null>(null)
   const canAuto = max > 1
 
-  const go = (next: number) => setIdx((prev) => (next + max) % max)
-  const next = () => go(idx + 1)
-  const prev = () => go(idx - 1)
+  const go = useCallback(
+    (next: number) => {
+      const wrapped = ((next % max) + max) % max
+      setIdx(wrapped)
+    },
+    [max],
+  )
+  const next = useCallback(() => go(idx + 1), [go, idx])
+  const prev = useCallback(() => go(idx - 1), [go, idx])
 
   // auto-play
   useEffect(() => {
     if (!canAuto) return
-    timer.current && clearInterval(timer.current)
+    if (timer.current) clearInterval(timer.current)
     timer.current = window.setInterval(next, intervalMs)
     return () => {
       if (timer.current) clearInterval(timer.current)
     }
-  }, [idx, intervalMs, canAuto])
+  }, [idx, intervalMs, canAuto, next])
 
   // pause on hover
   const containerRef = useRef<HTMLDivElement>(null)
@@ -53,7 +59,7 @@ export function AdSection({
       el.removeEventListener('mouseenter', pause)
       el.removeEventListener('mouseleave', resume)
     }
-  }, [intervalMs, canAuto])
+  }, [intervalMs, canAuto, next])
 
   const current = useMemo(() => items[idx], [items, idx])
 

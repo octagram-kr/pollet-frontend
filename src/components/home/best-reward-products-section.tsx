@@ -14,7 +14,7 @@ export function BestRewardProductsSection({
     <section>
       <SectionHeader
         title="BEST! 리워드 추천 상품"
-        moreHref="/reward"
+        moreHref="/reward-shop"
       />
       <ResponsiveSliderGrid>
         {items.map((p) => (
