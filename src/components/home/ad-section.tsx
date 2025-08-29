@@ -127,10 +127,10 @@ export function AdSection({
               onClick={() => go(i)}
               className={cn(
                 'h-2 w-2 rounded-full bg-white/60',
-                i === idx && 'w-5 bg-white',
+                i === safeIdx && 'w-5 bg-white',
               )}
               aria-label={`${i + 1}번째 배너로 이동`}
-              aria-current={i === idx ? 'true' : undefined}
+              aria-current={i === safeIdx ? 'true' : undefined}
             />
           ))}
         </div>
