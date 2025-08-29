@@ -1,6 +1,6 @@
 import Link from 'next/link'
 // import { Grid2X2 } from 'lucide-react'
-import FilterPopover from '@/components/my-serveys/filter-popover'
+import FilterPopover from '@/components/my-surveys/filter-popover'
 
 interface Props {
   path: string
@@ -17,12 +17,21 @@ function buildHref(
     status,
   }: { q?: string; view?: 'list' | 'grid'; status?: 'ongoing' | 'closed' },
 ) {
-  const sp = new URLSearchParams()
-  if (q) sp.set('q', q)
+  const [base, existing] = path.split('?')
+  const sp = new URLSearchParams(existing)
+  // q 명시 시 동기화, 비어있으면 제거
+  if (q !== undefined) {
+    if (q) sp.set('q', q)
+    else sp.delete('q')
+  }
+  // view 기본값(list)이면 제거, grid면 설정
   if (view === 'grid') sp.set('view', 'grid')
+  else sp.delete('view')
+  // status 미지정이면 제거
   if (status) sp.set('status', status)
+  else sp.delete('status')
   const qs = sp.toString()
-  return qs ? `${path}?${qs}` : path
+  return qs ? `${base}?${qs}` : base
 }
 
 export default function ToolbarControls({

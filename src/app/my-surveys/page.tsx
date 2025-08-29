@@ -1,7 +1,7 @@
 import SearchInput from '@/components/ui/search-input'
-import CreateSurveyCard from '@/components/my-serveys/create-survey-card'
-import SurveyList from '@/components/my-serveys/survey-list'
-import ToolbarControls from '@/components/my-serveys/toolbar-controls'
+import CreateSurveyCard from '@/components/my-surveys/create-survey-card'
+import SurveyList from '@/components/my-surveys/survey-list'
+import ToolbarControls from '@/components/my-surveys/toolbar-controls'
 import type { SurveyItem, SurveyCardExtras } from '@/types/survey'
 
 // 데모용 목데이터 (API 연동 전)

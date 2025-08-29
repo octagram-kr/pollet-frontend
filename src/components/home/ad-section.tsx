@@ -26,15 +26,18 @@ export function AdSection({
   const timer = useRef<number | null>(null)
   const canAuto = max > 1
 
-  const go = useCallback(
-    (next: number) => {
-      const wrapped = ((next % max) + max) % max
-      setIdx(wrapped)
-    },
-    [max],
+  const go = useCallback((next: number) => setIdx(next), [])
+  const next = useCallback(() => setIdx((v) => v + 1), [])
+  const prev = useCallback(() => setIdx((v) => v - 1), [])
+  const safeIdx = useMemo(
+    () => (max > 0 ? ((idx % max) + max) % max : 0),
+    [idx, max],
   )
-  const next = useCallback(() => go(idx + 1), [go, idx])
-  const prev = useCallback(() => go(idx - 1), [go, idx])
+  const current = useMemo(
+    () => (max > 0 ? items[safeIdx] : undefined),
+    [items, safeIdx, max],
+  )
+  const containerRef = useRef<HTMLDivElement>(null)
 
   // auto-play
   useEffect(() => {
@@ -44,24 +47,25 @@ export function AdSection({
     return () => {
       if (timer.current) clearInterval(timer.current)
     }
-  }, [idx, intervalMs, canAuto, next])
+  }, [canAuto, intervalMs, next])
 
   // pause on hover
-  const containerRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const el = containerRef.current
     if (!el || !canAuto) return
     const pause = () => timer.current && clearInterval(timer.current)
-    const resume = () => (timer.current = window.setInterval(next, intervalMs))
+    const resume = () => {
+      if (timer.current) clearInterval(timer.current)
+      timer.current = window.setInterval(next, intervalMs)
+    }
     el.addEventListener('mouseenter', pause)
     el.addEventListener('mouseleave', resume)
     return () => {
       el.removeEventListener('mouseenter', pause)
       el.removeEventListener('mouseleave', resume)
     }
-  }, [intervalMs, canAuto, next])
-
-  const current = useMemo(() => items[idx], [items, idx])
+  }, [canAuto, intervalMs, next])
+  if (max === 0) return null
 
   return (
     <section
@@ -85,8 +89,8 @@ export function AdSection({
           </Link>
         ) : (
           <Image
-            src={current.image}
-            alt={current.alt}
+            src={current!.image}
+            alt={current!.alt}
             fill
             className="object-cover"
             priority
@@ -119,14 +123,14 @@ export function AdSection({
         <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-2">
           {items.map((_, i) => (
             <button
-              key={i}
+              key={items[i]?.id ?? i}
               onClick={() => go(i)}
               className={cn(
                 'h-2 w-2 rounded-full bg-white/60',
-                i === idx && 'w-5 bg-white',
+                i === safeIdx && 'w-5 bg-white',
               )}
               aria-label={`${i + 1}번째 배너로 이동`}
-              aria-current={i === idx}
+              aria-current={i === safeIdx ? 'true' : undefined}
             />
           ))}
         </div>
