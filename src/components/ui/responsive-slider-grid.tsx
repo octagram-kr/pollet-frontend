@@ -22,7 +22,7 @@ export function ResponsiveSliderGrid({
             [scrollbar-width:none] [-ms-overflow-style:none]
           "
           // 크롬 스크롤바 감추기
-          style={{ scrollbarWidth: 'none' } as any}
+          style={{ scrollbarWidth: 'none' }}
         >
           {items.map((child, i) => (
             <div

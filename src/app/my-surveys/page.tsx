@@ -50,7 +50,7 @@ const extrasById: Record<string, SurveyCardExtras> = {
 }
 
 export default async function Page(props: {
-  searchParams: { q?: string; view?: string; status?: string }
+  searchParams: Promise<{ q?: string; view?: string; status?: string }>
 }) {
   const searchParams = await props.searchParams
   const q = typeof searchParams.q === 'string' ? searchParams.q : ''
