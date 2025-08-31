@@ -1,18 +1,20 @@
-import { SurveyCard } from '@/components/survey/survey-card'
-import { SectionHeader } from './section-header'
+import { SurveyCard } from '@/app/components/survey-card'
+import { SectionHeader } from '@/app/components/section-header'
 import { ResponsiveSliderGrid } from '@/components/ui/responsive-slider-grid'
 import { SurveyItem } from '@/types/survey'
 
-export function SurveyPreviewSection({
+export function CustomSurveySection({
   items,
+  cardHeightClass = 'h-[380px] md:h-[400px] lg:h-[420px]',
 }: {
-  items: (SurveyItem & { answers: string[] })[]
+  items: SurveyItem[]
+  cardHeightClass?: string
 }) {
   return (
     <section>
       <SectionHeader
-        title="이런 설문조사는 어때요?"
-        moreHref="/survey"
+        title="맞춤 설문조사"
+        moreHref="/all-survey?tab=custom"
       />
       <ResponsiveSliderGrid>
         {items.map((s) => (
@@ -23,9 +25,9 @@ export function SurveyPreviewSection({
             thumbnail={s.thumbnail}
             reward={s.reward}
             duration={s.duration}
-            variant="withAnswers"
-            answers={s.answers}
             tags={s.tags}
+            variant="default"
+            heightClass={cardHeightClass}
           />
         ))}
       </ResponsiveSliderGrid>

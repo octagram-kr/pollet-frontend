@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { SurveyCard } from '@/components/survey/survey-card'
-import { SectionHeader } from './section-header'
+import { SurveyCard } from '@/app/components/survey-card'
+import { SectionHeader } from '@/app/components/section-header'
 import { cn } from '@/lib/utils'
 import type { SurveyItem } from '@/types/survey'
 
@@ -34,7 +34,7 @@ export function UrgentCarouselSection({
     <section className={cn('relative', className)}>
       <SectionHeader
         title="마감 임박 설문조사"
-        moreHref="/survey?tab=urgent"
+        moreHref="/all-survey?tab=urgent"
       />
 
       {/* 모바일/태블릿: 가로 슬라이드 */}

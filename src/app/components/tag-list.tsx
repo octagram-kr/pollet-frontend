@@ -1,3 +1,5 @@
+'use client'
+
 export function TagList({ tags }: { tags: string[] }) {
   return (
     <div className="flex flex-wrap gap-2">
