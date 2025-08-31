@@ -1,6 +1,6 @@
-import SurveyCard from './survey-card'
-import SurveyTile from './survey-tile'
-import CreateSurveyTile from './create-survey-tile'
+import SurveyCard from '@/app/my-surveys/components/survey-card'
+import SurveyTile from '@/app/my-surveys/components/survey-tile'
+import CreateSurveyTile from '@/app/my-surveys/components/create-survey-tile'
 import type { SurveyItem, SurveyCardExtras } from '@/types/survey'
 
 interface Props {

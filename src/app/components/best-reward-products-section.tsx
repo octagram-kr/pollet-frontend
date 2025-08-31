@@ -1,5 +1,5 @@
-import { SectionHeader } from './section-header'
-import { ProductCard } from '@/components/product/product-card'
+import { SectionHeader } from '@/app/components/section-header'
+import { ProductCard } from '@/app/components/product-card'
 import { ResponsiveSliderGrid } from '@/components/ui/responsive-slider-grid'
 import { ProductItem } from '@/types/product'
 
