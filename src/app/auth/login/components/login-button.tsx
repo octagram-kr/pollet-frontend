@@ -55,7 +55,7 @@ export function LoginButton() {
       {/* 카카오 로그인 버튼 - 공식 가이드라인 준수 */}
       <button
         onClick={handleKakaoLogin}
-        className="w-full h-12 bg-[#FEE500] hover:bg-[#FDD800] rounded-lg flex items-center justify-center transition-all duration-200 shadow-sm hover:shadow-md"
+        className="w-full h-12 bg-[#FEE500] rounded-lg flex items-center justify-center transition-all duration-200 shadow-sm"
         style={{
           paddingLeft: '2rem',
           paddingRight: '2rem'
