@@ -71,7 +71,7 @@ export default function SurveyRegisterPage() {
 
   // ====== 플랫폼 사용료(기간은 편집기에서 전달받는다고 가정: 데모 값) ======
   const [periodStart] = useState('2025-05-01')
-  const [periodEnd] = useState('2025-05-14')
+  const [periodEnd] = useState('2025-05-03')
   const [platformFeeWon, setPlatformFeeWon] = useState(0)
 
   // ====== 비용 합계(원) ======

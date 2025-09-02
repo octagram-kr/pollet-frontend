@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo } from 'react'
+import HelpTooltip from './help-tooltip'
 
 interface Props {
   // 편집 페이지에서 등록된 값 (읽기 전용)
@@ -62,16 +63,27 @@ export function PlatformFeeSection({
             (총 {totalDays}일)
           </span>
           {isDouble && (
-            <span className="rounded bg-gray-300 px-2.5 py-1 text-[12px] font-semibold text-gray-800">
-              플랫폼 사용료 2배 적용 ⓘ
+            <span className="flex items-center justify-center gap-1 rounded bg-gray-300 px-2.5 py-1 text-[12px] font-semibold text-gray-800 leading-none">
+              플랫폼 사용료 2배 적용
+              <HelpTooltip
+                message={
+                  '목표 인원 수 50명 이하는 기본 플랫폼 사용료 3,000원이 적용되며,\n50명 초과시 10명 단위로 올림하여 플랫폼 사용료 1,000원이 추가됩니다.'
+                }
+              />
             </span>
           )}
         </div>
 
         {/* 라벨 */}
         <div className="mb-2 text-base text-gray-800">
-          <span className="font-semibold">플랫폼 사용료</span>{' '}
-          <span className="align-middle text-gray-400">ⓘ</span>
+          <span className="flex items-center gap-1">
+            플랫폼 사용료
+            <HelpTooltip
+              message={
+                '목표 인원 수 50명 이하는 기본 플랫폼 사용료 3,000원이 적용되며,\n50명 초과시 10명 단위로 올림하여 플랫폼 사용료 1,000원이 추가됩니다.'
+              }
+            />
+          </span>
         </div>
 
         {/* 수식 박스 */}

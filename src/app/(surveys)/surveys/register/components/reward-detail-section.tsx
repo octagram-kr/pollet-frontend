@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import type { RewardType } from '@/types/survey'
+import HelpTooltip from './help-tooltip'
 
 export type Gifticon = {
   id: string
@@ -57,7 +58,14 @@ export function RewardDetailSection({
         {/* ==== 폼 행: 좌 라벨 / 우 입력 ==== */}
         <div className="space-y-3">
           {/* 목표 인원 수 */}
-          <Row label="목표 인원 수">
+          <Row
+            label={
+              <span className="flex items-center gap-1">
+                목표 인원 수
+                <HelpTooltip message="목표 인원 수에 도달하면 설문이 자동 종료됩니다." />
+              </span>
+            }
+          >
             <InputWithSuffix
               value={targetCount}
               onChange={onChangeTargetCount}
@@ -66,7 +74,18 @@ export function RewardDetailSection({
           </Row>
 
           {/* 예상 시간 */}
-          <Row label="예상 시간">
+          <Row
+            label={
+              <span className="flex items-center gap-1">
+                예상 시간
+                <HelpTooltip
+                  message={
+                    '응답자의 실제 설문 시간과 평균 2분 이상 차이가\n발생 할 경우, 응답자에게 경고창이 노출됩니다.'
+                  }
+                />
+              </span>
+            }
+          >
             <InputWithSuffix
               value={estimatedMinutes}
               onChange={onChangeEstimatedMinutes}
@@ -76,7 +95,18 @@ export function RewardDetailSection({
 
           {/* 포인트 or 기프티콘 인원 */}
           {rewardType === 'point' ? (
-            <Row label="1분 당 지급 포인트">
+            <Row
+              label={
+                <span className="flex items-center gap-1">
+                  1분 당 지급 포인트
+                  <HelpTooltip
+                    message={
+                      '2025년 기준 10분 최저 시급은 1671원이며, 150p 이상 설정 시\n목표 인원 수를 채우지 못할 경우 남은 금액 환불이 가능합니다.'
+                    }
+                  />
+                </span>
+              }
+            >
               {/* <span className="mr-2 inline-flex items-center rounded bg-gray-200/80 px-2 py-1 text-[12px] text-gray-800">
                 ⓘ 인원 수 미도달 시 환불 불가능
               </span> */}
@@ -87,7 +117,14 @@ export function RewardDetailSection({
               />
             </Row>
           ) : (
-            <Row label="기프티콘 지급 인원 수">
+            <Row
+              label={
+                <span className="flex items-center gap-1">
+                  기프티콘 지급 인원 수
+                  <HelpTooltip message="목표 인원 수에 도달하지 못할 경우, 비율대로(이거 어카지?) 지급 후 남은 기프티콘 금액 만큼 환불이 가능합니다." />
+                </span>
+              }
+            >
               <InputWithSuffix
                 value={gifticonCount}
                 onChange={onChangeGifticonCount}
@@ -168,7 +205,7 @@ function Row({
   label,
   children,
 }: {
-  label: string
+  label: React.ReactNode
   children: React.ReactNode
 }) {
   return (
