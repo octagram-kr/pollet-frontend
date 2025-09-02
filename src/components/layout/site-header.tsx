@@ -7,7 +7,6 @@ import ProfilePanel from '@/components/layout/profile-panel'
 
 function NavLink({ href, label }: { href: string; label: string }) {
   const pathname = usePathname()
-  // const isActive = pathname === href || pathname.startsWith(`${href}/`)
   const normalize = (s: string) => s.replace(/\/+$/, '') || '/'
   const p = normalize(pathname || '/')
   const h = normalize(href)
@@ -25,16 +24,15 @@ function NavLink({ href, label }: { href: string; label: string }) {
   )
 }
 
-export function Header() {
+export default function SiteHeader() {
   const points = 0
   const hasNotification = true
   const [openProfile, setOpenProfile] = useState(false)
-  const isAuthed = true // 실제 인증 상태로 교체
+  const isAuthed = true
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-white px-6 py-3">
-      <div className="mx-auto max-w-6xl h-16 px-6 flex items-center justify-between gap-6">
-        {/* 좌: 로고 + 서비스명 */}
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6">
         <div className="flex items-center gap-3">
           <Link
             href="/"
@@ -44,8 +42,7 @@ export function Header() {
           </Link>
         </div>
 
-        {/* 중간: 1차 내비게이션 */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden items-center gap-8 md:flex">
           <NavLink
             href="/all-survey"
             label="설문조사"
@@ -60,10 +57,8 @@ export function Header() {
           />
         </nav>
 
-        {/* 우: 포인트 / 등급 / 알림 / 프로필 */}
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-1 text-sm text-gray-900">
-            {/* <PiggyBank className="size-5" /> */}
             <span className="tabular-nums">
               {points.toLocaleString('ko-KR', { minimumIntegerDigits: 1 })}
             </span>
@@ -72,32 +67,25 @@ export function Header() {
 
           <button
             aria-label="내 등급"
-            className="p-1 rounded hover:bg-gray-100"
-          >
-            {/* <Shield className="size-5 text-gray-700" /> */}
-          </button>
-
+            className="rounded p-1 hover:bg-gray-100"
+          />
           <Link
             href="/notifications"
             aria-label="알림"
-            className="relative p-1 rounded hover:bg-gray-100"
+            className="relative rounded p-1 hover:bg-gray-100"
           >
-            {/* <Bell className="size-5 text-gray-700" /> */}
             {hasNotification && (
               <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-red-500" />
             )}
           </Link>
-
           <button
             aria-label="내 프로필"
             className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gray-200"
             onClick={() => setOpenProfile(true)}
-          >
-            {/* <User className="size-4 text-gray-700" /> */}
-          </button>
+          />
         </div>
       </div>
-      {/* 프로필 패널 */}
+
       <ProfilePanel
         open={openProfile}
         onClose={() => setOpenProfile(false)}

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 // import { Grid2X2 } from 'lucide-react'
-import FilterPopover from '@/app/my-surveys/components/filter-popover'
+import FilterPopover from '@/app/(site)/my-surveys/components/filter-popover'
 
 interface Props {
   path: string

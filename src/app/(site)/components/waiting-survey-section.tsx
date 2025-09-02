@@ -1,20 +1,19 @@
-import { SurveyCard } from '@/app/components/survey-card'
-import { SectionHeader } from '@/app/components/section-header'
+import { SurveyCard } from '@/app/(site)/components/survey-card'
+import { SectionHeader } from '@/app/(site)/components/section-header'
 import { ResponsiveSliderGrid } from '@/components/ui/responsive-slider-grid'
 import { SurveyItem } from '@/types/survey'
 
-export function CustomSurveySection({
+export function WaitingSurveySection({
   items,
-  cardHeightClass = 'h-[380px] md:h-[400px] lg:h-[420px]',
 }: {
-  items: SurveyItem[]
-  cardHeightClass?: string
+  items: (SurveyItem & { answers: string[] })[]
 }) {
   return (
     <section>
       <SectionHeader
-        title="맞춤 설문조사"
-        moreHref="/all-survey?tab=custom"
+        title="응답자를 기다리고 있어요!"
+        subtitle="기간이 설정됐지만 아직 응답자가 충분하지 않은 설문이에요"
+        moreHref="/all-survey?tab=waiting"
       />
       <ResponsiveSliderGrid>
         {items.map((s) => (
@@ -26,8 +25,8 @@ export function CustomSurveySection({
             reward={s.reward}
             duration={s.duration}
             tags={s.tags}
-            variant="default"
-            heightClass={cardHeightClass}
+            variant="withAnswers"
+            answers={s.answers}
           />
         ))}
       </ResponsiveSliderGrid>

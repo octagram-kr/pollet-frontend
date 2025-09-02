@@ -99,10 +99,6 @@ export default function SurveyRegisterPage() {
 
   return (
     <main className="mx-auto max-w-5xl p-6">
-      <header className="mb-6 border-b pb-4">
-        <h1 className="text-xl font-bold">설문 등록하기</h1>
-      </header>
-
       <SurveyToRegister survey={survey} />
       <RegistrationPreview
         survey={survey}
