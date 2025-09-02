@@ -1,18 +1,20 @@
-import { SurveyCard } from '@/app/components/survey-card'
-import { SectionHeader } from '@/app/components/section-header'
+import { SurveyCard } from '@/app/(site)/components/survey-card'
+import { SectionHeader } from '@/app/(site)/components/section-header'
 import { ResponsiveSliderGrid } from '@/components/ui/responsive-slider-grid'
 import { SurveyItem } from '@/types/survey'
 
-export function NewestSurveySection({
+export function CustomSurveySection({
   items,
+  cardHeightClass = 'h-[380px] md:h-[400px] lg:h-[420px]',
 }: {
-  items: (SurveyItem & { answers: string[] })[]
+  items: SurveyItem[]
+  cardHeightClass?: string
 }) {
   return (
     <section>
       <SectionHeader
-        title="방금 올라온 따끈따끈한 설문조사"
-        moreHref="/all-survey?tab=newest"
+        title="맞춤 설문조사"
+        moreHref="/all-survey?tab=custom"
       />
       <ResponsiveSliderGrid>
         {items.map((s) => (
@@ -24,8 +26,8 @@ export function NewestSurveySection({
             reward={s.reward}
             duration={s.duration}
             tags={s.tags}
-            variant="withAnswers"
-            answers={s.answers}
+            variant="default"
+            heightClass={cardHeightClass}
           />
         ))}
       </ResponsiveSliderGrid>
