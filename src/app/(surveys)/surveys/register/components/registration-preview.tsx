@@ -102,7 +102,7 @@ export function RegistrationPreview({
                 {survey.previewQuestions[0].options.map((opt, idx) => (
                   <li
                     key={idx}
-                    className="flex items-center rounded-md border-1 border-gray-300 gap-2 p-0.5"
+                    className="flex items-center rounded-md border border-gray-300 gap-2 p-0.5"
                   >
                     <input
                       disabled

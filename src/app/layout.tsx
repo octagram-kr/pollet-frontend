@@ -16,10 +16,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           href="https://fastly.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.1/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css"
         />
       </head>
-      <body>
-        <main className="font-sans min-h-screen min-w-lg bg-white text-gray-900">
-          {children}
-        </main>
+      <body className="font-sans min-h-screen bg-white text-gray-900">
+        <div className="min-w-[320px]">{children}</div>
       </body>
     </html>
   )

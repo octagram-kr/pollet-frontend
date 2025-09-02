@@ -44,7 +44,7 @@ export function RewardDetailSection({
   onChangeSelectedGifticonId,
 }: Props) {
   const selectedGifticon =
-    gifticons.find((g) => g.id === selectedGifticonId) ?? gifticons[0]
+    gifticons.find((g) => g.id === selectedGifticonId) ?? null
 
   const won = (n: number) => `${n.toLocaleString()}원`
   const pointPerPerson =
@@ -80,7 +80,7 @@ export function RewardDetailSection({
                 예상 시간
                 <HelpTooltip
                   message={
-                    '응답자의 실제 설문 시간과 평균 2분 이상 차이가\n발생 할 경우, 응답자에게 경고창이 노출됩니다.'
+                    '응답자의 실제 설문 시간과 평균 2분 이상 차이가\n발생할 경우, 응답자에게 경고창이 노출됩니다.'
                   }
                 />
               </span>
@@ -107,9 +107,6 @@ export function RewardDetailSection({
                 </span>
               }
             >
-              {/* <span className="mr-2 inline-flex items-center rounded bg-gray-200/80 px-2 py-1 text-[12px] text-gray-800">
-                ⓘ 인원 수 미도달 시 환불 불가능
-              </span> */}
               <InputWithSuffix
                 value={pointPerMinute}
                 onChange={onChangePointPerMinute}
@@ -121,7 +118,11 @@ export function RewardDetailSection({
               label={
                 <span className="flex items-center gap-1">
                   기프티콘 지급 인원 수
-                  <HelpTooltip message="목표 인원 수에 도달하지 못할 경우, 비율대로(이거 어카지?) 지급 후 남은 기프티콘 금액 만큼 환불이 가능합니다." />
+                  <HelpTooltip
+                    message={
+                      '목표 인원 수에 도달하지 못할 경우, 비율에 따라 지급되며\n남은 기프티콘 금액 만큼 환불이 가능합니다.'
+                    }
+                  />
                 </span>
               }
             >
@@ -186,14 +187,18 @@ export function RewardDetailSection({
               </div>
             </div>
 
-            <p className="mt-4 text-[15px] text-gray-800">
-              전체 참여자 중{' '}
-              <b className="text-gray-900">{gifticonCount.toLocaleString()}</b>
-              명은 약 <b className="text-gray-900">{estimatedMinutes}</b>분 동안
-              설문 조사에 참여한 후,&nbsp;
-              <b className="text-gray-900">{selectedGifticon.name}</b>{' '}
-              기프티콘을 지급받습니다.
-            </p>
+            {selectedGifticon && (
+              <p className="mt-4 text-[15px] text-gray-800">
+                전체 참여자 중{' '}
+                <b className="text-gray-900">
+                  {gifticonCount.toLocaleString()}
+                </b>
+                명은 약 <b className="text-gray-900">{estimatedMinutes}</b>분
+                동안 설문 조사에 참여한 후,&nbsp;
+                <b className="text-gray-900">{selectedGifticon.name}</b>{' '}
+                기프티콘을 지급받습니다.
+              </p>
+            )}
           </>
         )}
       </div>

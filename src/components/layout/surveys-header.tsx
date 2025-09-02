@@ -1,9 +1,13 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export default function SurveysHeader() {
-  const title = '설문 등록하기'
+  const pathname = usePathname()
+  const title = pathname?.startsWith('/surveys/register')
+    ? '설문 등록하기'
+    : '설문'
 
   return (
     <div className="border-b bg-white px-6 py-3">
