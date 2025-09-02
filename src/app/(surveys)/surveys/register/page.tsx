@@ -26,32 +26,35 @@ export default function SurveyRegisterPage() {
   const [pointPerMinute, setPointPerMinute] = useState<number>(100) // 1분당 포인트
 
   // 기프티콘(목록 + 선택)
-  const gifticons: Gifticon[] = [
-    {
-      id: 'g1',
-      name: '컴포즈커피 아이스 아메리카노',
-      price: 1800,
-      imageUrl: '/images/gift-1.png',
-    },
-    {
-      id: 'g2',
-      name: '스타벅스 아아T',
-      price: 4700,
-      imageUrl: '/images/gift-2.png',
-    },
-    {
-      id: 'g3',
-      name: '맘스터치 싸이버거 세트',
-      price: 7300,
-      imageUrl: '/images/gift-3.png',
-    },
-    {
-      id: 'g4',
-      name: 'BHC 콜라+25L',
-      price: 19500,
-      imageUrl: '/images/gift-4.png',
-    },
-  ]
+  const gifticons: Gifticon[] = useMemo(
+    () => [
+      {
+        id: 'g1',
+        name: '컴포즈커피 아이스 아메리카노',
+        price: 1800,
+        imageUrl: '/images/gift-1.png',
+      },
+      {
+        id: 'g2',
+        name: '스타벅스 아아T',
+        price: 4700,
+        imageUrl: '/images/gift-2.png',
+      },
+      {
+        id: 'g3',
+        name: '맘스터치 싸이버거 세트',
+        price: 7300,
+        imageUrl: '/images/gift-3.png',
+      },
+      {
+        id: 'g4',
+        name: 'BHC 콜라+25L',
+        price: 19500,
+        imageUrl: '/images/gift-4.png',
+      },
+    ],
+    [],
+  )
   const [gifticonCount, setGifticonCount] = useState(10)
   const [selectedGifticonId, setSelectedGifticonId] =
     useState<Gifticon['id']>('g2')

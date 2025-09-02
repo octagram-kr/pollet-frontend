@@ -1,15 +1,12 @@
-// src/components/surveys/surveys-header.tsx
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 
 export default function SurveysHeader() {
-  const pathname = usePathname()
   const title = '설문 등록하기'
 
   return (
-    <div className="border-b bg-white py-3">
+    <div className="border-b bg-white px-6 py-3">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 relative">
         {/* 좌측 로고 */}
         <Link

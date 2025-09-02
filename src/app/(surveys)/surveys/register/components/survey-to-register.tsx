@@ -1,4 +1,5 @@
 'use client'
+import Image from 'next/image'
 
 export interface PreviewQuestion {
   id: string
@@ -26,10 +27,12 @@ export function SurveyToRegister({ survey }: Props) {
       <div className="flex gap-4 rounded-xl border border-gray-200 bg-white p-4">
         <div className="aspect-[16/9] w-60 shrink-0 overflow-hidden rounded-lg bg-gray-100">
           {/* 썸네일 */}
-          <img
+          <Image
             src={survey.thumbnailUrl}
             alt="설문 썸네일"
-            className="h-full w-full object-cover"
+            width={300}
+            height={112}
+            className="object-cover"
           />
         </div>
 

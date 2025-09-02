@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import type { SurveySummary } from './survey-to-register'
 import type { RewardType } from '@/types/survey'
 import { PointBadge, GifticonBadge, MinuteBadge } from '@/components/ui/badges'
@@ -41,10 +42,12 @@ export function RegistrationPreview({
             </div>
 
             <div className="h-36 w-full overflow-hidden rounded-md bg-gray-100">
-              <img
+              <Image
                 src={survey.thumbnailUrl}
                 alt="설문 썸네일"
-                className="h-full w-full object-cover"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
           </div>
@@ -76,10 +79,12 @@ export function RegistrationPreview({
             </div>
 
             <div className="h-36 w-full overflow-hidden rounded-md bg-gray-100">
-              <img
+              <Image
                 src={survey.thumbnailUrl}
                 alt="설문 썸네일"
-                className="h-full w-full object-cover"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
           </div>

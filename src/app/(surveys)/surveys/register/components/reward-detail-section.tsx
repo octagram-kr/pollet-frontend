@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import type { RewardType } from '@/types/survey'
 
 export type Gifticon = {
@@ -125,10 +126,12 @@ export function RewardDetailSection({
                     >
                       <div className="h-28 w-full overflow-hidden rounded bg-gray-100">
                         {g.imageUrl ? (
-                          <img
+                          <Image
                             src={g.imageUrl}
                             alt={g.name}
-                            className="h-full w-full object-cover"
+                            width={300}
+                            height={112}
+                            className="object-cover"
                           />
                         ) : null}
                       </div>
