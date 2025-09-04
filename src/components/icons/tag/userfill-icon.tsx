@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-export function UserfillIcon(props: React.SVGProps<SVGSVGElement>) {
+export function UserFillIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
