@@ -232,6 +232,7 @@ export default {
         'heading-1': ['36px', { lineHeight: '52px' }],
         'heading-2': ['26px', { lineHeight: '36px' }],
         'heading-3': ['22px', { lineHeight: '30px' }],
+        'heading-4': ['18px', { lineHeight: '26px' }],
 
         // Body
         'body-1': ['20px', { lineHeight: '36px' }],
@@ -242,14 +243,14 @@ export default {
         'body-6': ['16px', { lineHeight: '28px' }],
 
         // Label
-        'label-1': ['26px', { lineHeight: '36px' }],
-        'label-2': ['20px', { lineHeight: '28px' }],
-        'label-3': ['24px', { lineHeight: '32px' }],
-        'label-4': ['22px', { lineHeight: '30px' }],
-        'label-5': ['20px', { lineHeight: '28px' }],
-        'label-6': ['18px', { lineHeight: '26px' }],
-        'label-7': ['18px', { lineHeight: '26px' }],
-        'label-8': ['14px', { lineHeight: '20px' }],
+        'label-1': ['24px', { lineHeight: '32px' }],
+        'label-2': ['18px', { lineHeight: '26px' }],
+        'label-3': ['22px', { lineHeight: '30px' }],
+        'label-4': ['20px', { lineHeight: '28px' }],
+        'label-5': ['18px', { lineHeight: '26px' }],
+        'label-6': ['16px', { lineHeight: '22px' }],
+        'label-7': ['16px', { lineHeight: '22px' }],
+        'label-8': ['12px', { lineHeight: '16px' }],
 
         // Caption
         'caption-1': ['24px', { lineHeight: '32px' }],
