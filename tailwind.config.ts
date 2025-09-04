@@ -75,8 +75,10 @@ export default {
           4: 'rgba(0, 0, 0, 0.04)',
           8: 'rgba(0, 0, 0, 0.08)',
           12: 'rgba(0, 0, 0, 0.12)',
+          42: 'rgba(0, 0, 0, 0.42)',
           60: 'rgba(0, 0, 0, 0.6)',
         },
+        dim: 'rgba(0, 0, 0, 0.42)',
         // ===== Semantic aliases (Figma 변수 매핑) =====
         // Brand
         primary: '#0ec4b2', // Mint/500
@@ -253,9 +255,10 @@ export default {
         'label-8': ['12px', { lineHeight: '16px' }],
 
         // Caption
-        'caption-1': ['24px', { lineHeight: '32px' }],
-        'caption-2': ['20px', { lineHeight: '28px' }],
-        'caption-3': ['16px', { lineHeight: '22px' }],
+        'caption-1': ['22px', { lineHeight: '30px' }],
+        'caption-2': ['18px', { lineHeight: '24px' }],
+        'caption-3': ['14px', { lineHeight: '20px' }],
+        'caption-4': ['12px', { lineHeight: '16px' }],
       },
 
       fontWeight: {
@@ -288,6 +291,7 @@ export default {
 
         // Caption
         'caption-3': '-0.32px',
+        'caption-4': '-0.32px',
       },
     },
   },

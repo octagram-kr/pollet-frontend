@@ -7,6 +7,7 @@ export function ShortmentIcon(props: React.SVGProps<SVGSVGElement>) {
       viewBox="0 0 24 24"
       fill="currentColor"
       {...props}
+      className={`size-6 ${props.className ?? ''}`}
     >
       <path d="M8.00977 10C8.56205 10 9.00977 10.4477 9.00977 11C9.00977 11.5523 8.56205 12 8.00977 12H8C7.44772 12 7 11.5523 7 11C7 10.4477 7.44772 10 8 10H8.00977Z" />
       <path d="M12.0098 10C12.5621 10 13.0098 10.4477 13.0098 11C13.0098 11.5523 12.5621 12 12.0098 12H12C11.4477 12 11 11.5523 11 11C11 10.4477 11.4477 10 12 10H12.0098Z" />

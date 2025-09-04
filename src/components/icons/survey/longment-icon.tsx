@@ -7,6 +7,7 @@ export function LongmentIcon(props: React.SVGProps<SVGSVGElement>) {
       viewBox="0 0 24 24"
       fill="currentColor"
       {...props}
+      className={`size-6 ${props.className ?? ''}`}
     >
       <path d="M13 14C13.5523 14 14 14.4477 14 15C14 15.5523 13.5523 16 13 16H7C6.44772 16 6 15.5523 6 15C6 14.4477 6.44772 14 7 14H13Z" />
       <path d="M17 10C17.5523 10 18 10.4477 18 11C18 11.5523 17.5523 12 17 12H7C6.44772 12 6 11.5523 6 11C6 10.4477 6.44772 10 7 10H17Z" />

@@ -4,11 +4,10 @@ export function ClockIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
       viewBox="0 0 24 24"
       fill="currentColor"
       {...props}
+      className={`size-6 ${props.className ?? ''}`}
     >
       <path d="M12.0001 8.0001C12.5523 8.00014 13.0001 8.44784 13.0001 9.0001V12.586L14.7071 14.2931C15.0975 14.6836 15.0976 15.3166 14.7071 15.7071C14.3166 16.0976 13.6836 16.0976 13.2931 15.7071L11.2931 13.7071C11.1055 13.5196 11.0001 13.2653 11.0001 13.0001V9.0001C11.0001 8.44781 11.4478 8.0001 12.0001 8.0001Z" />
       <path

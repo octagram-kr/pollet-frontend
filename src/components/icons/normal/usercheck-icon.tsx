@@ -7,6 +7,7 @@ export function UserCheckIcon(props: React.SVGProps<SVGSVGElement>) {
       viewBox="0 0 24 24"
       fill="currentColor"
       {...props}
+      className={`size-6 ${props.className ?? ''}`}
     >
       <path
         fillRule="evenodd"

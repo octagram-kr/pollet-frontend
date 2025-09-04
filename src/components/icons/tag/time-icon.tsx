@@ -4,9 +4,10 @@ export function TimeIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 25"
+      viewBox="0 0 24 24"
       fill="currentColor"
       {...props}
+      className={`size-6 ${props.className ?? ''}`}
     >
       <path d="M12 5.5C12.5523 5.5 13 5.94772 13 6.5V12.6719L13.0049 12.7705C13.0276 12.9994 13.1288 13.2148 13.293 13.3789L15.707 15.793C16.0976 16.1835 16.0976 16.8165 15.707 17.207C15.3165 17.5976 14.6835 17.5976 14.293 17.207L11.8789 14.793C11.3867 14.3008 11.083 13.6554 11.0146 12.9688L11 12.6719V6.5C11 5.94772 11.4477 5.5 12 5.5Z" />
       <path
