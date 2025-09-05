@@ -1,3 +1,5 @@
+import { DotIcon } from './normal/dot-icon'
+
 export { StarcandyFillIcon } from './tag/starcandy-fill-icon'
 export { ShowGridIcon } from './normal/showgrid-icon'
 export { ShowListIcon } from './normal/showlist-icon'
@@ -45,3 +47,5 @@ export { CheckboxDefaultIcon } from './survey/checkbox-default-icon'
 export { CheckboxFillIcon } from './survey/checkbox-fill-icon'
 export { RadioDefaultIcon } from './survey/radio-default-icon'
 export { RadioFillIcon } from './survey/radio-fill-icon'
+export { LogoNoneIcon } from './logo/logo-none-icon'
+export { DotIcon } from './normal/dot-icon'

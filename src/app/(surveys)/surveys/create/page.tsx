@@ -3,7 +3,7 @@ import CreateOptions from './components/create-option-section'
 
 export default function Page() {
   return (
-    <main className="h-screen bg-gray-10">
+    <main className="bg-gray-10">
       <section className="mx-auto max-w-5xl px-4 py-10">
         <div className="mt-8">
           <SectionHeader
