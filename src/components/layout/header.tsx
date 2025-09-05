@@ -51,7 +51,7 @@ export default function SiteHeader() {
 
         <nav className="flex items-center gap-5">
           <NavLink
-            href="/all-survey"
+            href="/surveys"
             label="설문조사"
           />
           <p className="text-heading-2 font-heading-2 leading-heading-2 tracking-heading-2 text-text-subtler">

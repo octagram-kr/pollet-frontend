@@ -34,7 +34,7 @@ export function UrgentCarouselSection({
     <section className={cn('relative', className)}>
       <SectionHeader
         title="마감 임박 설문조사"
-        moreHref="/all-survey?tab=urgent"
+        moreHref="/surveys/urgent"
       />
 
       {/* 모바일/태블릿: 가로 슬라이드 */}

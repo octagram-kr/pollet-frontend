@@ -12,7 +12,7 @@ export function NewestSurveySection({
     <section>
       <SectionHeader
         title="방금 올라온 따끈따끈한 설문조사"
-        moreHref="/all-survey?tab=newest"
+        moreHref="/surveys?tab=newest"
       />
       <ResponsiveSliderGrid>
         {items.map((s) => (

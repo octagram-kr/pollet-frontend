@@ -12,7 +12,7 @@ export function SurveyPreviewSection({
     <section>
       <SectionHeader
         title="이런 설문조사는 어때요?"
-        moreHref="/all-survey"
+        moreHref="/surveys"
       />
       <ResponsiveSliderGrid>
         {items.map((s) => (
