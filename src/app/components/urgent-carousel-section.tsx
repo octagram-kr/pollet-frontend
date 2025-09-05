@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { SurveyCard } from '@/app/(site)/components/survey-card'
-import { SectionHeader } from '@/app/(site)/components/section-header'
+import { SurveyCard } from '@/app/components/survey-card'
+import { SectionHeader } from '@/app/components/section-header'
 import { cn } from '@/lib/utils'
 import type { SurveyItem } from '@/types/survey'
 

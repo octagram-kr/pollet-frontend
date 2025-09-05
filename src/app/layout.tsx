@@ -1,6 +1,8 @@
 import './globals.css'
 import { ReactNode } from 'react'
 import { Metadata } from 'next/types'
+import SiteHeader from '@/components/layout/header'
+import { Footer } from '@/components/layout/footer'
 
 export const metadata: Metadata = {
   title: 'Pollet',
@@ -17,7 +19,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
       </head>
       <body className="font-sans bg-bg-white text-text-default">
+        <SiteHeader />
         <div className="min-w-auto min-h-auto">{children}</div>
+        <Footer />
       </body>
     </html>
   )
