@@ -1,4 +1,4 @@
-import SiteHeader from '@/components/layout/site-header'
+import SiteHeader from '@/components/layout/header'
 
 export default function SiteLayout({
   children,
