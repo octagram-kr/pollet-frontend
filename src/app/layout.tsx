@@ -19,9 +19,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
       </head>
       <body className="font-sans bg-bg-white text-text-default">
-        <SiteHeader />
-        <div className="min-w-auto min-h-auto">{children}</div>
-        <Footer />
+        <div className="min-h-screen flex flex-col">
+          <SiteHeader />
+          <div className="flex-1 min-w-0">{children}</div>
+          <Footer />
+        </div>
       </body>
     </html>
   )
