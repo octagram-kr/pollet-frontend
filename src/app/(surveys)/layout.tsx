@@ -8,7 +8,7 @@ export default function SurveysLayout({
   return (
     <div className="min-h-screen">
       <SurveysHeader />
-      <main className="mx-auto max-w-6xl px-4">{children}</main>
+      <main>{children}</main>
     </div>
   )
 }

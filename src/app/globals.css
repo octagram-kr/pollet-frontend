@@ -1,26 +1,306 @@
 @import 'tailwindcss';
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css');
 
+@theme {
+  /* ===== Gray ===== */
+  --color-gray-0: #ffffff;
+  --color-gray-10: #f9f9f9;
+  --color-gray-50: #f3f4f5;
+  --color-gray-100: #e8e9eb;
+  --color-gray-200: #d9dde0;
+  --color-gray-300: #c9cbd1;
+  --color-gray-400: #b4b7bd;
+  --color-gray-500: #91959c;
+  --color-gray-600: #74767c;
+  --color-gray-700: #5e6064;
+  --color-gray-800: #434447;
+  --color-gray-900: #292a2c;
+  --color-gray-999: #000000;
+
+  /* ===== Pink ===== */
+  --color-pink-50: #fff6fe;
+  --color-pink-100: #ffeffe;
+  --color-pink-150: #ffe8fd;
+  --color-pink-200: #ffd4fa;
+  --color-pink-300: #ff83f3;
+  --color-pink-400: #ff5bef;
+  --color-pink-500: #ff12e7;
+  --color-pink-600: #e200cb;
+  --color-pink-700: #b50598;
+  --color-pink-800: #90056d;
+  --color-pink-900: #6e0554;
+
+  /* ===== Mint ===== */
+  --color-mint-50: #e9fef8;
+  --color-mint-100: #d1f6ef;
+  --color-mint-200: #b4ede5;
+  --color-mint-300: #90e4d6;
+  --color-mint-400: #5ed7c3;
+  --color-mint-500: #0ec4b2;
+  --color-mint-600: #0db2a4;
+  --color-mint-700: #0a898b;
+  --color-mint-800: #08676c;
+  --color-mint-900: #064c52;
+  /* ===== Red ===== */
+  --color-red-50: #fff2f0;
+  --color-red-100: #ffe8e5;
+  --color-red-200: #ffdcd8;
+  --color-red-500: #ff7965;
+
+  /* ===== Yellow ===== */
+  --color-yellow-50: #fffbf0;
+  --color-yellow-100: #fff4d2;
+  --color-yellow-200: #ffeebc;
+  --color-yellow-500: #ffda6d;
+  --color-yellow-600: #f1bd5d;
+
+  /* ===== Green ===== */
+  --color-green-50: #f6fdf0;
+  --color-green-100: #e9f9db;
+  --color-green-200: #e1f8cb;
+  --color-green-500: #a5e866;
+
+  /* ===== Violet ===== */
+  --color-violet-50: #f9f6ff;
+  --color-violet-100: #ede2ff;
+  --color-violet-200: #e4d4ff;
+  --color-violet-500: #c4a2ff;
+
+  /* ===== Brand ===== */
+  --color-primary: var(--color-mint-500);
+  --color-secondary: var(--color-pink-500);
+
+  /* ===== Semantic colors ===== */
+  --color-text-white: var(--color-gray-0);
+  --color-text-default: var(--color-gray-800);
+  --color-text-strong: var(--color-gray-900);
+  --color-text-subtle: var(--color-gray-500);
+  --color-text-subtler: var(--color-gray-300);
+  --color-text-primary: var(--color-mint-600);
+  --color-text-secondary: var(--color-pink-600);
+
+  /* Fill */
+  --color-fill-white: var(--color-gray-0);
+  --color-fill-subtle: var(--color-gray-50);
+  --color-fill-default: var(--color-gray-100);
+  --color-fill-active: var(--color-gray-400);
+  --color-fill-disabled: var(--color-gray-50);
+  --color-fill-strong: var(--color-gray-600);
+  --color-fill-deep: var(--color-gray-700);
+  --color-fill-black: var(--color-gray-999);
+
+  --color-fill-primary: var(--color-mint-400);
+  --color-fill-primary-subtle: var(--color-mint-200);
+  --color-fill-primary-active: var(--color-mint-600);
+  --color-fill-primary-disabled: var(--color-mint-50);
+
+  --color-fill-secondary: var(--color-pink-400);
+  --color-fill-secondary-subtle: var(--color-pink-200);
+  --color-fill-secondary-active: var(--color-pink-600);
+  --color-fill-secondary-disabled: var(--color-pink-50);
+
+  /* Stroke/Border */
+  --color-stroke-default: var(--color-gray-500);
+  --color-stroke-subtle: var(--color-gray-300);
+  --color-stroke-subtler: var(--color-gray-100);
+  --color-stroke-active: var(--color-gray-700);
+  --color-stroke-deep: var(--color-gray-800);
+  --color-stroke-white: var(--color-gray-0);
+
+  --color-stroke-primary: var(--color-mint-400);
+  --color-stroke-primary-subtle: var(--color-mint-300);
+  --color-stroke-primary-active: var(--color-mint-700);
+  --color-stroke-primary-disabled: var(--color-mint-200);
+
+  --color-stroke-secondary: var(--color-pink-300);
+  --color-stroke-secondary-subtle: var(--color-pink-200);
+  --color-stroke-secondary-active: var(--color-pink-700);
+  --color-stroke-secondary-disabled: var(--color-pink-150);
+
+  --color-stroke-mint: var(--color-mint-500);
+  --color-stroke-pink: var(--color-pink-400);
+  --color-stroke-red: var(--color-red-500);
+  --color-stroke-yellow: var(--color-yellow-600);
+  --color-stroke-green: var(--color-green-500);
+  --color-stroke-violet: var(--color-violet-500);
+
+  /* Backgrounds */
+  --color-bg-white: var(--color-gray-0);
+  --color-bg-subtle: var(--color-gray-10);
+
+  --color-bg-mint-faint: var(--color-mint-50);
+  --color-bg-mint-lighter: var(--color-mint-100);
+  --color-bg-mint-light: var(--color-mint-200);
+
+  --color-bg-pink-faint: var(--color-pink-50);
+  --color-bg-pink-lighter: var(--color-pink-100);
+  --color-bg-pink-light: var(--color-pink-150);
+
+  --color-bg-red-faint: var(--color-red-50);
+  --color-bg-red-lighter: var(--color-red-100);
+  --color-bg-red-light: var(--color-red-200);
+
+  --color-bg-yellow-faint: var(--color-yellow-50);
+  --color-bg-yellow-lighter: var(--color-yellow-100);
+  --color-bg-yellow-light: var(--color-yellow-200);
+
+  --color-bg-green-faint: var(--color-green-50);
+  --color-bg-green-lighter: var(--color-green-100);
+  --color-bg-green-light: var(--color-green-200);
+
+  --color-bg-violet-faint: var(--color-violet-50);
+  --color-bg-violet-lighter: var(--color-violet-100);
+  --color-bg-violet-light: var(--color-violet-200);
+
+  /* ===== Transparency/DIM ===== */
+  --color-transparency-2: rgba(0, 0, 0, 0.02);
+  --color-transparency-4: rgba(0, 0, 0, 0.04);
+  --color-transparency-8: rgba(0, 0, 0, 0.08);
+  --color-transparency-12: rgba(0, 0, 0, 0.12);
+  --color-transparency-42: rgba(0, 0, 0, 0.42);
+  --color-transparency-60: rgba(0, 0, 0, 0.6);
+  --color-dim: rgba(0, 0, 0, 0.42);
+
+  /* ===== Shadows ===== */
+  --shadow-light: var(--color-transparency-2);
+  --shadow-soft: var(--color-transparency-4);
+  --shadow-strong: var(--color-transparency-8);
+  --shadow-deep: var(--color-transparency-12);
+
+  /* ===== Starcandy ===== */
+  --color-starcandy-mint: var(--color-mint-400);
+  --color-starcandy-pink: var(--color-pink-300);
+  --color-starcandy-red: var(--color-red-500);
+  --color-starcandy-yellow: var(--color-yellow-500);
+  --color-starcandy-gray: var(--color-gray-300);
+  --color-starcandy-green: var(--color-green-500);
+  --color-starcandy-violet: var(--color-violet-500);
+
+  /* ==== Border radius ==== */
+  --radius-xxs: 4px;
+  --radius-xs: 8px;
+  --radius-sm: 16px;
+  --radius-md: 32px;
+  --radius-lg: 40px;
+  --radius-xl: 999px;
+
+  /* ==== BreakPoint ==== */
+  --breakpoint-md: 769px;
+
+  /* ==== Max width ==== */
+  --max-w-layout: 1440px;
+
+  /* ===== Typography (size + line-height + font-weight) ===== */
+  /* Title */
+  --text-title-1: 28px;
+  --leading-title-1: 40px;
+  --font-weight-title-1: var(--font-weight-bold);
+  --text-title-2: 22px;
+  --leading-title-2: 30px;
+  --font-weight-title-2: var(--font-weight-semibold);
+  --text-title-3: 18px;
+  --leading-title-3: 26px;
+  --font-weight-title-3: var(--font-weight-medium);
+
+  /* Heading */
+  --text-heading-1: 36px;
+  --leading-heading-1: 52px;
+  --font-weight-heading-1: var(--font-weight-bold);
+  --text-heading-2: 26px;
+  --leading-heading-2: 36px;
+  --font-weight-heading-2: var(--font-weight-semibold);
+  --text-heading-3: 22px;
+  --leading-heading-3: 30px;
+  --font-weight-heading-3: var(--font-weight-semibold);
+  --text-heading-4: 18px;
+  --leading-heading-4: 26px;
+  --font-weight-heading-4: var(--font-weight-medium);
+
+  /* Body */
+  --text-body-1: 20px;
+  --leading-body-1: 36px;
+  --font-weight-body-1: var(--font-weight-medium);
+  --text-body-2: 20px;
+  --leading-body-2: 36px;
+  --font-weight-body-2: var(--font-weight-bold);
+  --text-body-3: 18px;
+  --leading-body-3: 32px;
+  --font-weight-body-3: var(--font-weight-regular);
+  --text-body-4: 16px;
+  --leading-body-4: 28px;
+  --font-weight-body-4: var(--font-weight-bold);
+  --text-body-5: 16px;
+  --leading-body-5: 28px;
+  --font-weight-body-5: var(--font-weight-medium);
+  --text-body-6: 16px;
+  --leading-body-6: 28px;
+  --font-weight-body-6: var(--font-weight-regular);
+
+  /* Label */
+  --text-label-1: 24px;
+  --leading-label-1: 32px;
+  --font-weight-label-1: var(--font-weight-bold);
+  --text-label-2: 18px;
+  --leading-label-2: 26px;
+  --font-weight-label-2: var(--font-weight-medium);
+  --text-label-3: 22px;
+  --leading-label-3: 30px;
+  --font-weight-label-3: var(--font-weight-bold);
+  --text-label-4: 20px;
+  --leading-label-4: 28px;
+  --font-weight-label-4: var(--font-weight-medium);
+  --text-label-5: 18px;
+  --leading-label-5: 26px;
+  --font-weight-label-5: var(--font-weight-semibold);
+  --text-label-6: 16px;
+  --leading-label-6: 22px;
+  --font-weight-label-6: var(--font-weight-regular);
+  --text-label-7: 16px;
+  --leading-label-7: 22px;
+  --font-weight-label-7: var(--font-weight-medium);
+  --text-label-8: 12px;
+  --leading-label-8: 16px;
+  --font-weight-label-8: var(--font-weight-regular);
+
+  /* Caption */
+  --text-caption-1: 22px;
+  --leading-caption-1: 30px;
+  --font-weight-caption-1: var(--font-weight-medium);
+  --text-caption-2: 18px;
+  --leading-caption-2: 24px;
+  --font-weight-caption-2: var(--font-weight-regular);
+  --text-caption-3: 14px;
+  --leading-caption-3: 20px;
+  --font-weight-caption-3: var(--font-weight-regular);
+  --text-caption-4: 12px;
+  --leading-caption-4: 16px;
+  --font-weight-caption-4: var(--font-weight-regular);
+
+  /* ==== Font weight ==== */
+  --font-weight-bold: 700;
+  --font-weight-semibold: 600;
+  --font-weight-medium: 500;
+  --font-weight-regular: 400;
+
+  /* ===== Letter spacing ===== */
+  --tracking-heading-2: -0.72px;
+  --tracking-body-1: -0.6px;
+  --tracking-body-2: -0.6px;
+  --tracking-body-3: -0.5px;
+  --tracking-body-4: -0.4px;
+  --tracking-body-5: -0.4px;
+  --tracking-body-6: -0.4px;
+  --tracking-label-1: -0.72px;
+  --tracking-label-5: -0.48px;
+  --tracking-label-8: -0.64px;
+  --tracking-caption-3: -0.32px;
+  --tracking-caption-4: -0.32px;
+
+  /* ===== Font family (Pretendard Variable) ===== */
+  --font-sans: 'Pretendard Variable';
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --font-kor: 'Pretendard Variable';
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-kor);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
+  color: var(--color-text-default);
+  font-family: var(--font-sans);
 }
