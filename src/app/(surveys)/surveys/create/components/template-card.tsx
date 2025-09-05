@@ -1,7 +1,8 @@
-import Link from 'next/link'
 import Image from 'next/image'
 
-export default function TemplateCard({ layout = 'wide' as 'tall' | 'wide' }) {
+type TemplateCardProps = { layout?: 'tall' | 'wide' }
+
+export default function TemplateCard({ layout = 'wide' }: TemplateCardProps) {
   return (
     <div
       className={[

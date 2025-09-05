@@ -1,6 +1,10 @@
 import Image from 'next/image'
 
-export default function ComingSoonCard({ layout = 'wide' as 'tall' | 'wide' }) {
+type ComingSoonCardProps = { layout?: 'tall' | 'wide' }
+
+export default function ComingSoonCard({
+  layout = 'wide',
+}: ComingSoonCardProps) {
   return (
     <div
       className={[
@@ -26,7 +30,7 @@ export default function ComingSoonCard({ layout = 'wide' as 'tall' | 'wide' }) {
             업데이트 예정
           </h3>
           <p className="text-text-subtle text-body-6 font-body-6 leading-body-6">
-            새로운 설문조사 제작 방식이 추가 될 예정이에요.
+            새로운 설문조사 제작 방식이 추가될 예정이에요.
           </p>
         </div>
       </div>

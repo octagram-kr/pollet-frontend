@@ -20,7 +20,7 @@ export function Footer() {
           </ul>
         </nav>
         <p className="text-label-8 font-label-8 leading-label-8 tracking-label-8 text-text-subtle">
-          Copyright© Pollet All right reserved.
+          Copyright© Pollet All rights reserved.
           <br />
           상호명 (주)폴렛 | 대표 장우영 | 개인정보보호책임자 이승훈 |
           사업자등록번호 025-09-02153

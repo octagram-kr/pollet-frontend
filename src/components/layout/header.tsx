@@ -78,14 +78,17 @@ export default function SiteHeader() {
             </span>
           </div>
 
-          <div className="relative inline-block">
+          <button
+            type="button"
+            className="relative inline-block"
+          >
             <BellIcon className="size-8 fill-fill-deep" />
             {hasNotification && (
               <div className="absolute right-1 top-1">
                 <DotIcon className="text-secondary" />
               </div>
             )}
-          </div>
+          </button>
 
           <button
             aria-label="내 프로필"
