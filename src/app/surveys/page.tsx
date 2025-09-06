@@ -1,3 +1,11 @@
+import SurveyCounterSection from './components/counter-seciton'
+import TagChipsSection from './components/tag-chips-section'
+
 export default function SurveysPage() {
-  return <div>전체보기 페이지</div>
+  return (
+    <>
+      <SurveyCounterSection initialTotal={1280} />
+      <TagChipsSection />
+    </>
+  )
 }
