@@ -11,6 +11,13 @@ import {
   RightIcon,
 } from '@/components/icons'
 
+export type UserSelection = {
+  gender: 'male' | 'female' | 'all' | null
+  age: string | null
+  job: string | null
+  selectedTags: Set<string>
+}
+
 export type Survey = {
   id: string
   rewardType: 'point' | 'gifticon'
@@ -18,20 +25,35 @@ export type Survey = {
   durationMin: number
   thumbnail: string | null
   title: string
-  tags: string[]
-  options?: string[] // qview=on일 때 노출(최대 4개)
+  // 설문 고유 속성
+  gender: 'male' | 'female'
+  age: '10' | '20' | '30' | '40' | '50' | '60+'
+  job: string
+  tag1: string
+  tag2: string
+  // 질문 보기 on
+  options?: string[]
+}
+
+type Chip = {
+  label: string
+  tone: 'mint' | 'pink' | 'muted'
+  // 정렬 우선순위 (사용자가 해당 필터를 설정했으면 0, 아니면 1)
+  prio: number
 }
 
 export default function SurveyCard({
   survey,
   qview, // 'on' | 'off'
-  selectedTags, // URL에서 선택된 태그
-  filterChips, // URL에서 유도된 필터 칩 문자열 배열
+  selection,
+  // selectedTags, // URL에서 선택된 태그
+  // filterChips, // URL에서 유도된 필터 칩 문자열 배열
 }: {
   survey: Survey
   qview: 'on' | 'off'
-  selectedTags: Set<string>
-  filterChips: string[]
+  selection: UserSelection
+  // selectedTags: Set<string>
+  // filterChips: string[]
 }) {
   // 질문 선택 결과: 'unknown' 최초, 이후 'eligible' | 'ineligible'
   const [result, setResult] = useState<'unknown' | 'eligible' | 'ineligible'>(
@@ -42,29 +64,59 @@ export default function SurveyCard({
   const title = useMemo(() => limitChars(survey.title, 30), [survey.title])
 
   // 칩(최대 5): 1) 필터칩(민트) 우선 → 2) 선택된 태그(분홍) → 3) 나머지 태그(회색)
-  const chips = useMemo(() => {
-    const res: { label: string; tone: 'mint' | 'pink' | 'muted' }[] = []
-    for (const f of filterChips) {
-      if (res.length >= 5) break
-      res.push({ label: f, tone: 'mint' })
-    }
-    for (const t of survey.tags) {
-      if (res.length >= 5) break
-      if (
-        selectedTags.has(t) &&
-        !res.some((c) => c.label === `#${t}` || c.label === t)
-      ) {
-        res.push({ label: `#${t}`, tone: 'pink' })
-      }
-    }
-    for (const t of survey.tags) {
-      if (res.length >= 5) break
-      if (!selectedTags.has(t)) {
-        res.push({ label: `#${t}`, tone: 'muted' })
-      }
-    }
-    return res.slice(0, 5)
-  }, [filterChips, selectedTags, survey.tags])
+  const chips = useMemo<Chip[]>(() => {
+    const chips: Chip[] = []
+
+    // 1) 성별
+    const genderSelected = selection.gender && selection.gender !== 'all'
+    const genderMatch = genderSelected
+      ? selection.gender === survey.gender
+      : false
+    chips.push({
+      label: survey.gender === 'male' ? '남자' : '여자',
+      tone: genderSelected ? (genderMatch ? 'mint' : 'muted') : 'muted',
+      prio: genderSelected ? 0 : 1,
+    })
+
+    // 2) 연령
+    const ageSelected = !!selection.age
+    const ageLabel = survey.age === '60+' ? '60대 이상' : `${survey.age}대`
+    const ageMatch = ageSelected ? selection.age === survey.age : false
+    chips.push({
+      label: ageLabel,
+      tone: ageSelected ? (ageMatch ? 'mint' : 'muted') : 'muted',
+      prio: ageSelected ? 0 : 1,
+    })
+
+    // 3) 직업
+    const jobSelected = !!selection.job
+    const jobMatch = jobSelected ? selection.job === survey.job : false
+    chips.push({
+      label: survey.job,
+      tone: jobSelected ? (jobMatch ? 'mint' : 'muted') : 'muted',
+      prio: jobSelected ? 0 : 1,
+    })
+
+    // 4) 태그1
+    const hasTagFilter = selection.selectedTags.size > 0
+    const tag1Selected = hasTagFilter && selection.selectedTags.has(survey.tag1)
+    chips.push({
+      label: `#${survey.tag1}`,
+      tone: hasTagFilter ? (tag1Selected ? 'pink' : 'muted') : 'muted',
+      prio: hasTagFilter ? (tag1Selected ? 0 : 0) : 1, // 태그 필터가 있으면 태그 칩도 앞쪽 그룹
+    })
+
+    // 5) 태그2
+    const tag2Selected = hasTagFilter && selection.selectedTags.has(survey.tag2)
+    chips.push({
+      label: `#${survey.tag2}`,
+      tone: hasTagFilter ? (tag2Selected ? 'pink' : 'muted') : 'muted',
+      prio: hasTagFilter ? (tag2Selected ? 0 : 0) : 1,
+    })
+
+    // “사용자가 선택한 필터 칩이 먼저” — prio(0) → prio(1) 정렬, 동일한 그룹 내에서는 원래 순서 유지
+    return chips.sort((a, b) => a.prio - b.prio)
+  }, [survey, selection])
 
   // 옵션(최대 4, 15자, 1줄)
   const options = useMemo(
@@ -128,7 +180,7 @@ export default function SurveyCard({
 
         {/* qview off → 칩 / qview on → 옵션 or 결과문구 */}
         {qview === 'off' ? (
-          <ChipsRow chips={chips} />
+          <ChipsOneLine chips={chips} />
         ) : (
           <QuizArea
             options={options}
@@ -149,11 +201,7 @@ export default function SurveyCard({
 /* Sub components                                                     */
 /* ------------------------------------------------------------------ */
 
-function ChipsRow({
-  chips,
-}: {
-  chips: { label: string; tone: 'mint' | 'pink' | 'muted' }[]
-}) {
+function ChipsOneLine({ chips }: { chips: Chip[] }) {
   return (
     <div className={cn('relative overflow-hidden')}>
       <div
@@ -175,6 +223,7 @@ function ChipsRow({
           </span>
         ))}
       </div>
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-bg-base to-transparent" />
     </div>
   )
 }
