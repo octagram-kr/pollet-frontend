@@ -123,7 +123,17 @@ export default function FilterModalContent({
         <div className="flex items-center gap-2">
           <NumberInput
             value={form.pointMin ?? 0}
-            onChange={(v) => setForm((f) => ({ ...f, pointMin: v }))}
+            onChange={(v) =>
+              setForm((f) => {
+                const nextMin = v
+                const nextMax = f.pointMax ?? v
+                return {
+                  ...f,
+                  pointMin: nextMin,
+                  pointMax: Math.max(nextMin, nextMax),
+                }
+              })
+            }
             min={0}
           />
           <span className="text-body-3 font-body-3 leading-body-3 tracking-body-3 text-text-default">
@@ -131,7 +141,13 @@ export default function FilterModalContent({
           </span>
           <NumberInput
             value={form.pointMax ?? 0}
-            onChange={(v) => setForm((f) => ({ ...f, pointMax: v }))}
+            onChange={(v) =>
+              setForm((f) => {
+                const nextMax = v
+                const nextMin = f.pointMin ?? 0
+                return { ...f, pointMax: Math.max(nextMin, nextMax) }
+              })
+            }
             min={0}
           />
           <span className="text-body-3 font-body-3 leading-body-3 tracking-body-3 text-text-default">
@@ -256,12 +272,14 @@ function NumberInput({
     <input
       type="text"
       inputMode="numeric"
-      pattern="\d*"
-      value={String(value)}
+      pattern="[0-9]*"
+      value={String(Number.isFinite(value) ? value : 0)}
       onChange={(e) => {
-        const raw = e.target.value.replace(/^0+/, '')
-        const num = raw === '' ? 0 : Number(raw)
-        onChange(Math.max(min, num))
+        const rawDigits = e.target.value.replace(/[^\d]/g, '')
+        const trimmed = rawDigits.replace(/^0+(?=\d)/, '')
+        const num = trimmed === '' ? 0 : Number(trimmed)
+        const safe = Number.isFinite(num) ? Math.max(min, num) : min
+        onChange(safe)
       }}
       className="w-28 rounded-xs border border-stroke-subtler bg-fill-subtle px-3 py-1 text-label-6 font-label-6 leading-label-6 text-text-subtler outline-none"
     />

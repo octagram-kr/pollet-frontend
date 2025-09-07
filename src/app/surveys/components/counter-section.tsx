@@ -28,11 +28,11 @@ export default function SurveyCounterSection({
   const q = searchParams.get('q') ?? ''
   const [keyword, setKeyword] = useState(q)
 
-  // 총량 표시 (실서비스에서는 SWR로 갱신)
+  // 총량 표시
   const [total, setTotal] = useState(initialTotal)
 
   // TODO: 실제 구현 시, 아래 useEffect를 SWR(fetch)로 바꿔서
-  // `keyword` 또는 기타 필터 변경 시 서버 카운트를 재검증하세요.
+  // `keyword` 또는 기타 필터 변경 시 서버 카운트 재검증
   useEffect(() => {
     // 데모용 가짜 변화: 글자 수에 따라 총량이 살짝 변하는 효과
     const base = Math.max(0, initialTotal)
@@ -43,10 +43,14 @@ export default function SurveyCounterSection({
   // 검색 디바운스 -> URL ?q= 반영(스크롤 유지)
   useEffect(() => {
     const t = setTimeout(() => {
+      const currQ = searchParams.get('q') ?? ''
+      if (currQ === keyword) return
       const sp = new URLSearchParams(searchParams.toString())
       if (keyword) sp.set('q', keyword)
       else sp.delete('q')
-      router.replace(`${pathname}?${sp.toString()}`, { scroll: false })
+      const qs = sp.toString()
+      const href = qs ? `${pathname}?${qs}` : pathname
+      router.replace(href, { scroll: false })
     }, 300)
     return () => clearTimeout(t)
   }, [keyword, pathname, router, searchParams])

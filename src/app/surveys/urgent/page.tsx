@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import SurveyCounterSection from '../components/counter-seciton'
+import SurveyCounterSection from '../components/counter-section'
 import SurveyList from './components/survey-list-urgent'
 
 export default function UrgentSurveysPage() {

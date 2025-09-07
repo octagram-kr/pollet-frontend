@@ -1,6 +1,5 @@
 'use client'
 
-import { cn } from '@/lib/utils'
 import { UserFillIcon } from '@/components/icons'
 
 export default function TargetProgress({

@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
-import SurveyCounterSection from '../components/counter-seciton'
-import RecommendationBannerSection from './components/recommendation-banner-seciton'
+import SurveyCounterSection from '../components/counter-section'
+import RecommendationBannerSection from './components/recommendation-banner-section'
 import SortControlSection from '../components/sort-control-section'
 import SurveyList, { SurveyListFilters } from '../components/survey-list'
 
