@@ -5,7 +5,17 @@ import { SubMessage } from './sub-message'
 import { RecentLoginMethod } from './recent-login-method'
 import { LoginButton } from './login-button'
 
-export function LoginBox() {
+interface LoginBoxProps {
+  isGoogleRecent?: boolean
+  onGoogleLogin?: () => void
+  onKakaoLogin?: () => void
+}
+
+export function LoginBox({ 
+  isGoogleRecent = false, 
+  onGoogleLogin, 
+  onKakaoLogin 
+}: LoginBoxProps) {
   return (
     <div className="w-full space-y-8 p-8 bg-gray-900 rounded-lg">
       {/* 로고 */}
@@ -22,8 +32,12 @@ export function LoginBox() {
       <div className="space-y-4">
         <SubMessage />
         <div className="space-y-3">
-          <RecentLoginMethod />
-          <LoginButton />
+          <RecentLoginMethod isGoogleRecent={isGoogleRecent} />
+          <LoginButton 
+            isGoogleRecent={isGoogleRecent}
+            onGoogleLogin={onGoogleLogin}
+            onKakaoLogin={onKakaoLogin}
+          />
         </div>
       </div>
     </div>
