@@ -103,7 +103,11 @@ export default function TagChipsSection({
   }
   const toggleTag = (tag: string) => {
     const next = new Set(selectedTags)
-    next.has(tag) ? next.delete(tag) : next.add(tag)
+    if (next.has(tag)) {
+      next.delete(tag)
+    } else {
+      next.add(tag)
+    }
     replaceTags(next)
   }
   const clearTags = () => replaceTags(new Set())
@@ -112,19 +116,41 @@ export default function TagChipsSection({
   const handleApplyFilter = (form: FilterFormState) => {
     // 간단한 직렬화 규칙(필요 시 서버 규격에 맞춰 교체)
     const sp = new URLSearchParams(searchParams.toString())
-    form.gender ? sp.set('gender', form.gender) : sp.delete('gender')
-    form.age ? sp.set('age', form.age) : sp.delete('age')
-    form.job ? sp.set('job', form.job) : sp.delete('job')
-    form.pointMin != null
-      ? sp.set('pmin', String(form.pointMin))
-      : sp.delete('pmin')
-    form.pointMax != null
-      ? sp.set('pmax', String(form.pointMax))
-      : sp.delete('pmax')
-    form.gifticonOnly ? sp.set('gifticon', '1') : sp.delete('gifticon')
-    form.durations.length
-      ? sp.set('dur', form.durations.join(','))
-      : sp.delete('dur')
+    if (form.gender) {
+      sp.set('gender', form.gender)
+    } else {
+      sp.delete('gender')
+    }
+    if (form.age) {
+      sp.set('age', form.age)
+    } else {
+      sp.delete('age')
+    }
+    if (form.job) {
+      sp.set('job', form.job)
+    } else {
+      sp.delete('job')
+    }
+    if (form.pointMin != null) {
+      sp.set('pmin', String(form.pointMin))
+    } else {
+      sp.delete('pmin')
+    }
+    if (form.pointMax != null) {
+      sp.set('pmax', String(form.pointMax))
+    } else {
+      sp.delete('pmax')
+    }
+    if (form.gifticonOnly) {
+      sp.set('gifticon', '1')
+    } else {
+      sp.delete('gifticon')
+    }
+    if (form.durations.length) {
+      sp.set('dur', form.durations.join(','))
+    } else {
+      sp.delete('dur')
+    }
     router.replace(`${pathname}?${sp.toString()}`, { scroll: false })
     setModalVariant(null)
   }
@@ -164,7 +190,12 @@ export default function TagChipsSection({
           <FilterModalContent
             // 초기값은 URL에서 읽어서 전달 (간단 파싱)
             initial={{
-              gender: (searchParams.get('gender') as any) || 'all',
+              gender: ['male', 'female', 'all'].includes(
+                searchParams.get('gender') ?? '',
+              )
+                ? (searchParams.get('gender') as 'male' | 'female' | 'all')
+                : 'all',
+
               age: searchParams.get('age'),
               job: searchParams.get('job'),
               pointMin: searchParams.get('pmin')

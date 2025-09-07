@@ -59,8 +59,13 @@ export default function FilterModalContent({
           ].map(({ key, label }) => (
             <Chip
               key={key}
-              active={form.gender === (key as any)}
-              onClick={() => setForm((f) => ({ ...f, gender: key as any }))}
+              active={form.gender === (key as FilterFormState['gender'])}
+              onClick={() =>
+                setForm((f) => ({
+                  ...f,
+                  gender: key as FilterFormState['gender'],
+                }))
+              }
             >
               {label}
             </Chip>
@@ -101,6 +106,7 @@ export default function FilterModalContent({
             '자영업자',
           ].map((j) => (
             <Chip
+              key={j}
               active={j === 'all' ? form.job === null : form.job === j}
               onClick={() =>
                 setForm((f) => ({ ...f, job: j === 'all' ? null : j }))
@@ -169,7 +175,11 @@ export default function FilterModalContent({
                     ? setForm((f) => ({ ...f, durations: [] }))
                     : setForm((f) => {
                         const s = new Set(f.durations)
-                        s.has(d) ? s.delete(d) : s.add(d)
+                        if (s.has(d)) {
+                          s.delete(d)
+                        } else {
+                          s.add(d)
+                        }
                         return { ...f, durations: [...s] }
                       })
                 }

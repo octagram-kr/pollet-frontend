@@ -1,5 +1,3 @@
-import { ToggleSmOnIcon } from './normal/toggle-sm-on-icon'
-
 export { DotIcon } from './normal/dot-icon'
 export { StarcandyFillIcon } from './tag/starcandy-fill-icon'
 export { ShowGridIcon } from './normal/showgrid-icon'

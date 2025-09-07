@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { SearchIcon } from '@/components/icons'
 import { cn } from '@/lib/utils'
@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils'
  * - 우측: 검색 입력(쿼리스트링 ?q= 로 반영, 디바운스)
  *
  * 실제 총량은 /api/surveys/count?{조건들} 같은 엔드포인트를 붙여
- * SWR(fetch)로 교체하면 됩니다. 우선은 부모에서 내려주는 initialTotal을 사용.
+ * SWR(fetch)로 교체. 우선은 부모에서 내려주는 initialTotal을 사용.
  */
 export default function SurveyCounterSection({
   className,
@@ -50,13 +50,6 @@ export default function SurveyCounterSection({
     }, 300)
     return () => clearTimeout(t)
   }, [keyword, pathname, router, searchParams])
-
-  // 좌측 요약문: 현재는 검색어만 요약, 나중에 탭/태그/정렬 등 합치면 됨
-  const summaryText = useMemo(() => {
-    const parts: string[] = []
-    if (q) parts.push(`검색: "${q}"`)
-    return parts.length ? parts.join(' · ') : '전체 조건'
-  }, [q])
 
   return (
     <section className={cn(className)}>
