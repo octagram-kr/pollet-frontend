@@ -8,7 +8,7 @@ export default function FilterSection({
   onAnyCardClick,
   className,
 }: {
-  cards: { icon: FilterCardIcon; title: string }[]
+  cards: { icon: FilterCardIcon; title: string; muted?: boolean }[]
   onAnyCardClick: () => void
   className?: string
 }) {
@@ -19,6 +19,7 @@ export default function FilterSection({
           key={`${c.icon}-${i}`}
           icon={c.icon}
           title={c.title}
+          muted={c.muted}
           onClick={onAnyCardClick}
         />
       ))}

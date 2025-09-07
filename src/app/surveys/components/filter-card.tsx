@@ -9,13 +9,19 @@ export default function FilterCard({
   icon,
   title,
   onClick,
+  muted = false,
   className,
 }: {
   icon: FilterCardIcon
   title: string
   onClick: () => void
+  muted?: boolean
   className?: string
 }) {
+  const iconCls = cn(
+    'h-19.5 w-19.5',
+    muted ? 'fill-fill-active' : 'fill-fill-primary',
+  )
   return (
     <button
       type="button"
@@ -28,15 +34,9 @@ export default function FilterCard({
         className,
       )}
     >
-      {icon === 'user' && (
-        <UserIcon className="h-19.5 w-19.5 text-fill-primary" />
-      )}
-      {icon === 'starcandy' && (
-        <StarcandyIcon className="h-19.5 w-19.5 text-fill-primary" />
-      )}
-      {icon === 'clock' && (
-        <ClockIcon className="h-19.5 w-19.5 text-fill-primary" />
-      )}
+      {icon === 'user' && <UserIcon className={iconCls} />}
+      {icon === 'starcandy' && <StarcandyIcon className={iconCls} />}
+      {icon === 'clock' && <ClockIcon className={iconCls} />}
       <span className="text-label-4 font-label-4 leading-label-4 text-text-default">
         {title}
       </span>

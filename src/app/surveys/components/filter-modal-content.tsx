@@ -6,12 +6,12 @@ import { ResetIcon } from '@/components/icons'
 
 export type FilterFormState = {
   gender: 'all' | 'male' | 'female' | null
-  ages: string[] // ['10','20','30','40','50','60+']
-  jobs: string[] // ['중학생','고등학생','대학생','직장인','전문직','프리랜서','창업자','자영업자']
-  pointMin: number | null // 개
-  pointMax: number | null // 개
+  age: string | null
+  job: string | null
+  pointMin: number | null
+  pointMax: number | null
   gifticonOnly: boolean
-  durations: string[] // ['1','3','5','10','15','20','30+'] (분)
+  durations: string[]
 }
 
 export default function FilterModalContent({
@@ -22,13 +22,6 @@ export default function FilterModalContent({
   onApply: (form: FilterFormState) => void
 }) {
   const [form, setForm] = useState<FilterFormState>(initial)
-
-  const toggleIn = (key: 'ages' | 'jobs' | 'durations', v: string) =>
-    setForm((f) => {
-      const next = new Set(f[key])
-      next.has(v) ? next.delete(v) : next.add(v)
-      return { ...f, [key]: [...next] }
-    })
 
   const Chip = ({
     active,
@@ -81,13 +74,9 @@ export default function FilterModalContent({
           {['all', '10', '20', '30', '40', '50', '60+'].map((a) => (
             <Chip
               key={a}
-              active={
-                a !== 'all' ? form.ages.includes(a) : form.ages.length === 0
-              }
+              active={a === 'all' ? form.age === null : form.age === a}
               onClick={() =>
-                a === 'all'
-                  ? setForm((f) => ({ ...f, ages: [] }))
-                  : toggleIn('ages', a)
+                setForm((f) => ({ ...f, age: a === 'all' ? null : a }))
               }
             >
               {a === 'all' ? '전체' : a === '60+' ? '60대 이상' : `${a}대`}
@@ -112,14 +101,9 @@ export default function FilterModalContent({
             '자영업자',
           ].map((j) => (
             <Chip
-              key={j}
-              active={
-                j !== 'all' ? form.jobs.includes(j) : form.jobs.length === 0
-              }
+              active={j === 'all' ? form.job === null : form.job === j}
               onClick={() =>
-                j === 'all'
-                  ? setForm((f) => ({ ...f, jobs: [] }))
-                  : toggleIn('jobs', j)
+                setForm((f) => ({ ...f, job: j === 'all' ? null : j }))
               }
             >
               {j === 'all' ? '전체' : j}
@@ -171,23 +155,29 @@ export default function FilterModalContent({
       {/* 소요시간 */}
       <Row label="소요시간">
         <div className="flex flex-wrap gap-x-4 gap-y-3">
-          {['all', '1', '3', '5', '10', '15', '20', '30+'].map((d) => (
-            <Chip
-              key={d}
-              active={
-                d !== 'all'
-                  ? form.durations.includes(d)
-                  : form.durations.length === 0
-              }
-              onClick={() =>
-                d === 'all'
-                  ? setForm((f) => ({ ...f, durations: [] }))
-                  : toggleIn('durations', d)
-              }
-            >
-              {d === 'all' ? '전체' : d === '30+' ? '30분 이상' : `${d}분`}
-            </Chip>
-          ))}
+          {['all', '1', '3', '5', '10', '15', '20', '30+'].map((d) => {
+            const active =
+              d === 'all'
+                ? form.durations.length === 0
+                : form.durations.includes(d)
+            return (
+              <Chip
+                key={d}
+                active={active}
+                onClick={() =>
+                  d === 'all'
+                    ? setForm((f) => ({ ...f, durations: [] }))
+                    : setForm((f) => {
+                        const s = new Set(f.durations)
+                        s.has(d) ? s.delete(d) : s.add(d)
+                        return { ...f, durations: [...s] }
+                      })
+                }
+              >
+                {d === 'all' ? '전체' : d === '30+' ? '30분 이상' : `${d}분`}
+              </Chip>
+            )
+          })}
         </div>
       </Row>
 
@@ -205,8 +195,8 @@ export default function FilterModalContent({
           onClick={() =>
             setForm({
               gender: 'all',
-              ages: [],
-              jobs: [],
+              age: null,
+              job: null,
               pointMin: 50,
               pointMax: 30000,
               gifticonOnly: false,

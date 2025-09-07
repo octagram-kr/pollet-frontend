@@ -38,6 +38,45 @@ export default function TagChipsSection({
   const [modalVariant, setModalVariant] = useState<null | 'filter' | 'tag'>(
     null,
   )
+  // 현재 필터값 파싱
+  const gender =
+    (searchParams.get('gender') as 'male' | 'female' | 'all' | null) ?? 'all'
+  const age = searchParams.get('age') // 단일 선택으로 key 변경
+  const job = searchParams.get('job')
+  const pmin = searchParams.get('pmin')
+  const pmax = searchParams.get('pmax')
+  const durList = (searchParams.get('dur') || '').split(',').filter(Boolean)
+
+  // 카드1: 성별·연령·직업
+  const card1Selected = !(gender === 'all' && !age && !job)
+  const genderLabel =
+    gender === 'male' ? '남자' : gender === 'female' ? '여자' : null
+  const ageLabel = age ? (age === '60+' ? '60대 이상' : `${age}대`) : null
+  const jobLabel = job ?? null
+  const card1Title = card1Selected
+    ? [genderLabel, ageLabel, jobLabel].filter(Boolean).join(' · ')
+    : '선택 사항 없음'
+
+  // 카드2: 포인트
+  const card2Selected = Boolean(pmin || pmax)
+  const card2Title = card2Selected
+    ? `${Number(pmin ?? 50).toLocaleString()}개 - ${Number(pmax ?? 30000).toLocaleString()}개`
+    : '50개 - 30,000개'
+
+  // 카드3: 시간 (dur 다중 선택 → 최소/최대 표시)
+  const mins = durList
+    .map((d) => (d === '30+' ? 999 : Number(d)))
+    .filter((n) => !Number.isNaN(n))
+    .sort((a, b) => a - b)
+  const hasDur = mins.length > 0
+  const minLabel = hasDur ? `${mins[0]}분` : '1분'
+  const maxLabel = hasDur
+    ? mins[mins.length - 1] >= 999
+      ? '30분 이상'
+      : `${mins[mins.length - 1]}분`
+    : '30분 이상'
+  const card3Title = `${minLabel} - ${maxLabel}`
+
   const isOpen = modalVariant !== null
 
   // URL ↔ 선택 태그
@@ -71,11 +110,11 @@ export default function TagChipsSection({
 
   // 필터 적용 시 반영
   const handleApplyFilter = (form: FilterFormState) => {
-    const sp = new URLSearchParams(searchParams.toString())
     // 간단한 직렬화 규칙(필요 시 서버 규격에 맞춰 교체)
+    const sp = new URLSearchParams(searchParams.toString())
     form.gender ? sp.set('gender', form.gender) : sp.delete('gender')
-    form.ages.length ? sp.set('ages', form.ages.join(',')) : sp.delete('ages')
-    form.jobs.length ? sp.set('jobs', form.jobs.join(',')) : sp.delete('jobs')
+    form.age ? sp.set('age', form.age) : sp.delete('age')
+    form.job ? sp.set('job', form.job) : sp.delete('job')
     form.pointMin != null
       ? sp.set('pmin', String(form.pointMin))
       : sp.delete('pmin')
@@ -86,7 +125,7 @@ export default function TagChipsSection({
     form.durations.length
       ? sp.set('dur', form.durations.join(','))
       : sp.delete('dur')
-    replaceSearch(sp)
+    router.replace(`${pathname}?${sp.toString()}`, { scroll: false })
     setModalVariant(null)
   }
 
@@ -97,9 +136,9 @@ export default function TagChipsSection({
       <div className="mx-auto max-w-7xl flex flex-col items-center">
         <FilterSection
           cards={[
-            { icon: 'user', title: '여자' },
-            { icon: 'starcandy', title: '50개 - 1,000개' },
-            { icon: 'clock', title: '1분 - 10분' },
+            { icon: 'user', title: card1Title, muted: !card1Selected },
+            { icon: 'starcandy', title: card2Title, muted: !card2Selected },
+            { icon: 'clock', title: card3Title, muted: !hasDur },
           ]}
           onAnyCardClick={() => setModalVariant('filter')}
         />
@@ -125,14 +164,9 @@ export default function TagChipsSection({
           <FilterModalContent
             // 초기값은 URL에서 읽어서 전달 (간단 파싱)
             initial={{
-              gender:
-                (searchParams.get('gender') as
-                  | 'male'
-                  | 'female'
-                  | 'all'
-                  | null) || 'all',
-              ages: (searchParams.get('ages') || '').split(',').filter(Boolean),
-              jobs: (searchParams.get('jobs') || '').split(',').filter(Boolean),
+              gender: (searchParams.get('gender') as any) || 'all',
+              age: searchParams.get('age'),
+              job: searchParams.get('job'),
               pointMin: searchParams.get('pmin')
                 ? Number(searchParams.get('pmin'))
                 : 50,
