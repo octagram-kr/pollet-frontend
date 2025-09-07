@@ -89,22 +89,6 @@ export function LoginButton({
           </div>
         )}
       </button>
-
-      {/* 우측 아이콘들 */}
-      <div className="flex justify-end gap-2">
-        <div className="h-4 w-4 rounded bg-yellow-300 flex items-center justify-center">
-          <svg
-            className="w-3 h-3"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path d="M12 3C6.48 3 2 6.48 2 12c0 5.52 4.48 10 10 10s10-4.48 10-10c0-5.52-4.48-10-10-10zm-2 15l-5-5 1.41-1.41L10 16.17l7.59-7.59L19 10l-9 8z" />
-          </svg>
-        </div>
-        <div className="h-4 w-4 rounded bg-gray-200 flex items-center justify-center text-gray-700 font-bold text-xs">
-          G
-        </div>
-      </div>
     </div>
   )
 }
