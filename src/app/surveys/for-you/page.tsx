@@ -1,10 +1,10 @@
 import { Suspense } from 'react'
-import SurveyCounterSection from './components/counter-seciton'
-import TagChipsSection from './components/tag-chips-section'
-import SortControlSection from './components/sort-control-section'
-import SurveyList from './components/survey-list'
+import SurveyCounterSection from '../components/counter-seciton'
+import TagChipsSection from '../components/tag-chips-section'
+import SortControlSection from '../components/sort-control-section'
+import SurveyList from '../components/survey-list'
 
-export default function AllSurveysPage() {
+export default function ForYouSurveysPage() {
   return (
     <main>
       <Suspense fallback={<div>로딩중...</div>}>

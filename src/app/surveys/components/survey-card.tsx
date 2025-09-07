@@ -18,10 +18,15 @@ export type UserSelection = {
   selectedTags: Set<string>
 }
 
+export type SurveyCardSlots = {
+  overlayBottomLeft?: React.ReactNode
+  footer?: React.ReactNode
+}
+
 export type Survey = {
   id: string
   rewardType: 'point' | 'gifticon'
-  rewardLabel: string // 뱃지 표시 텍스트
+  rewardLabel: string
   durationMin: number
   thumbnail: string | null
   title: string
@@ -33,6 +38,10 @@ export type Survey = {
   tag2: string
   // 질문 보기 on
   options?: string[]
+  // 마감임박용 데이터
+  endsAt?: string | Date
+  targetCount?: number
+  currentCount?: number
 }
 
 type Chip = {
@@ -46,21 +55,20 @@ export default function SurveyCard({
   survey,
   qview, // 'on' | 'off'
   selection,
-  // selectedTags, // URL에서 선택된 태그
-  // filterChips, // URL에서 유도된 필터 칩 문자열 배열
+  slots,
+  showUrgentUI = false,
 }: {
   survey: Survey
   qview: 'on' | 'off'
   selection: UserSelection
-  // selectedTags: Set<string>
-  // filterChips: string[]
+  slots?: SurveyCardSlots
+  showUrgentUI?: boolean
 }) {
   // 질문 선택 결과: 'unknown' 최초, 이후 'eligible' | 'ineligible'
   const [result, setResult] = useState<'unknown' | 'eligible' | 'ineligible'>(
     'unknown',
   )
-
-  // 제목 30자 제한(공백 포함) + 2줄 클램프
+  // 제목
   const title = useMemo(() => limitChars(survey.title, 30), [survey.title])
 
   // 칩(최대 5): 1) 필터칩(민트) 우선 → 2) 선택된 태그(분홍) → 3) 나머지 태그(회색)
@@ -125,7 +133,7 @@ export default function SurveyCard({
   )
 
   return (
-    <div className="rounded-sm border-2 border-stroke-subtler bg-fill-white shadow-md hover:stroke-stroke-primary hover:cursor-pointer">
+    <article className="rounded-sm border-2 border-stroke-subtler bg-fill-white shadow-md hover:cursor-pointer">
       {/* 썸네일 + 좌/우 상단 뱃지 */}
       <div className="relative aspect-[4/3]">
         {/* reward */}
@@ -153,17 +161,19 @@ export default function SurveyCard({
 
         {/* 썸네일 이미지 자리(있으면 Image 대체) */}
         {survey.thumbnail ? (
-          // <img
-          //   src={survey.thumbnail}
-          //   alt=""
-          //   className="absolute inset-0 h-full w-full object-cover"
-          // />
           <Image
             src={'/images/sample-1.png'}
             alt=""
             fill
           />
         ) : null}
+
+        {/* 타이머 배지 */}
+        {showUrgentUI && slots?.overlayBottomLeft && (
+          <div className="absolute left-3 bottom-3">
+            {slots.overlayBottomLeft}
+          </div>
+        )}
       </div>
 
       {/* 본문 */}
@@ -192,8 +202,10 @@ export default function SurveyCard({
             }}
           />
         )}
+        {/* 마감임박용 진행도 */}
+        {showUrgentUI && slots?.footer}
       </div>
-    </div>
+    </article>
   )
 }
 

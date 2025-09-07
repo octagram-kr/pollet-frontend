@@ -157,7 +157,10 @@ export default function TagChipsSection({
 
   return (
     <section
-      className={cn('flex items-center bg-fill-subtle pt-8 pb-6', className)}
+      className={cn(
+        'flex items-center bg-fill-subtle mt-4 pt-8 pb-6',
+        className,
+      )}
     >
       <div className="mx-auto max-w-7xl flex flex-col items-center">
         <FilterSection

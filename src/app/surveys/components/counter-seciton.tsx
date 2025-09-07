@@ -53,7 +53,7 @@ export default function SurveyCounterSection({
 
   return (
     <section className={cn(className)}>
-      <div className="mx-auto flex max-w-7xl items-center justify-between pt-16 pb-4">
+      <div className="mx-auto flex max-w-7xl items-center justify-between pt-16">
         {/* 좌측: 총량 */}
         <div className="flex items-baseline">
           <span className="tabular-nums text-title-1 font-title-1 leading-title-1 text-text-strong">
