@@ -47,8 +47,8 @@ export type Survey = {
 type Chip = {
   label: string
   tone: 'mint' | 'pink' | 'muted'
-  // 정렬 우선순위 (사용자가 해당 필터를 설정했으면 0, 아니면 1)
-  prio: number
+  matched: boolean
+  order: number
 }
 
 export default function SurveyCard({
@@ -71,59 +71,72 @@ export default function SurveyCard({
   // 제목
   const title = useMemo(() => limitChars(survey.title, 30), [survey.title])
 
-  // 칩(최대 5): 1) 필터칩(민트) 우선 → 2) 선택된 태그(분홍) → 3) 나머지 태그(회색)
-  const chips = useMemo<Chip[]>(() => {
-    const chips: Chip[] = []
+  // 칩
+  const chips = useMemo(() => {
+    const tagSet = selection.selectedTags ?? new Set<string>()
+
+    // helper: tone 계산
+    const getTone = (
+      cond: boolean,
+      match: boolean,
+      type: 'mint' | 'pink',
+    ): 'mint' | 'pink' | 'muted' => (cond ? (match ? type : 'muted') : 'muted')
 
     // 1) 성별
-    const genderSelected = selection.gender && selection.gender !== 'all'
-    const genderMatch = genderSelected
-      ? selection.gender === survey.gender
-      : false
-    chips.push({
+    const genderSelected =
+      selection.gender !== null && selection.gender !== 'all'
+    const genderMatch = genderSelected && selection.gender === survey.gender
+    const genderChip: Chip = {
       label: survey.gender === 'male' ? '남자' : '여자',
-      tone: genderSelected ? (genderMatch ? 'mint' : 'muted') : 'muted',
-      prio: genderSelected ? 0 : 1,
-    })
+      tone: getTone(genderSelected, genderMatch, 'mint'),
+      matched: Boolean(genderMatch),
+      order: 0,
+    }
 
     // 2) 연령
     const ageSelected = !!selection.age
+    const ageMatch = ageSelected && selection.age === survey.age
     const ageLabel = survey.age === '60+' ? '60대 이상' : `${survey.age}대`
-    const ageMatch = ageSelected ? selection.age === survey.age : false
-    chips.push({
+    const ageChip: Chip = {
       label: ageLabel,
-      tone: ageSelected ? (ageMatch ? 'mint' : 'muted') : 'muted',
-      prio: ageSelected ? 0 : 1,
-    })
+      tone: getTone(ageSelected, ageMatch, 'mint'),
+      matched: Boolean(ageMatch),
+      order: 1,
+    }
 
     // 3) 직업
     const jobSelected = !!selection.job
-    const jobMatch = jobSelected ? selection.job === survey.job : false
-    chips.push({
+    const jobMatch = jobSelected && selection.job === survey.job
+    const jobChip: Chip = {
       label: survey.job,
-      tone: jobSelected ? (jobMatch ? 'mint' : 'muted') : 'muted',
-      prio: jobSelected ? 0 : 1,
-    })
+      tone: getTone(jobSelected, jobMatch, 'mint'),
+      matched: Boolean(jobMatch),
+      order: 2,
+    }
 
     // 4) 태그1
-    const hasTagFilter = selection.selectedTags.size > 0
-    const tag1Selected = hasTagFilter && selection.selectedTags.has(survey.tag1)
-    chips.push({
+    const hasTagFilter = tagSet.size > 0
+    const tag1Match = hasTagFilter && tagSet.has(survey.tag1)
+    const tag1Chip: Chip = {
       label: `#${survey.tag1}`,
-      tone: hasTagFilter ? (tag1Selected ? 'pink' : 'muted') : 'muted',
-      prio: hasTagFilter ? (tag1Selected ? 0 : 0) : 1, // 태그 필터가 있으면 태그 칩도 앞쪽 그룹
-    })
+      tone: getTone(hasTagFilter, tag1Match, 'pink'),
+      matched: Boolean(tag1Match),
+      order: 3,
+    }
 
     // 5) 태그2
-    const tag2Selected = hasTagFilter && selection.selectedTags.has(survey.tag2)
-    chips.push({
+    const tag2Match = hasTagFilter && tagSet.has(survey.tag2)
+    const tag2Chip: Chip = {
       label: `#${survey.tag2}`,
-      tone: hasTagFilter ? (tag2Selected ? 'pink' : 'muted') : 'muted',
-      prio: hasTagFilter ? (tag2Selected ? 0 : 0) : 1,
-    })
+      tone: getTone(hasTagFilter, tag2Match, 'pink'),
+      matched: Boolean(tag2Match),
+      order: 4,
+    }
 
-    // “사용자가 선택한 필터 칩이 먼저” — prio(0) → prio(1) 정렬, 동일한 그룹 내에서는 원래 순서 유지
-    return chips.sort((a, b) => a.prio - b.prio)
+    return [genderChip, ageChip, jobChip, tag1Chip, tag2Chip].sort((a, b) => {
+      if (a.matched !== b.matched) return a.matched ? -1 : 1
+      return a.order - b.order
+    })
   }, [survey, selection])
 
   // 옵션(최대 4, 15자, 1줄)
