@@ -81,7 +81,7 @@ export default function SurveyListUrgent({
   }, [])
 
   const page = Math.max(1, Number(sp.get('page') || 1))
-  const total = MOCK.length
+  const total = urgentItems.length
   const start = (page - 1) * PAGE_SIZE
   const end = Math.min(start + PAGE_SIZE, total)
   const pageItems = urgentItems.slice(start, end)
