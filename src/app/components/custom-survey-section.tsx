@@ -14,7 +14,7 @@ export function CustomSurveySection({
     <section>
       <SectionHeader
         title="맞춤 설문조사"
-        moreHref="/all-survey?tab=custom"
+        moreHref="/surveys/for-you"
       />
       <ResponsiveSliderGrid>
         {items.map((s) => (

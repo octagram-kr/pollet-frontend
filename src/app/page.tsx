@@ -20,19 +20,19 @@ const banners: BannerItem[] = [
     id: 'b1',
     image: '/images/sample-1.png',
     alt: '신규 설문 오픈',
-    href: '/survey?tab=newest',
+    href: '/surveys?tab=newest',
   },
   {
     id: 'b2',
     image: '/images/sample-2.png',
     alt: '리워드샵 특가',
-    href: '/reward',
+    href: '/reward-shop',
   },
   {
     id: 'b3',
     image: '/images/sample-3.png',
     alt: '맞춤 설문 추천',
-    href: '/survey?tab=custom',
+    href: '/surveys/for-you',
   },
 ]
 
