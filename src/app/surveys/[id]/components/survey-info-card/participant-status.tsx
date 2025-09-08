@@ -1,4 +1,4 @@
-import { UserFillIcon } from '@/components/icons'
+import { UserIcon } from '@/components/icons'
 
 export default function ParticipantStatus({
   value,
@@ -8,11 +8,9 @@ export default function ParticipantStatus({
   max: number
 }) {
   return (
-    <div className="flex items-center justify-between rounded-lg bg-gray-50 px-3 py-2">
-      <UserFillIcon />
-      <span className="font-semibold">
-        {value}/{max}
-      </span>
+    <div className="absolute right-3 bottom-4 flex items-center justify-between rounded-lg bg-fill-white border border-stroke-subtle text-label-4 font-label-4 text-text-subtle px-3 py-0.5">
+      <UserIcon className="fill-fill-strong" />
+      <span className="ml-0.25 text-text-primary">{value}</span>/{max}
     </div>
   )
 }

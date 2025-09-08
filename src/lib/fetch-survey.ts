@@ -12,7 +12,7 @@ export async function fetchSurveyById(id: string): Promise<Survey | null> {
     tags: ['여자', '20대', '여행'],
     reward: { type: 'point', value: 300, unit: 'P' },
     expectedMinutes: 5,
-    closingAt: null, // 또는 '2025-09-15T03:00:00Z'
+    closingAt: new Date(Date.now() + 1000 * 60 * 90).toISOString(),
     participants: { current: 60, max: 100 },
     surveyor: { name: '설문자' },
     purpose: '연구 과제',

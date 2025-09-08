@@ -8,7 +8,7 @@ export default function ContentContainer({
   right: ReactNode
 }) {
   return (
-    <section className="mt-6 grid gap-6 md:grid-cols-[1.05fr_1.2fr]">
+    <section className="grid grid-cols-[1.05fr_1.2fr]">
       {left}
       {right}
     </section>
