@@ -70,7 +70,7 @@ export default async function Page(props: {
 
   return (
     <main className="flex-1">
-      <div className="mx-auto max-w-6xl px-6 py-8 space-y-6">
+      <div className="mx-auto max-w-6xl flex flex-col min-h-[calc(100vh-280px)] justify-center px-6 space-y-6">
         {/* 페이지 타이틀 */}
         <div className="flex items-center justify-between flex-wrap gap-4">
           <h2 className="text-2xl font-semibold">내 설문 목록</h2>
