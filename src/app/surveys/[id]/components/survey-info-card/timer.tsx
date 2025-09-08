@@ -9,13 +9,26 @@ export default function Timer({ closingAt }: Props) {
   const end = useMemo(() => new Date(closingAt).getTime(), [closingAt])
   const valid = Number.isFinite(end)
 
-  const [text, setText] = useState<string>(() => toHms(end))
+  const [text, setText] = useState<string>('00:00:00')
 
+  // useEffect(() => {
+  //   if (!valid) return
+  //   const tick = () => setText(toHms(end))
+  //   tick()
+  //   const t = setInterval(tick, 1000)
+  //   return () => clearInterval(t)
+  // }, [end, valid])
   useEffect(() => {
     if (!valid) return
-    const tick = () => setText(toHms(end))
-    tick()
+    const tick = () => {
+      const next = toHms(end)
+      setText(next)
+      if (next === '00:00:00') {
+        clearInterval(t)
+      }
+    }
     const t = setInterval(tick, 1000)
+    tick()
     return () => clearInterval(t)
   }, [end, valid])
 
@@ -27,8 +40,14 @@ export default function Timer({ closingAt }: Props) {
       aria-live="polite"
       aria-label={text === '00:00:00' ? '마감' : `남은 시간 ${text}`}
     >
-      <TimeIcon className="fill-fill-strong" />
-      <span className="ml-1 text-label-1 font-label-1 leading-label-1 tracking-label-1 text-text-default">
+      <TimeIcon
+        className="fill-fill-strong"
+        aria-hidden="true"
+      />
+      <span
+        className="ml-1 text-label-1 font-label-1 leading-label-1 tracking-label-1 text-text-default
+      suppressHydrationWarning"
+      >
         {text}
       </span>
     </span>

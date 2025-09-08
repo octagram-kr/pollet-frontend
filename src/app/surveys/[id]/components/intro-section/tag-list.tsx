@@ -1,6 +1,6 @@
 export default function TagList({ tags }: { tags: string[] }) {
   return (
-    <div className="mt-3 justify-center flex flex-wrap gap-4.25">
+    <div className="mt-3 justify-center flex flex-wrap gap-[17px]">
       {tags.map((t) => (
         <span
           key={t}

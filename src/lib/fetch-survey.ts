@@ -16,7 +16,7 @@ export async function fetchSurveyById(id: string): Promise<Survey | null> {
     participants: { current: 60, max: 100 },
     surveyor: { name: '설문자' },
     purpose: '연구 과제',
-    period: { from: '2025.00.00', to: '2025.00.00' },
+    period: { from: '2025.09.01', to: '2025.12.31' },
     retentionMonths: 3,
     personalInfo: {
       items: ['연락처'],
