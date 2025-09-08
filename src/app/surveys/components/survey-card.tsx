@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import Link from 'next/link'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import {
@@ -146,79 +147,84 @@ export default function SurveyCard({
   )
 
   return (
-    <article className="rounded-sm border-2 border-stroke-subtler bg-fill-white shadow-md hover:cursor-pointer">
-      {/* 썸네일 + 좌/우 상단 뱃지 */}
-      <div className="relative aspect-[4/3]">
-        {/* reward */}
-        <span
-          className={cn(
-            'absolute left-3 top-4 inline-flex items-center gap-0.5 rounded-xl border border-stroke-primary bg-fill-primary-subtle px-2 text-label-5 font-label-5 leading-label-5 tracking-label-5',
+    <Link
+      href={`/surveys/${survey.id}`}
+      className="block"
+    >
+      <article className="rounded-sm border-2 border-stroke-subtler bg-fill-white shadow-md hover:cursor-pointer">
+        {/* 썸네일 + 좌/우 상단 뱃지 */}
+        <div className="relative aspect-[4/3]">
+          {/* reward */}
+          <span
+            className={cn(
+              'absolute left-3 top-4 inline-flex items-center gap-0.5 rounded-xl border border-stroke-primary bg-fill-primary-subtle px-2 text-label-5 font-label-5 leading-label-5 tracking-label-5',
+            )}
+          >
+            {/* 간단한 아이콘 */}
+            {survey.rewardType === 'gifticon' ? (
+              <GiftIcon className="size-5 fill-fill-primary-active" />
+            ) : (
+              <StarcandyIcon className="size-5 fill-fill-primary-active" />
+            )}
+            {survey.rewardLabel}
+          </span>
+
+          {/* duration */}
+          <span className="absolute right-3 top-4 inline-flex items-center gap-0.5 rounded-xl border border-stroke-subtle bg-fill-white px-2 py-0.5 text-label-6 font-label-6 leading-label-6 text-text-default">
+            <p className="text-label-5 font-label-5 leading-label-5 tracking-label-5 text-text-secondary">
+              {survey.durationMin}
+            </p>
+            분
+          </span>
+
+          {/* 썸네일 이미지 자리(있으면 Image 대체) */}
+          {survey.thumbnail ? (
+            <Image
+              src={'/images/sample-1.png'}
+              alt=""
+              fill
+            />
+          ) : null}
+
+          {/* 타이머 배지 */}
+          {showUrgentUI && slots?.overlayBottomLeft && (
+            <div className="absolute left-3 bottom-3">
+              {slots.overlayBottomLeft}
+            </div>
           )}
-        >
-          {/* 간단한 아이콘 */}
-          {survey.rewardType === 'gifticon' ? (
-            <GiftIcon className="size-5 fill-fill-primary-active" />
+        </div>
+
+        {/* 본문 */}
+        <div className="space-y-3 p-4">
+          {/* 제목 */}
+          <h3
+            className={cn(
+              'line-clamp-2 text-title-3 font-title-3 leading-title-3 text-text-strong',
+            )}
+            title={survey.title}
+          >
+            {title}
+          </h3>
+
+          {/* qview off → 칩 / qview on → 옵션 or 결과문구 */}
+          {qview === 'off' ? (
+            <ChipsOneLine chips={chips} />
           ) : (
-            <StarcandyIcon className="size-5 fill-fill-primary-active" />
+            <QuizArea
+              options={options}
+              result={result}
+              onPick={(idx) => {
+                // TODO: 실제 로직으로 대체
+                // 지금은 짝수 인덱스 선택 → eligible, 홀수 → ineligible
+                setResult(idx % 2 === 0 ? 'eligible' : 'ineligible')
+              }}
+            />
           )}
-          {survey.rewardLabel}
-        </span>
-
-        {/* duration */}
-        <span className="absolute right-3 top-4 inline-flex items-center gap-0.5 rounded-xl border border-stroke-subtle bg-fill-white px-2 py-0.5 text-label-6 font-label-6 leading-label-6 text-text-default">
-          <p className="text-label-5 font-label-5 leading-label-5 tracking-label-5 text-text-secondary">
-            {survey.durationMin}
-          </p>
-          분
-        </span>
-
-        {/* 썸네일 이미지 자리(있으면 Image 대체) */}
-        {survey.thumbnail ? (
-          <Image
-            src={'/images/sample-1.png'}
-            alt=""
-            fill
-          />
-        ) : null}
-
-        {/* 타이머 배지 */}
-        {showUrgentUI && slots?.overlayBottomLeft && (
-          <div className="absolute left-3 bottom-3">
-            {slots.overlayBottomLeft}
-          </div>
-        )}
-      </div>
-
-      {/* 본문 */}
-      <div className="space-y-3 p-4">
-        {/* 제목 */}
-        <h3
-          className={cn(
-            'line-clamp-2 text-title-3 font-title-3 leading-title-3 text-text-strong',
-          )}
-          title={survey.title}
-        >
-          {title}
-        </h3>
-
-        {/* qview off → 칩 / qview on → 옵션 or 결과문구 */}
-        {qview === 'off' ? (
-          <ChipsOneLine chips={chips} />
-        ) : (
-          <QuizArea
-            options={options}
-            result={result}
-            onPick={(idx) => {
-              // TODO: 실제 로직으로 대체
-              // 지금은 짝수 인덱스 선택 → eligible, 홀수 → ineligible
-              setResult(idx % 2 === 0 ? 'eligible' : 'ineligible')
-            }}
-          />
-        )}
-        {/* 마감임박용 진행도 */}
-        {showUrgentUI && slots?.footer}
-      </div>
-    </article>
+          {/* 마감임박용 진행도 */}
+          {showUrgentUI && slots?.footer}
+        </div>
+      </article>
+    </Link>
   )
 }
 

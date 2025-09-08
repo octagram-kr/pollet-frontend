@@ -64,3 +64,24 @@ export interface UserSummary {
   points: number
   unreadNotifications: number
 }
+
+export type Survey = {
+  id: string
+  title: string
+  description: string
+  tags: string[]
+  reward: { type: RewardType; value: number; unit?: string } // ex) {type:'point', value:300, unit:'P'}
+  expectedMinutes: number
+  closingAt?: string | null // 마감임박일 때 사용
+  participants: { current: number; max: number }
+  surveyor: { name: string }
+  purpose: string
+  period: { from: string; to: string }
+  retentionMonths: number
+  personalInfo?: {
+    // 설문 생성 시 개인정보를 수집하지 않음을 선택할 수 있음
+    items: string[] // 개인정보 수집 항목
+    purpose: string // 개인정보 수집 목적
+    retention: string // 보유 및 이용 기간
+  }
+}
