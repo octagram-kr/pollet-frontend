@@ -6,7 +6,7 @@ export default function DirectCreateCard({
 }) {
   return (
     <Link
-      href="/surveys/create/direct"
+      href="/my-surveys/create/direct"
       className={[
         'group block h-full rounded-md border-2 border-stroke-subtle bg-fill-white p-5',
         'transition shadow-sm hover:shadow-md hover:-translate-y-0.5 focus:outline-none',
