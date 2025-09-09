@@ -1,8 +1,5 @@
 'use client'
 
-import { WelcomeMessage } from './welcome-message'
-import { SubMessage } from './sub-message'
-import { RecentLoginMethod } from './recent-login-method'
 import { LoginButton } from './login-button'
 
 interface LoginBoxProps {
@@ -12,26 +9,39 @@ interface LoginBoxProps {
 
 export function LoginBox({ onGoogleLogin, onKakaoLogin }: LoginBoxProps) {
   return (
-    <div className="w-full space-y-8 p-8 bg-gray-900 rounded-lg">
-      {/* 로고 */}
-      <div className="flex justify-center">
-        <div className="h-12 w-32 rounded bg-gray-700 flex items-center justify-center text-gray-300 text-sm font-medium">
-          로고
+    <div className="w-full bg-white rounded-2xl shadow-xl overflow-hidden">
+      <div className="flex flex-col lg:flex-row">
+        {/* 좌측 틸 섹션 */}
+        <div className="w-full lg:w-1/3 bg-teal-500 flex items-center justify-center p-8 min-h-[200px] lg:min-h-auto">
+          <div className="flex items-center gap-2">
+            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+              <div className="w-8 h-8 bg-gradient-to-br from-teal-400 to-pink-400 rounded-full flex items-center justify-center">
+                <div className="w-4 h-4 bg-white rounded-full flex items-center justify-center">
+                  <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
+                </div>
+              </div>
+            </div>
+            <span className="text-3xl font-bold text-white">pollet</span>
+          </div>
         </div>
-      </div>
 
-      {/* 환영 메시지 */}
-      <WelcomeMessage />
+        {/* 우측 화이트 섹션 */}
+        <div className="w-full lg:w-2/3 p-8">
+          <div className="max-w-2xl mx-auto">
+            {/* 제목 */}
+            <h1 className="text-2xl font-semibold text-gray-800 text-center mb-8">
+              로그인 또는 회원 가입
+            </h1>
 
-      {/* 소셜 로그인 섹션 */}
-      <div className="space-y-4">
-        <SubMessage />
-        <div className="space-y-3">
-          <RecentLoginMethod />
-          <LoginButton
-            onGoogleLogin={onGoogleLogin}
-            onKakaoLogin={onKakaoLogin}
-          />
+            {/* 로그인 버튼들 */}
+            <div className="space-y-4">
+              <LoginButton
+                onGoogleLogin={onGoogleLogin}
+                onKakaoLogin={onKakaoLogin}
+              />
+            </div>
+
+          </div>
         </div>
       </div>
     </div>

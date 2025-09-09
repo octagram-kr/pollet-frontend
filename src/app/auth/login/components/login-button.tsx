@@ -43,30 +43,19 @@ export function LoginButton({ onGoogleLogin, onKakaoLogin }: LoginButtonProps) {
   }
 
   return (
-    <div className="space-y-3">
-      {/* 구글 로그인 버튼 - 공식 가이드라인 준수 */}
+    <div className="space-y-4">
+      {/* 카카오 로그인 버튼 */}
       <button
-        onClick={handleGoogleLogin}
-        className="w-full h-12 bg-white hover:bg-gray-50 border border-gray-300 rounded-lg flex items-center justify-center gap-3 transition-all duration-200 shadow-sm hover:shadow-md"
-      >
-        <div className="flex items-center justify-center w-6 h-6">
-          <GoogleIcon className="w-5 h-5" />
-        </div>
-        <span className="text-sm font-medium text-gray-700">
-          Google로 로그인
-        </span>
-      </button>
-
-      {/* 카카오 로그인 버튼 - 공식 가이드라인 준수 */}
-      <button
+        type="button"
+        aria-label="카카오로 계속하기"
         onClick={handleKakaoLogin}
-        className="w-full h-12 bg-[#FEE500] rounded-lg flex items-center justify-center px-8 transition-all duration-200 shadow-sm"
+        className="w-full h-14 bg-[#FEE500] hover:bg-[#FDD835] rounded-xl flex items-center justify-center gap-3 transition-all duration-200 shadow-sm hover:shadow-md"
       >
         {!kakaoImageError ? (
           <div className="flex items-center justify-center w-full h-full">
             <Image
               src="/images/kakao_login_large_narrow.png"
-              alt="카카오 로그인"
+              alt="카카오로 계속하기"
               width={180}
               height={48}
               className="object-contain h-full max-w-none"
@@ -75,16 +64,28 @@ export function LoginButton({ onGoogleLogin, onKakaoLogin }: LoginButtonProps) {
             />
           </div>
         ) : (
-          /* 이미지 로드 실패 시 CSS로 구현한 백업 버전 */
           <div className="flex items-center justify-center gap-3 w-full h-full">
             <div className="flex items-center justify-center w-6 h-6">
-              <KakaoIcon className="w-5 h-5" />
+              <KakaoIcon className="w-6 h-6" />
             </div>
-            <span className="text-sm font-medium text-black opacity-85">
-              카카오 로그인
+            <span className="text-base font-medium text-black">
+              카카오로 계속하기
             </span>
           </div>
         )}
+      </button>
+
+      {/* 구글 로그인 버튼 */}
+      <button
+        type="button"
+        aria-label="구글로 계속하기"
+        onClick={handleGoogleLogin}
+        className="w-full h-14 bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-xl flex items-center justify-center gap-3 transition-all duration-200 shadow-sm hover:shadow-md"
+      >
+        <div className="flex items-center justify-center w-6 h-6">
+          <GoogleIcon className="w-6 h-6" />
+        </div>
+        <span className="text-base font-medium text-gray-700">구글로 계속하기</span>
       </button>
     </div>
   )
