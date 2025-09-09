@@ -46,6 +46,8 @@ export function LoginButton({ onGoogleLogin, onKakaoLogin }: LoginButtonProps) {
     <div className="space-y-4">
       {/* 카카오 로그인 버튼 */}
       <button
+        type="button"
+        aria-label="카카오로 계속하기"
         onClick={handleKakaoLogin}
         className="w-full h-14 bg-[#FEE500] hover:bg-[#FDD835] rounded-xl flex items-center justify-center gap-3 transition-all duration-200 shadow-sm hover:shadow-md"
       >
@@ -53,7 +55,7 @@ export function LoginButton({ onGoogleLogin, onKakaoLogin }: LoginButtonProps) {
           <div className="flex items-center justify-center w-full h-full">
             <Image
               src="/images/kakao_login_large_narrow.png"
-              alt="카카오 로그인"
+              alt="카카오로 계속하기"
               width={180}
               height={48}
               className="object-contain h-full max-w-none"
@@ -67,7 +69,7 @@ export function LoginButton({ onGoogleLogin, onKakaoLogin }: LoginButtonProps) {
               <KakaoIcon className="w-6 h-6" />
             </div>
             <span className="text-base font-medium text-black">
-              카카오 로그인
+              카카오로 계속하기
             </span>
           </div>
         )}
@@ -75,13 +77,15 @@ export function LoginButton({ onGoogleLogin, onKakaoLogin }: LoginButtonProps) {
 
       {/* 구글 로그인 버튼 */}
       <button
+        type="button"
+        aria-label="구글로 계속하기"
         onClick={handleGoogleLogin}
         className="w-full h-14 bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-xl flex items-center justify-center gap-3 transition-all duration-200 shadow-sm hover:shadow-md"
       >
         <div className="flex items-center justify-center w-6 h-6">
           <GoogleIcon className="w-6 h-6" />
         </div>
-        <span className="text-base font-medium text-gray-700">구글 로그인</span>
+        <span className="text-base font-medium text-gray-700">구글로 계속하기</span>
       </button>
     </div>
   )

@@ -22,6 +22,7 @@ export default function LoginPage() {
     >
       {/* 상단 로고 */}
       <button
+        aria-label="홈으로 이동"
         onClick={handleLogoClick}
         className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
       >
