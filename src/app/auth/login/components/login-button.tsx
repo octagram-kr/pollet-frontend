@@ -67,7 +67,7 @@ export function LoginButton({ onGoogleLogin, onKakaoLogin }: LoginButtonProps) {
               <KakaoIcon className="w-6 h-6" />
             </div>
             <span className="text-base font-medium text-black">
-              카카오 로그인
+              카카오로 계속하기
             </span>
           </div>
         )}
@@ -81,7 +81,9 @@ export function LoginButton({ onGoogleLogin, onKakaoLogin }: LoginButtonProps) {
         <div className="flex items-center justify-center w-6 h-6">
           <GoogleIcon className="w-6 h-6" />
         </div>
-        <span className="text-base font-medium text-gray-700">구글 로그인</span>
+        <span className="text-base font-medium text-gray-700">
+          구글로 계속하기
+        </span>
       </button>
     </div>
   )

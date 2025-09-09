@@ -39,7 +39,7 @@ export function LoginBox({ onGoogleLogin, onKakaoLogin }: LoginBoxProps) {
           <div className="max-w-md mx-auto">
             {/* 제목 */}
             <h1 className="text-2xl font-semibold text-gray-800 text-center mb-8">
-              로그인
+              로그인 / 회원가입
             </h1>
 
             {/* 로그인 버튼들 */}
@@ -48,19 +48,6 @@ export function LoginBox({ onGoogleLogin, onKakaoLogin }: LoginBoxProps) {
                 onGoogleLogin={onGoogleLogin}
                 onKakaoLogin={onKakaoLogin}
               />
-            </div>
-
-            {/* 회원가입 링크 */}
-            <div className="text-center mt-6">
-              <span className="text-gray-600">
-                계정이 없으신가요?{' '}
-                <a
-                  href="#"
-                  className="text-teal-600 underline hover:text-teal-700 transition-colors"
-                >
-                  회원가입 하기
-                </a>
-              </span>
             </div>
           </div>
         </div>
