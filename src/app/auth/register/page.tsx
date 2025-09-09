@@ -1,7 +1,7 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
 import { RegisterForm } from './components/register-form'
+import { useRouter } from 'next/navigation'
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -11,29 +11,21 @@ export default function RegisterPage() {
   }
 
   return (
-    <div
-      className="min-h-screen flex flex-col items-center justify-center w-full max-w-[1440px] mx-auto px-4 sm:px-8 md:px-16 lg:px-32 xl:px-80"
-      style={{
-        background: 'var(--Background-mint-faint, #E9FEF8)',
-        paddingTop: '30px',
-        paddingBottom: '189px',
-        gap: '119px',
-      }}
-    >
+    <div className="bg-[#e9fef8] relative min-h-screen">
       {/* 상단 로고 */}
       <button
+        aria-label="홈으로 이동"
         onClick={handleLogoClick}
-        className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
+        className="absolute left-1/2 top-[30px] translate-x-[-50%] hover:opacity-80 transition-opacity cursor-pointer"
       >
-        <div className="w-8 h-8 bg-gradient-to-br from-teal-400 to-pink-400 rounded-full flex items-center justify-center">
-          <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
-            <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
-          </div>
-        </div>
-        <span className="text-2xl font-bold text-teal-600">pollet</span>
+        <img 
+          src="/icons/logo/logo-all-row-default-icon.svg" 
+          alt="Pollet 로고" 
+          className="w-[169px] h-[40px]"
+        />
       </button>
 
-      {/* 메인 회원 정보 입력 폼 */}
+      {/* 메인 회원가입 카드 */}
       <RegisterForm />
     </div>
   )

@@ -1,7 +1,6 @@
 'use client'
 
 import { LoginButton } from './login-button'
-import { useRouter } from 'next/navigation'
 
 interface LoginBoxProps {
   onGoogleLogin?: () => void
@@ -9,46 +8,40 @@ interface LoginBoxProps {
 }
 
 export function LoginBox({ onGoogleLogin, onKakaoLogin }: LoginBoxProps) {
-  const router = useRouter()
-
-  const handleLogoClick = () => {
-    router.push('/')
-  }
   return (
-    <div className="w-full bg-white rounded-2xl shadow-xl overflow-hidden">
-      <div className="flex flex-col lg:flex-row">
+    <div className="bg-white rounded-[40px] shadow-[0px_0px_8px_0px_rgba(0,0,0,0.12),0px_1px_4px_0px_rgba(0,0,0,0.08),0px_0px_2px_0px_rgba(0,0,0,0.04)] overflow-hidden h-[480px] w-[792px]">
+      <div className="flex h-full">
         {/* 좌측 틸 섹션 */}
-        <div className="w-full lg:w-1/3 bg-teal-500 flex items-center justify-center p-8 min-h-[200px] lg:min-h-auto">
-          <button
-            onClick={handleLogoClick}
-            className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
-          >
-            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-              <div className="w-8 h-8 bg-gradient-to-br from-teal-400 to-pink-400 rounded-full flex items-center justify-center">
-                <div className="w-4 h-4 bg-white rounded-full flex items-center justify-center">
-                  <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
-                </div>
-              </div>
-            </div>
-            <span className="text-3xl font-bold text-white">pollet</span>
-          </button>
+        <div className="bg-[#5ed7c3] flex flex-col gap-6 h-full items-center justify-center w-[281px]">
+          <div className="flex flex-col items-center">
+            {/* 심볼 로고 */}
+            <img 
+              src="/icons/logo/logo-symbol-white-icon.svg" 
+              alt="Pollet 심볼" 
+              className="w-[80px] h-[80px] -mb-2"
+            />
+            {/* 텍스트 로고 */}
+            <img 
+              src="/icons/logo/logo-none-white-icon.svg" 
+              alt="Pollet" 
+              className="w-[102px] h-[35px]"
+            />
+          </div>
         </div>
 
         {/* 우측 화이트 섹션 */}
-        <div className="w-full lg:w-2/3 p-8">
-          <div className="max-w-md mx-auto">
-            {/* 제목 */}
-            <h1 className="text-2xl font-semibold text-gray-800 text-center mb-8">
-              로그인 / 회원가입
-            </h1>
+        <div className="flex flex-col gap-12 grow h-full items-center justify-center px-6 py-12">
+          {/* 제목 */}
+          <h1 className="text-[22px] font-semibold text-[#292a2c] leading-[30px]">
+            로그인 / 회원가입
+          </h1>
 
-            {/* 로그인 버튼들 */}
-            <div className="space-y-4">
-              <LoginButton
-                onGoogleLogin={onGoogleLogin}
-                onKakaoLogin={onKakaoLogin}
-              />
-            </div>
+          {/* 로그인 버튼들 */}
+          <div className="flex flex-col gap-3">
+            <LoginButton
+              onGoogleLogin={onGoogleLogin}
+              onKakaoLogin={onKakaoLogin}
+            />
           </div>
         </div>
       </div>
