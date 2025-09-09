@@ -6,16 +6,11 @@ import { GoogleIcon } from './google-icon'
 import { KakaoIcon } from './kakao-icon'
 
 interface LoginButtonProps {
-  isGoogleRecent?: boolean
   onGoogleLogin?: () => void
   onKakaoLogin?: () => void
 }
 
-export function LoginButton({ 
-  isGoogleRecent = false, 
-  onGoogleLogin, 
-  onKakaoLogin 
-}: LoginButtonProps) {
+export function LoginButton({ onGoogleLogin, onKakaoLogin }: LoginButtonProps) {
   const [kakaoImageError, setKakaoImageError] = useState(false)
 
   const handleGoogleLogin = () => {
@@ -57,7 +52,9 @@ export function LoginButton({
         <div className="flex items-center justify-center w-6 h-6">
           <GoogleIcon className="w-5 h-5" />
         </div>
-        <span className="text-sm font-medium text-gray-700">Google로 로그인</span>
+        <span className="text-sm font-medium text-gray-700">
+          Google로 로그인
+        </span>
       </button>
 
       {/* 카카오 로그인 버튼 - 공식 가이드라인 준수 */}
