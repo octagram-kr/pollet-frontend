@@ -27,7 +27,7 @@ export function LoginBox({ onGoogleLogin, onKakaoLogin }: LoginBoxProps) {
 
         {/* 우측 화이트 섹션 */}
         <div className="w-full lg:w-2/3 p-8">
-          <div className="max-w-md mx-auto">
+          <div className="max-w-2xl mx-auto">
             {/* 제목 */}
             <h1 className="text-2xl font-semibold text-gray-800 text-center mb-8">
               로그인 또는 회원 가입
