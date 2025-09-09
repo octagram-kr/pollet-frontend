@@ -40,7 +40,7 @@ export function LoginButton({ onGoogleLogin, onKakaoLogin }: LoginButtonProps) {
         type="button"
         aria-label="카카오로 계속하기"
         onClick={handleKakaoLogin}
-        className="bg-[#fee500] hover:bg-[#fdd835] rounded-[32px] w-[400px] px-0 py-3 flex items-center justify-center gap-3 transition-all duration-200"
+        className="bg-[#fee500] hover:bg-[#fdd835] rounded-[32px] w-full max-w-[400px] px-0 py-3 flex items-center justify-center gap-3 transition-colors duration-200"
       >
         <div className="size-6 flex items-center justify-center">
           <KakaoIcon className="w-6 h-6" />
@@ -55,7 +55,7 @@ export function LoginButton({ onGoogleLogin, onKakaoLogin }: LoginButtonProps) {
         type="button"
         aria-label="구글로 계속하기"
         onClick={handleGoogleLogin}
-        className="bg-[#f3f4f5] hover:bg-[#e5e7eb] rounded-[32px] w-[400px] px-0 py-3 flex items-center justify-center gap-3 transition-all duration-200"
+        className="bg-[#f3f4f5] hover:bg-[#e5e7eb] rounded-[32px] w-full max-w-[400px] px-0 py-3 flex items-center justify-center gap-3 transition-colors duration-200"
       >
         <div className="size-6 flex items-center justify-center">
           <GoogleIcon className="w-6 h-6" />

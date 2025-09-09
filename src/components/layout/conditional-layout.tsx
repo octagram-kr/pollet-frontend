@@ -13,7 +13,7 @@ export function ConditionalLayout({ children }: ConditionalLayoutProps) {
   const pathname = usePathname()
 
   // 로그인 페이지에서는 헤더만 숨기고 푸터는 표시
-  const isAuthPage = pathname?.startsWith('/auth')
+  const isAuthPage = !!pathname && /^\/auth(\/|$)/.test(pathname)
 
   if (isAuthPage) {
     return (
