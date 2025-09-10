@@ -67,9 +67,6 @@ export default function PrivacyConsentModal({
               <div className="relative shrink-0">
                 <p className="leading-[28px] text-nowrap whitespace-pre">직접 입력</p>
               </div>
-              <div className="relative shrink-0">
-                <p className="leading-[28px] text-nowrap whitespace-pre">직접 입력 내용이 길어질 경우</p>
-              </div>
             </div>
           </div>
           
