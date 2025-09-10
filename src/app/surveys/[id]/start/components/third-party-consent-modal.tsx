@@ -22,7 +22,7 @@ export default function ThirdPartyConsentModal({
     >
       <div className="bg-white box-border content-stretch flex flex-col gap-6 items-start justify-start pb-6 pt-8 px-6 relative rounded-[32px] w-full max-w-md">
         <div className="font-['Pretendard_Variable:Bold',_sans-serif] leading-[0] not-italic relative shrink-0 text-[#292a2c] text-[22px] w-full">
-          <h2 id="third-party-consent-title" className="leading-[30px]">개인정보 제3자 동의</h2>
+          <h2 id="third-party-consent-title" className="leading-[30px]">개인정보 제3자 제공 동의</h2>
         </div>
         
         <div className="content-stretch flex flex-col gap-2 items-start justify-start relative shrink-0 w-full">
