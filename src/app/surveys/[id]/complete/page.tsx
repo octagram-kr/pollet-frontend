@@ -17,9 +17,12 @@ export default function SurveyCompletePage() {
   const rewardType = searchParams.get('type') // 'points' 또는 'gift'
   const earnedPoints = parseInt(searchParams.get('points') || '0')
   const productName = searchParams.get('productName') || ''
-  const raffleYear = searchParams.get('raffleYear') || '2024'
-  const raffleMonth = searchParams.get('raffleMonth') || '12'
-  const raffleDay = searchParams.get('raffleDay') || '31'
+  
+  // 현재 날짜 기반으로 안전한 기본값 설정
+  const now = new Date()
+  const raffleYear = searchParams.get('raffleYear') || String(now.getFullYear())
+  const raffleMonth = searchParams.get('raffleMonth') || String(now.getMonth() + 1).padStart(2, '0')
+  const raffleDay = searchParams.get('raffleDay') || String(now.getDate()).padStart(2, '0')
   const winnerCount = parseInt(searchParams.get('winnerCount') || '1')
 
   useEffect(() => {
