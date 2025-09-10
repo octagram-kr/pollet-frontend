@@ -246,6 +246,7 @@ export default function SurveyStartPage() {
             {/* Navigation Buttons */}
             <div className="flex gap-3">
               <button
+                type="button"
                 onClick={handlePrevious}
                 disabled={currentQuestion === 0}
                 className="flex-1 bg-[#b4ede5] text-[#434447] py-3 px-4 rounded-[8px] font-medium text-[20px] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#a0e6d8] transition-colors"
@@ -253,8 +254,10 @@ export default function SurveyStartPage() {
                 이전
               </button>
               <button
+                type="button"
                 onClick={handleNext}
-                className="flex-1 bg-[#5ed7c3] text-[#434447] py-3 px-4 rounded-[8px] font-medium text-[20px] hover:bg-[#4bc4b0] transition-colors"
+                disabled={currentQuestion < 2 ? !answers[currentQuestion] : !(answers[2]?.trim?.() ?? answers[2])}
+                className="flex-1 bg-[#5ed7c3] text-[#434447] py-3 px-4 rounded-[8px] font-medium text-[20px] hover:bg-[#4bc4b0] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {currentQuestion === 2 ? '완료' : '다음'}
               </button>
