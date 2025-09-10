@@ -20,10 +20,15 @@ export default function InterviewRequestModal({
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="interview-request-title"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+    >
       <div className="bg-white box-border content-stretch flex flex-col gap-6 items-center justify-center pb-6 pt-8 px-6 relative rounded-[32px] w-full max-w-md">
         <div className="font-['Pretendard_Variable:Bold',_sans-serif] leading-[0] not-italic relative shrink-0 text-[#292a2c] text-[22px] text-nowrap">
-          <p className="leading-[30px] whitespace-pre">인터뷰 요청을 수락하시겠습니까?</p>
+          <h2 id="interview-request-title" className="leading-[30px] whitespace-pre">인터뷰 요청을 수락하시겠습니까?</h2>
         </div>
         
         <div className="content-center flex flex-wrap gap-0 items-center justify-center leading-[0] not-italic relative shrink-0 text-[#434447] text-[16px] text-nowrap tracking-[-0.4px] w-full">
@@ -69,6 +74,7 @@ export default function InterviewRequestModal({
         
         <div className="content-stretch flex gap-3 items-center justify-start relative shrink-0 w-full">
           <button
+            type="button"
             onClick={onClose}
             className="basis-0 bg-[#e8e9eb] box-border content-stretch flex gap-3 grow items-center justify-center min-h-px min-w-px px-4 py-3 relative rounded-[8px] shrink-0"
           >
@@ -77,6 +83,7 @@ export default function InterviewRequestModal({
             </div>
           </button>
           <button
+            type="button"
             onClick={onAccept}
             className="basis-0 bg-[#5ed7c3] box-border content-stretch flex gap-3 grow items-center justify-center min-h-px min-w-px px-4 py-3 relative rounded-[8px] shrink-0"
           >

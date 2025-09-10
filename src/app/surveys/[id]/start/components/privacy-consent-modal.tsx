@@ -14,10 +14,15 @@ export default function PrivacyConsentModal({
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="privacy-consent-title"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+    >
       <div className="bg-white box-border content-stretch flex flex-col gap-6 items-start justify-start pb-6 pt-8 px-6 relative rounded-[32px] w-full max-w-md">
         <div className="font-['Pretendard_Variable:Bold',_sans-serif] leading-[0] not-italic relative shrink-0 text-[#292a2c] text-[22px] w-full">
-          <p className="leading-[30px]">개인정보 동의 수집 및 이용 동의</p>
+          <h2 id="privacy-consent-title" className="leading-[30px]">개인정보 동의 수집 및 이용 동의</h2>
         </div>
         
         <div className="content-stretch flex flex-col gap-2 items-start justify-start relative shrink-0 w-full">
@@ -80,6 +85,7 @@ export default function PrivacyConsentModal({
         
         <div className="content-stretch flex gap-3 items-center justify-start relative shrink-0 w-full">
           <button
+            type="button"
             onClick={onClose}
             className="basis-0 bg-[#e8e9eb] box-border content-stretch flex gap-3 grow items-center justify-center min-h-px min-w-px px-4 py-3 relative rounded-[8px] shrink-0"
           >
@@ -88,6 +94,7 @@ export default function PrivacyConsentModal({
             </div>
           </button>
           <button
+            type="button"
             onClick={onAgree}
             className="basis-0 bg-[#5ed7c3] box-border content-stretch flex gap-3 grow items-center justify-center min-h-px min-w-px px-4 py-3 relative rounded-[8px] shrink-0"
           >
