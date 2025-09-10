@@ -11,14 +11,21 @@ export default function ProgressBar({
   total, 
   className = "" 
 }: ProgressBarProps) {
-  const percentage = total > 0 ? (current / total) * 100 : 0
+  const raw = total > 0 ? (current / total) * 100 : 0
+  const percentage = Math.max(0, Math.min(100, Math.round(raw)))
 
   return (
-    <div className={`relative size-full ${className}`}>
+    <div
+      className={`relative size-full ${className}`}
+      role="progressbar"
+      aria-valuenow={Math.min(current, total)}
+      aria-valuemin={0}
+      aria-valuemax={total}
+    >
       <div className="absolute content-stretch flex flex-col gap-1 h-3 items-start justify-start left-0 top-0 w-full">
         <div className="absolute bg-[#e8e9eb] h-3 left-0 rounded-[16px] top-0 w-full" />
         <div 
-          className="bg-[#5ed7c3] h-3 rounded-[16px] shrink-0 transition-all duration-300 ease-in-out"
+          className="bg-[#5ed7c3] h-3 rounded-[16px] shrink-0 transition-[width] duration-300 ease-in-out"
           style={{ width: `${percentage}%` }}
         />
       </div>
