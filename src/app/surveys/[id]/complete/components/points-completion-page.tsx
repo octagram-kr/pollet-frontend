@@ -93,7 +93,7 @@ export default function PointsCompletionPage({
               <span className="text-[#91959c] text-[16px] font-medium">고객센터</span>
             </div>
             <div className="text-center text-[#91959c] text-[12px] leading-[16px] tracking-[-0.64px]">
-              <p>Copyright© Pollet All right reserved.</p>
+              <p>Copyright© Pollet All rights reserved.</p>
               <p className="mt-1">
                 상호명 (주)폴렛 | 대표 장우영 | 개인정보보호책임자 이승훈 | 사업자등록번호 025-09-02153<br />
                 주소 경기도 성남시 분당구 판교로 242 PDC A동 902호
