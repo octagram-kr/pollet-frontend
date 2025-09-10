@@ -1,7 +1,5 @@
 'use client'
 
-import { useState } from 'react'
-import Image from 'next/image'
 import { GoogleIcon } from './google-icon'
 import { KakaoIcon } from './kakao-icon'
 
@@ -11,8 +9,6 @@ interface LoginButtonProps {
 }
 
 export function LoginButton({ onGoogleLogin, onKakaoLogin }: LoginButtonProps) {
-  const [kakaoImageError, setKakaoImageError] = useState(false)
-
   const handleGoogleLogin = () => {
     try {
       if (onGoogleLogin) {
@@ -37,42 +33,21 @@ export function LoginButton({ onGoogleLogin, onKakaoLogin }: LoginButtonProps) {
     }
   }
 
-  const handleKakaoImageError = () => {
-    console.warn('카카오 로그인 이미지 로드 실패, 백업 버전으로 전환')
-    setKakaoImageError(true)
-  }
-
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-3">
       {/* 카카오 로그인 버튼 */}
       <button
         type="button"
         aria-label="카카오로 계속하기"
         onClick={handleKakaoLogin}
-        className="w-full h-14 bg-[#FEE500] hover:bg-[#FDD835] rounded-xl flex items-center justify-center gap-3 transition-all duration-200 shadow-sm hover:shadow-md"
+        className="bg-[#fee500] hover:bg-[#fdd835] rounded-[32px] w-full max-w-[400px] px-0 py-3 flex items-center justify-center gap-3 transition-colors duration-200"
       >
-        {!kakaoImageError ? (
-          <div className="flex items-center justify-center w-full h-full">
-            <Image
-              src="/images/kakao_login_large_narrow.png"
-              alt="카카오로 계속하기"
-              width={180}
-              height={48}
-              className="object-contain h-full max-w-none"
-              priority
-              onError={handleKakaoImageError}
-            />
-          </div>
-        ) : (
-          <div className="flex items-center justify-center gap-3 w-full h-full">
-            <div className="flex items-center justify-center w-6 h-6">
-              <KakaoIcon className="w-6 h-6" />
-            </div>
-            <span className="text-base font-medium text-black">
-              카카오로 계속하기
-            </span>
-          </div>
-        )}
+        <div className="size-6 flex items-center justify-center">
+          <KakaoIcon className="w-6 h-6" />
+        </div>
+        <span className="text-[18px] font-semibold text-[#434447] leading-[26px] tracking-[-0.48px]">
+          카카오로 계속하기
+        </span>
       </button>
 
       {/* 구글 로그인 버튼 */}
@@ -80,12 +55,14 @@ export function LoginButton({ onGoogleLogin, onKakaoLogin }: LoginButtonProps) {
         type="button"
         aria-label="구글로 계속하기"
         onClick={handleGoogleLogin}
-        className="w-full h-14 bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-xl flex items-center justify-center gap-3 transition-all duration-200 shadow-sm hover:shadow-md"
+        className="bg-[#f3f4f5] hover:bg-[#e5e7eb] rounded-[32px] w-full max-w-[400px] px-0 py-3 flex items-center justify-center gap-3 transition-colors duration-200"
       >
-        <div className="flex items-center justify-center w-6 h-6">
+        <div className="size-6 flex items-center justify-center">
           <GoogleIcon className="w-6 h-6" />
         </div>
-        <span className="text-base font-medium text-gray-700">구글로 계속하기</span>
+        <span className="text-[18px] font-semibold text-[#434447] leading-[26px] tracking-[-0.48px]">
+          구글로 계속하기
+        </span>
       </button>
     </div>
   )

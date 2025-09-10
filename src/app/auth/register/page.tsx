@@ -1,9 +1,9 @@
 'use client'
 
-import { LoginForm } from './components/login-form'
+import { RegisterForm } from './components/register-form'
 import Link from 'next/link'
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <div className="bg-[#e9fef8] relative min-h-screen">
       {/* 상단 로고 */}
@@ -19,8 +19,8 @@ export default function LoginPage() {
         />
       </Link>
 
-      {/* 메인 로그인 카드 */}
-      <LoginForm />
+      {/* 메인 회원가입 카드 */}
+      <RegisterForm />
     </div>
   )
 }

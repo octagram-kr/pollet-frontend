@@ -1,12 +1,12 @@
 'use client'
 
-import { LoginBox } from './login-box'
+import { RegisterBox } from './register-box'
 
-export function LoginForm() {
+export function RegisterForm() {
   return (
     <div className="min-h-dvh flex items-center justify-center px-5">
       <div className="w-full max-w-[792px]">
-        <LoginBox />
+        <RegisterBox />
       </div>
     </div>
   )
