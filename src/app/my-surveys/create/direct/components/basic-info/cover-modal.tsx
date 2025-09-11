@@ -245,9 +245,16 @@ export default function CoverModal({
                 </>
               ) : (
                 <>
-                  <img
+                  {/* <img
                     src={fileUrl}
                     alt="미리보기"
+                    className="mb-6 h-[270px] w-[360px] rounded-sm object-cover"
+                  /> */}
+                  <Image
+                    src={fileUrl}
+                    alt="미리보기"
+                    width={90}
+                    height={70}
                     className="mb-6 h-[270px] w-[360px] rounded-sm object-cover"
                   />
 

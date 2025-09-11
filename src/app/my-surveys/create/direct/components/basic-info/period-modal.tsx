@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   CalendarIcon,
   ClockIcon,
@@ -26,6 +26,16 @@ type Props = {
   onCancel: () => void
   onClose: () => void
 }
+const TIMES: string[] = (() => {
+  const pad = (n: number) => (n < 10 ? `0${n}` : `${n}`)
+  const arr: string[] = []
+  for (let h = 0; h < 24; h++) {
+    const isAM = h < 12
+    const hour12 = h % 12 === 0 ? 12 : h % 12
+    arr.push(`${isAM ? '오전' : '오후'} ${hour12}:${pad(0)}`)
+  }
+  return arr
+})()
 
 export default function PeriodModal({
   open,
@@ -79,16 +89,7 @@ export default function PeriodModal({
     setDraft((p) => ({ ...p, endUntilClose: b }))
 
   // 시간 리스트 24개
-  const times = useMemo(() => {
-    const pad = (n: number) => (n < 10 ? `0${n}` : `${n}`)
-    const labels: string[] = []
-    for (let h = 0; h < 24; h++) {
-      const isAM = h < 12
-      const hour12 = h % 12 === 0 ? 12 : h % 12
-      labels.push(`${isAM ? '오전' : '오후'} ${hour12}:${pad(0)}`)
-    }
-    return labels
-  }, [])
+  const times = TIMES
 
   return (
     <div

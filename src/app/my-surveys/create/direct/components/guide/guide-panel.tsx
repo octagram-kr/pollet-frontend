@@ -10,6 +10,8 @@ import {
   StarcandyFillIcon,
 } from '@/components/icons'
 
+type TabKey = 'toc' | 'style' | 'screen' | 'settings'
+
 /** 부모와 통신용 프로퍼티 */
 type Props = {
   /** 폼 리스트(실시간 반영) */
@@ -72,7 +74,15 @@ export default function GuidePanel({
   onChangeSettings,
 }: Props) {
   /** 탭 */
-  const [tab, setTab] = useState<'toc' | 'style' | 'screen' | 'settings'>('toc')
+  const TABS: ReadonlyArray<{ key: TabKey; label: string }> = [
+    { key: 'toc', label: '목차' },
+    { key: 'style', label: '꾸미기' },
+    { key: 'screen', label: '대상자확인' },
+    { key: 'settings', label: '설정' },
+  ]
+
+  // state
+  const [tab, setTab] = useState<TabKey>('toc')
 
   /** 내부 테마 상태(부모 미제공 시 로컬로 유지) */
   const [primary, setPrimary] = useState(themePrimary ?? PRIMARYS[0])
@@ -99,14 +109,6 @@ export default function GuidePanel({
 
   /** 목차: 섹션→질문 구조로 그룹핑 */
   const grouped = useMemo(() => {
-    const groups = new Map<number, QuestionForm[]>()
-    //   forms.forEach((f) => {
-    //     const key = f.sectionNo ?? 0
-    //     if (!groups.has(key)) groups.set(key, [])
-    //     groups.get(key)!.push(f)
-    //   })
-    //   return [...groups.entries()].sort((a, b) => a[0] - b[0])
-    // }, [forms])
     if (!forms.length) return []
     const g = new Map<number, QuestionForm[]>()
 
@@ -208,16 +210,11 @@ export default function GuidePanel({
       {/* 탭 헤더 */}
       <div className="relative border-b border-stroke-subtle">
         <div className="flex items-center">
-          {[
-            { key: 'toc', label: '목차' },
-            { key: 'style', label: '꾸미기' },
-            { key: 'screen', label: '대상자확인' },
-            { key: 'settings', label: '설정' },
-          ].map((t) => (
+          {TABS.map((t) => (
             <button
               key={t.key}
               type="button"
-              onClick={() => setTab(t.key as any)}
+              onClick={() => setTab(t.key)}
               className={`relative flex-1 px-1 py-1.5 text-label-5 font-label-5 leading-label-5 tracking-label-5 ${
                 tab === t.key
                   ? 'text-text-primary'

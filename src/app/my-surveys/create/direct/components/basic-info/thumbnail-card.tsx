@@ -124,7 +124,7 @@ export default function ThumbnailCard({ className }: Props) {
             <div className="absolute right-3 top-2 z-10 flex items-center gap-2">
               <button
                 type="button"
-                onClick={(e) => {
+                onClick={() => {
                   setIsOpen(true)
                 }}
                 className="w-[40px] h-[40px] flex items-center justify-center rounded-xl border border-stroke-primary bg-fill-primary cursor-pointer hover:opacity-90"
@@ -133,7 +133,7 @@ export default function ThumbnailCard({ className }: Props) {
               </button>
               <button
                 type="button"
-                onClick={(e) => {
+                onClick={() => {
                   setThumbnail(null)
                   setSource(null)
                 }}

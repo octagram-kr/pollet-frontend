@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import PeriodModal, { PeriodValue } from './period-modal'
 import { CheckboxDefaultIcon, CheckboxFillIcon } from '@/components/icons'
 
@@ -176,17 +176,4 @@ export default function SurveyInfoCard({
       )}
     </div>
   )
-}
-
-/* 기간 요약 텍스트 */
-function summary(v: PeriodValue) {
-  if (v.startNow && v.endUntilClose) return '바로 시작 · 응답자 마감까지'
-  const fmt = (d: Date | null, t: string | null) =>
-    d ? `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()} ${t ?? ''}` : ''
-  const s = v.startNow ? '바로 시작' : fmt(v.startDate, v.startTime)
-  const e = v.endUntilClose ? '응답자 마감까지' : fmt(v.endDate, v.endTime)
-  if (!s && !e) return ''
-  if (s && !e) return `시작: ${s}`
-  if (!s && e) return `종료: ${e}`
-  return `${s} ~ ${e}`
 }
