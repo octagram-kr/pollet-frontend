@@ -5,12 +5,10 @@ import { CheckIcon, StarcandyIcon } from '@/components/icons'
 
 interface PointsCompletionPageProps {
   earnedPoints: number
-  surveyTitle: string
 }
 
-export default function PointsCompletionPage({ 
-  earnedPoints, 
-  surveyTitle 
+export default function PointsCompletionPage({
+  earnedPoints,
 }: PointsCompletionPageProps) {
   const router = useRouter()
 
@@ -29,7 +27,9 @@ export default function PointsCompletionPage({
               </button>
             </div>
             <div className="text-center">
-              <h1 className="text-[22px] font-semibold text-[#434447]">설문 완료</h1>
+              <h1 className="text-[22px] font-semibold text-[#434447]">
+                설문 완료
+              </h1>
             </div>
             <div className="w-32"></div>
           </div>
@@ -49,7 +49,8 @@ export default function PointsCompletionPage({
                 설문에 참여해주셔서 감사합니다
               </h2>
               <p className="text-[#91959c] text-[16px] leading-[22px]">
-                보상은 즉시 적립되며, 자세한 내역은 마이페이지에서 확인하실 수 있습니다
+                보상은 즉시 적립되며, 자세한 내역은 마이페이지에서 확인하실 수
+                있습니다
               </p>
             </div>
           </div>
@@ -86,16 +87,24 @@ export default function PointsCompletionPage({
         <div className="max-w-7xl mx-auto px-5 py-8">
           <div className="flex flex-col items-center gap-4">
             <div className="flex gap-6 items-center">
-              <span className="text-[#91959c] text-[16px] font-medium">이용약관</span>
+              <span className="text-[#91959c] text-[16px] font-medium">
+                이용약관
+              </span>
               <div className="w-px h-[22px] bg-[#c9cbd1]"></div>
-              <span className="text-[#91959c] text-[16px] font-medium">개인정보보호정책</span>
+              <span className="text-[#91959c] text-[16px] font-medium">
+                개인정보보호정책
+              </span>
               <div className="w-px h-[22px] bg-[#c9cbd1]"></div>
-              <span className="text-[#91959c] text-[16px] font-medium">고객센터</span>
+              <span className="text-[#91959c] text-[16px] font-medium">
+                고객센터
+              </span>
             </div>
             <div className="text-center text-[#91959c] text-[12px] leading-[16px] tracking-[-0.64px]">
               <p>Copyright© Pollet All rights reserved.</p>
               <p className="mt-1">
-                상호명 (주)폴렛 | 대표 장우영 | 개인정보보호책임자 이승훈 | 사업자등록번호 025-09-02153<br />
+                상호명 (주)폴렛 | 대표 장우영 | 개인정보보호책임자 이승훈 |
+                사업자등록번호 025-09-02153
+                <br />
                 주소 경기도 성남시 분당구 판교로 242 PDC A동 902호
               </p>
             </div>

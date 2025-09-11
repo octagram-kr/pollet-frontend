@@ -15,15 +15,15 @@ export function LoginBox({ onGoogleLogin, onKakaoLogin }: LoginBoxProps) {
         <div className="bg-[#5ed7c3] flex flex-col gap-6 items-center justify-center md:w-[281px] w-full md:h-full h-[180px]">
           <div className="flex flex-col items-center">
             {/* 심볼 로고 */}
-            <img 
-              src="/icons/logo/logo-symbol-white-icon.svg" 
-              alt="Pollet 심볼" 
+            <img
+              src="/icons/logo/logo-symbol-white-icon.svg"
+              alt="Pollet 심볼"
               className="w-[60px] h-[60px] md:w-[80px] md:h-[80px] -mb-2"
             />
             {/* 텍스트 로고 */}
-            <img 
-              src="/icons/logo/logo-none-white-icon.svg" 
-              alt="Pollet" 
+            <img
+              src="/icons/logo/logo-none-white-icon.svg"
+              alt="Pollet"
               className="w-[80px] h-[28px] md:w-[102px] md:h-[35px]"
             />
           </div>

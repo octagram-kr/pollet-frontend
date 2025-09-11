@@ -18,10 +18,15 @@ export default function SurveyStartPage() {
   const [loading, setLoading] = useState(true)
   const [currentModal, setCurrentModal] = useState<ModalType>('privacy')
   const [currentQuestion, setCurrentQuestion] = useState(0)
-  const [answers, setAnswers] = useState<Record<number, any>>({})
+  const [answers, setAnswers] = useState<Record<number, string>>({})
 
   // 모달 순서: privacy -> thirdParty -> interview -> survey
-  const modalSequence: ModalType[] = ['privacy', 'thirdParty', 'interview', null]
+  const modalSequence: ModalType[] = [
+    'privacy',
+    'thirdParty',
+    'interview',
+    null,
+  ]
 
   useEffect(() => {
     const loadSurvey = async () => {
@@ -43,7 +48,7 @@ export default function SurveyStartPage() {
 
   const handleModalAction = (action: 'close' | 'agree' | 'accept') => {
     const currentIndex = modalSequence.indexOf(currentModal)
-    
+
     if (action === 'close') {
       router.push(`/surveys/${params.id}`)
       return
@@ -58,37 +63,42 @@ export default function SurveyStartPage() {
     }
   }
 
-  const handleAnswer = (questionIndex: number, answer: any) => {
-    setAnswers(prev => ({
+  const handleAnswer = (questionIndex: number, answer: string) => {
+    setAnswers((prev) => ({
       ...prev,
-      [questionIndex]: answer
+      [questionIndex]: answer,
     }))
   }
 
   const handleNext = () => {
     // TODO: 실제 설문 로직 구현
-    if (currentQuestion < 2) { // 임시로 3개 질문
-      setCurrentQuestion(prev => prev + 1)
+    if (currentQuestion < 2) {
+      // 임시로 3개 질문
+      setCurrentQuestion((prev) => prev + 1)
     } else {
       // 설문 완료 - 보상 타입에 따라 다른 완료 페이지로 이동
       const rewardType = survey?.reward.type
-      
+
       if (rewardType === 'point') {
         // 포인트 보상 완료 페이지
-        router.push(`/surveys/${params.id}/complete?type=points&points=${survey?.reward.value || 0}`)
+        router.push(
+          `/surveys/${params.id}/complete?type=points&points=${survey?.reward.value || 0}`,
+        )
       } else {
         // 기프티콘 보상 완료 페이지 (추첨)
         const raffleDate = new Date()
         raffleDate.setDate(raffleDate.getDate() + 7) // 7일 후 추첨
-        
-        router.push(`/surveys/${params.id}/complete?type=gift&productName=${encodeURIComponent(survey?.title || '')}&raffleYear=${raffleDate.getFullYear()}&raffleMonth=${String(raffleDate.getMonth() + 1).padStart(2, '0')}&raffleDay=${String(raffleDate.getDate()).padStart(2, '0')}&winnerCount=10`)
+
+        router.push(
+          `/surveys/${params.id}/complete?type=gift&productName=${encodeURIComponent(survey?.title || '')}&raffleYear=${raffleDate.getFullYear()}&raffleMonth=${String(raffleDate.getMonth() + 1).padStart(2, '0')}&raffleDay=${String(raffleDate.getDate()).padStart(2, '0')}&winnerCount=10`,
+        )
       }
     }
   }
 
   const handlePrevious = () => {
     if (currentQuestion > 0) {
-      setCurrentQuestion(prev => prev - 1)
+      setCurrentQuestion((prev) => prev - 1)
     }
   }
 
@@ -108,7 +118,7 @@ export default function SurveyStartPage() {
       <div className="min-h-screen bg-[#f9f9f9] flex items-center justify-center">
         <div className="text-center">
           <p className="text-[#434447] text-xl">설문을 찾을 수 없습니다.</p>
-          <button 
+          <button
             onClick={() => router.push('/surveys')}
             className="mt-4 px-6 py-2 bg-[#5ed7c3] text-white rounded-lg hover:bg-[#4bc4b0] transition-colors"
           >
@@ -134,7 +144,9 @@ export default function SurveyStartPage() {
               </button>
             </div>
             <div className="text-center">
-              <h1 className="text-[22px] font-semibold text-[#434447]">{survey.title}</h1>
+              <h1 className="text-[22px] font-semibold text-[#434447]">
+                {survey.title}
+              </h1>
             </div>
             <div className="w-32"></div> {/* 균형을 위한 빈 공간 */}
           </div>
@@ -143,8 +155,8 @@ export default function SurveyStartPage() {
 
       {/* Progress Bar */}
       <div className="max-w-7xl mx-auto px-5 py-4">
-        <ProgressBar 
-          current={currentQuestion + 1} 
+        <ProgressBar
+          current={currentQuestion + 1}
           total={3} // 임시로 3개 질문
           className="h-[46px]"
         />
@@ -159,7 +171,9 @@ export default function SurveyStartPage() {
               <div className="bg-white rounded-[16px] border border-[#c9cbd1] p-6">
                 <div className="mb-6">
                   <div className="bg-[#b4ede5] rounded-t-[16px] px-6 py-2 -mx-6 -mt-6 mb-4">
-                    <h2 className="text-[22px] font-semibold text-[#434447]">섹션 1</h2>
+                    <h2 className="text-[22px] font-semibold text-[#434447]">
+                      섹션 1
+                    </h2>
                   </div>
                   <div className="space-y-4">
                     <div className="bg-white border border-[#c9cbd1] rounded-[4px] p-4">
@@ -171,19 +185,21 @@ export default function SurveyStartPage() {
                       </p>
                     </div>
                     <div className="space-y-2">
-                      {['선택지 1', '선택지 2', '선택지 3', '선택지 4'].map((option, index) => (
-                        <button
-                          key={index}
-                          onClick={() => handleAnswer(0, option)}
-                          className={`w-full p-4 rounded-[4px] text-left transition-colors ${
-                            answers[0] === option 
-                              ? 'bg-[#5ed7c3] text-white' 
-                              : 'bg-[#f3f4f5] text-[#434447] hover:bg-[#e8e9eb]'
-                          }`}
-                        >
-                          {option}
-                        </button>
-                      ))}
+                      {['선택지 1', '선택지 2', '선택지 3', '선택지 4'].map(
+                        (option, index) => (
+                          <button
+                            key={index}
+                            onClick={() => handleAnswer(0, option)}
+                            className={`w-full p-4 rounded-[4px] text-left transition-colors ${
+                              answers[0] === option
+                                ? 'bg-[#5ed7c3] text-white'
+                                : 'bg-[#f3f4f5] text-[#434447] hover:bg-[#e8e9eb]'
+                            }`}
+                          >
+                            {option}
+                          </button>
+                        ),
+                      )}
                     </div>
                   </div>
                 </div>
@@ -203,19 +219,21 @@ export default function SurveyStartPage() {
                     </p>
                   </div>
                   <div className="space-y-2">
-                    {['선택지 A', '선택지 B', '선택지 C', '선택지 D'].map((option, index) => (
-                      <button
-                        key={index}
-                        onClick={() => handleAnswer(1, option)}
-                        className={`w-full p-4 rounded-[4px] text-left transition-colors ${
-                          answers[1] === option 
-                            ? 'bg-[#5ed7c3] text-white' 
-                            : 'bg-[#f3f4f5] text-[#434447] hover:bg-[#e8e9eb]'
-                        }`}
-                      >
-                        {option}
-                      </button>
-                    ))}
+                    {['선택지 A', '선택지 B', '선택지 C', '선택지 D'].map(
+                      (option, index) => (
+                        <button
+                          key={index}
+                          onClick={() => handleAnswer(1, option)}
+                          className={`w-full p-4 rounded-[4px] text-left transition-colors ${
+                            answers[1] === option
+                              ? 'bg-[#5ed7c3] text-white'
+                              : 'bg-[#f3f4f5] text-[#434447] hover:bg-[#e8e9eb]'
+                          }`}
+                        >
+                          {option}
+                        </button>
+                      ),
+                    )}
                   </div>
                 </div>
               </div>
@@ -256,7 +274,11 @@ export default function SurveyStartPage() {
               <button
                 type="button"
                 onClick={handleNext}
-                disabled={currentQuestion < 2 ? !answers[currentQuestion] : !(answers[2]?.trim?.() ?? answers[2])}
+                disabled={
+                  currentQuestion < 2
+                    ? !answers[currentQuestion]
+                    : !(answers[2]?.trim?.() ?? answers[2])
+                }
                 className="flex-1 bg-[#5ed7c3] text-[#434447] py-3 px-4 rounded-[8px] font-medium text-[20px] hover:bg-[#4bc4b0] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {currentQuestion === 2 ? '완료' : '다음'}
@@ -272,13 +294,13 @@ export default function SurveyStartPage() {
         onClose={() => handleModalAction('close')}
         onAgree={() => handleModalAction('agree')}
       />
-      
+
       <ThirdPartyConsentModal
         isOpen={currentModal === 'thirdParty'}
         onClose={() => handleModalAction('close')}
         onAgree={() => handleModalAction('agree')}
       />
-      
+
       <InterviewRequestModal
         isOpen={currentModal === 'interview'}
         onClose={() => handleModalAction('close')}

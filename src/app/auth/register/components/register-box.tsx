@@ -20,7 +20,7 @@ export function RegisterBox({ onSubmit }: RegisterBoxProps) {
     gender: null,
     birthYear: '',
     job: null,
-    phoneNumber: ''
+    phoneNumber: '',
   })
 
   const handleSubmit = () => {
@@ -32,23 +32,23 @@ export function RegisterBox({ onSubmit }: RegisterBoxProps) {
   }
 
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({ ...prev, nickname: e.target.value }))
+    setFormData((prev) => ({ ...prev, nickname: e.target.value }))
   }
 
   const handleGenderChange = (gender: 'male' | 'female') => {
-    setFormData(prev => ({ ...prev, gender }))
+    setFormData((prev) => ({ ...prev, gender }))
   }
 
   const handleBirthYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({ ...prev, birthYear: e.target.value }))
+    setFormData((prev) => ({ ...prev, birthYear: e.target.value }))
   }
 
   const handleJobChange = (job: string) => {
-    setFormData(prev => ({ ...prev, job }))
+    setFormData((prev) => ({ ...prev, job }))
   }
 
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({ ...prev, phoneNumber: e.target.value }))
+    setFormData((prev) => ({ ...prev, phoneNumber: e.target.value }))
   }
 
   const handleDuplicateCheck = () => {
@@ -156,8 +156,15 @@ export function RegisterBox({ onSubmit }: RegisterBoxProps) {
               </div>
               <div className="flex flex-wrap gap-3 grow items-center justify-start">
                 {[
-                  '중학생', '고등학생', '대학생', '취준생', 
-                  '직장인', '전문직', '프리랜서', '창업자', '자영업자'
+                  '중학생',
+                  '고등학생',
+                  '대학생',
+                  '취준생',
+                  '직장인',
+                  '전문직',
+                  '프리랜서',
+                  '창업자',
+                  '자영업자',
                 ].map((job) => (
                   <button
                     key={job}
@@ -195,7 +202,8 @@ export function RegisterBox({ onSubmit }: RegisterBoxProps) {
                   />
                 </div>
                 <p className="text-[12px] font-normal text-[#434447] leading-[16px] tracking-[-0.32px] w-full">
-                  잘못된 정보를 기입하면 추후 설문 조사 선별 및 리워드 전달에 문제가 발생할 수 있습니다.
+                  잘못된 정보를 기입하면 추후 설문 조사 선별 및 리워드 전달에
+                  문제가 발생할 수 있습니다.
                 </p>
               </div>
             </div>

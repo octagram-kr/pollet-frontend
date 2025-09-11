@@ -17,12 +17,15 @@ export default function SurveyCompletePage() {
   const rewardType = searchParams.get('type') // 'points' 또는 'gift'
   const earnedPoints = parseInt(searchParams.get('points') || '0')
   const productName = searchParams.get('productName') || ''
-  
+
   // 현재 날짜 기반으로 안전한 기본값 설정
   const now = new Date()
   const raffleYear = searchParams.get('raffleYear') || String(now.getFullYear())
-  const raffleMonth = searchParams.get('raffleMonth') || String(now.getMonth() + 1).padStart(2, '0')
-  const raffleDay = searchParams.get('raffleDay') || String(now.getDate()).padStart(2, '0')
+  const raffleMonth =
+    searchParams.get('raffleMonth') ||
+    String(now.getMonth() + 1).padStart(2, '0')
+  const raffleDay =
+    searchParams.get('raffleDay') || String(now.getDate()).padStart(2, '0')
   const winnerCount = parseInt(searchParams.get('winnerCount') || '1')
 
   useEffect(() => {
@@ -57,7 +60,9 @@ export default function SurveyCompletePage() {
     return (
       <div className="min-h-screen bg-[#f9f9f9] flex items-center justify-center">
         <div className="text-center">
-          <p className="text-[#434447] text-xl">설문 정보를 찾을 수 없습니다.</p>
+          <p className="text-[#434447] text-xl">
+            설문 정보를 찾을 수 없습니다.
+          </p>
         </div>
       </div>
     )
@@ -65,12 +70,7 @@ export default function SurveyCompletePage() {
 
   // 보상 타입에 따라 다른 페이지 렌더링
   if (rewardType === 'points') {
-    return (
-      <PointsCompletionPage
-        earnedPoints={earnedPoints}
-        surveyTitle={survey.title}
-      />
-    )
+    return <PointsCompletionPage earnedPoints={earnedPoints} />
   }
 
   // 기본값은 기프티콘 보상 페이지
@@ -81,10 +81,9 @@ export default function SurveyCompletePage() {
       raffleDate={{
         year: raffleYear,
         month: raffleMonth,
-        day: raffleDay
+        day: raffleDay,
       }}
       winnerCount={winnerCount}
-      surveyTitle={survey.title}
     />
   )
 }
