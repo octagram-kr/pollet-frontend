@@ -50,8 +50,8 @@ export default function ToolbarControls({
   const gridHref = buildHref(path, { q, view: 'grid', status })
 
   const baseBtn = 'inline-flex items-center gap-2 transition-colors'
-  const active = 'text-fill-primary hover:opacity/80'
-  const inactive = 'text-fill-deep hover:opacity/80'
+  const active = 'text-fill-primary hover:opacity-80'
+  const inactive = 'text-fill-deep hover:opacity-80'
 
   return (
     <div className="flex items-center gap-3">
