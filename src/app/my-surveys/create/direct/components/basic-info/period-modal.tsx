@@ -55,6 +55,7 @@ export default function PeriodModal({
 
   // 배경 스크롤 잠금
   useEffect(() => {
+    if (!open) return
     const html = document.documentElement
     const prevOverflow = html.style.overflow
     const prevOverscroll = html.style.overscrollBehavior
@@ -68,7 +69,7 @@ export default function PeriodModal({
       html.style.overscrollBehavior = prevOverscroll
       document.body.style.paddingRight = prevPR
     }
-  }, [])
+  }, [open])
 
   if (!open) return null
 
@@ -113,7 +114,7 @@ export default function PeriodModal({
             </span>
             <label className="inline-flex items-center gap-1 text-caption-3 font-caption-3 leading-caption-3 tracking-caption-3 text-text-default">
               <input
-                type="radio"
+                type="checkbox"
                 className="sr-only peer"
                 checked={draft.startNow}
                 onChange={(e) => toggleStartNow(e.target.checked)}
@@ -187,7 +188,7 @@ export default function PeriodModal({
             </span>
             <label className="inline-flex items-center gap-1 text-caption-3 font-caption-3 leading-caption-3 tracking-caption-3 text-text-default">
               <input
-                type="radio"
+                type="checkbox"
                 className="sr-only peer"
                 checked={draft.endUntilClose}
                 onChange={(e) => toggleEndUntilClose(e.target.checked)}

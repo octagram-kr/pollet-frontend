@@ -123,10 +123,20 @@ export default function SurveyFormList({
   const cloneAt = (idx: number) => {
     setForms((prev) => {
       const base = prev[idx]
+      const idMap = new Map<string, string>()
+      const copiedOptions = base.options?.map((o) => {
+        const nid = newId()
+        idMap.set(o.id, nid)
+        return { ...o, id: nid }
+      })
+      const remap = (id?: string | null) =>
+        id ? (idMap.get(id) ?? null) : null
       const copy: QuestionForm = {
         ...base,
         id: newId(),
-        options: base.options?.map((o) => ({ ...o, id: newId() })),
+        options: copiedOptions,
+        interviewTargetOptionId: remap(base.interviewTargetOptionId),
+        correctOptionId: remap(base.correctOptionId),
       }
       const next = prev.slice()
       next.splice(idx + 1, 0, copy)

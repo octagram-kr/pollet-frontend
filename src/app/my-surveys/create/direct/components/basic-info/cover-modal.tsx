@@ -40,6 +40,7 @@ export default function CoverModal({
   )
   const [fileUrl, setFileUrl] = useState<string | null>(null)
   const inputRef = useRef<HTMLInputElement | null>(null)
+  const appliedUrlRef = useRef<string | null>(null)
 
   // 기존 썸네일이 업로드 이미지라면 업로드 탭에서 바로 미리보기 보여주기
   useEffect(() => {
@@ -70,6 +71,18 @@ export default function CoverModal({
     const url = URL.createObjectURL(f)
     setFileUrl(url)
   }
+
+  useEffect(() => {
+    return () => {
+      if (
+        fileUrl &&
+        fileUrl !== appliedUrlRef.current &&
+        fileUrl.startsWith('blob:')
+      ) {
+        URL.revokeObjectURL(fileUrl)
+      }
+    }
+  }, [fileUrl])
 
   // 모달 오픈 시 백그라운드 스크롤 잠금
   useEffect(() => {
@@ -245,11 +258,6 @@ export default function CoverModal({
                 </>
               ) : (
                 <>
-                  {/* <img
-                    src={fileUrl}
-                    alt="미리보기"
-                    className="mb-6 h-[270px] w-[360px] rounded-sm object-cover"
-                  /> */}
                   <Image
                     src={fileUrl}
                     alt="미리보기"
@@ -270,6 +278,7 @@ export default function CoverModal({
                       type="button"
                       onClick={() => {
                         if (fileUrl) {
+                          appliedUrlRef.current = fileUrl
                           onApply(fileUrl, 'upload')
                           onClose()
                         }

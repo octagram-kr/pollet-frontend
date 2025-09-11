@@ -398,12 +398,21 @@ function Editor({
           </div>
         ) : (
           <>
-            <input
-              value={data.helper ?? ''}
-              onChange={(e) => onChange({ helper: e.target.value })}
-              placeholder="상황에 맞는 설명을 작성해주세요."
-              className={`w-full border border-gray-200 rounded-xs px-4 py-3 text-body-5 font-body-5 leading-body-5 tracking-body-5 placeholder:text-gray-300 ${data.type === 'long' ? 'h-[180px]' : 'h-auto'}`}
-            />
+            {data.type === 'long' ? (
+              <textarea
+                value={data.helper ?? ''}
+                onChange={(e) => onChange({ helper: e.target.value })}
+                placeholder="상황에 맞는 설명을 작성해주세요."
+                className="w-full min-h-[180px] border border-gray-200 rounded-xs px-4 py-3 text-body-5 font-body-5 leading-body-5 tracking-body-5 placeholder:text-gray-300"
+              />
+            ) : (
+              <input
+                value={data.helper ?? ''}
+                onChange={(e) => onChange({ helper: e.target.value })}
+                placeholder="상황에 맞는 설명을 작성해주세요."
+                className="w-full border border-gray-200 rounded-xs px-4 py-3 text-body-5 font-body-5 leading-body-5 tracking-body-5 placeholder:text-gray-300"
+              />
+            )}
           </>
         )}
       </div>

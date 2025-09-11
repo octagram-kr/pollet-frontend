@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import CoverModal, { ThemeCategory, SourceType } from './cover-modal'
 import { PlusIcon, ImageIcon, TrashIcon } from '@/components/icons'
 
@@ -11,10 +11,19 @@ type Props = {
 }
 
 /** 썸네일 카드(업로드/변경 모달 포함) */
-export default function ThumbnailCard({ className }: Props) {
+export default function ThumbnailCard({ className, value, onChange }: Props) {
   const [isOpen, setIsOpen] = useState(false)
-  const [thumbnail, setThumbnail] = useState<string | null>(null)
+  const [thumbnail, setThumbnail] = useState<string | null>(value ?? null)
   const [source, setSource] = useState<SourceType | null>(null)
+
+  useEffect(() => {
+    if (value !== undefined) setThumbnail(value)
+  }, [value])
+
+  const setThumbnailAndNotify = (url: string | null) => {
+    setThumbnail(url)
+    onChange?.(url)
+  }
 
   // 데모용 테마 이미지(placeholder). 이후 서버/정적 자원으로 교체하면 됨.
   const categories: ThemeCategory[] = [
@@ -116,7 +125,6 @@ export default function ThumbnailCard({ className }: Props) {
         {/* 적용 상태 */}
         {thumbnail && (
           <div className="relative">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={thumbnail}
               alt="선택된 썸네일"
@@ -136,7 +144,7 @@ export default function ThumbnailCard({ className }: Props) {
               <button
                 type="button"
                 onClick={() => {
-                  setThumbnail(null)
+                  setThumbnailAndNotify(null)
                   setSource(null)
                 }}
                 className="w-[40px] h-[40px] flex items-center justify-center rounded-xl border border-stroke-primary bg-fill-primary cursor-pointer hover:opacity-90"
@@ -158,13 +166,13 @@ export default function ThumbnailCard({ className }: Props) {
           currentSrc={thumbnail ?? undefined}
           // 적용(테마/업로드 출처 함께 전달)
           onApply={(src, nextSource) => {
-            setThumbnail(src)
+            setThumbnailAndNotify(src)
             setSource(nextSource)
             setIsOpen(false)
           }}
           // 취소(삭제)
           onClear={() => {
-            setThumbnail(null)
+            setThumbnailAndNotify(null)
             setSource(null)
           }}
           hasThumbnail={Boolean(thumbnail)}

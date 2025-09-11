@@ -95,9 +95,10 @@ export default function PrivacyAgreementCard({
     const nextItems = has
       ? state.collectItems.filter((x) => x !== v)
       : [...state.collectItems, v]
+
     update({
       collectItems: nextItems,
-      ...(v === '직접 입력' && has ? { collectItemsCustom: '' } : null),
+      ...(v === '직접 입력' && has ? { collectItemsCustom: '' } : {}),
     })
   }
 
@@ -105,7 +106,7 @@ export default function PrivacyAgreementCard({
     if (disabled) return
     update({
       retention: opt,
-      ...(opt !== '직접 입력' ? { retentionCustom: '' } : null),
+      ...(opt !== '직접 입력' ? { retentionCustom: '' } : {}),
     })
   }
 
