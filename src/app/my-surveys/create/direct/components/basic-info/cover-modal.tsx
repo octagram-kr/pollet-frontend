@@ -48,6 +48,7 @@ export default function CoverModal({
       if (currentSource === 'upload' && currentSrc) {
         setTab('upload')
         setFileUrl(currentSrc) // 선택된 업로드 이미지를 그대로 보여줌
+        appliedUrlRef.current = currentSrc
       } else {
         setTab('theme')
         setFileUrl(null)

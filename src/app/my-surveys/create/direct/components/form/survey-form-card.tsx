@@ -421,6 +421,7 @@ function Editor({
       <EditControls
         data={data}
         onChange={onChange}
+        onReplace={onReplace}
         onClone={onClone}
         onDelete={onDelete}
         onOpenInterview={() => setOpenInterview(true)}
@@ -479,6 +480,7 @@ function Editor({
 function EditControls({
   data,
   onChange,
+  onReplace,
   onClone,
   onDelete,
   onOpenInterview,
@@ -486,6 +488,7 @@ function EditControls({
 }: {
   data: QuestionForm
   onChange: (patch: Partial<QuestionForm>) => void
+  onReplace: (next: QuestionForm) => void
   onClone: () => void
   onDelete: () => void
   onOpenInterview?: () => void
@@ -508,7 +511,24 @@ function EditControls({
           <Toggle
             label="복수 답변"
             checked={!!data.multiAnswer}
-            onChange={(v) => onChange({ multiAnswer: v })}
+            onChange={(v) => {
+              if (v) {
+                onReplace({
+                  ...data,
+                  type: 'multiple',
+                  multiAnswer: true,
+                  options: data.options?.length
+                    ? data.options
+                    : [newOpt(), newOpt()],
+                })
+              } else {
+                onReplace({
+                  ...data,
+                  type: 'single',
+                  multiAnswer: false,
+                })
+              }
+            }}
           />
         )}
       </div>
