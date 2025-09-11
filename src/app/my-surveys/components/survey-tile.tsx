@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import StatusBadge from '@/components/ui/badges'
 import type { SurveyItem, SurveyCardExtras, SurveyStatus } from '@/types/survey'
+import { UserFillIcon } from '@/components/icons'
 
 interface Props {
   item: SurveyItem
@@ -28,10 +29,10 @@ export default function SurveyTile({ item, extras }: Props) {
       : 0
 
   return (
-    <li className="rounded-md border bg-white hover:bg-gray-100 overflow-hidden">
+    <li className="w-[282px] rounded-sm border border-stroke-subtler bg-fill-white overflow-hidden">
       <button className="w-full text-left">
         {/* 썸네일 영역 */}
-        <div className="relative aspect-[16/9] bg-gray-200">
+        <div className="relative h-[211.5px] bg-gray-200">
           {item.thumbnail && (
             <Image
               src={item.thumbnail}
@@ -43,35 +44,39 @@ export default function SurveyTile({ item, extras }: Props) {
           <div className="absolute left-2 top-2">
             <StatusBadge
               status={status}
-              widthClass="w-[64px]"
+              widthClass="w-[70px]"
             />
           </div>
         </div>
 
         {/* 본문 */}
-        <div className="px-3 py-2">
-          <p className="text-sm text-gray-900 leading-snug line-clamp-2 break-words">
+        <div className="px-4 py-3">
+          <p className="h-[52px] text-title-3 font-title-3 leading-title-3 text-text-strong line-clamp-2 break-words">
             {item.title}
           </p>
 
           {period && (
-            <p className="mt-1 text-[11px] text-gray-600">
+            <p className="text-caption-3 font-caption-3 leading-caption-3 tracking-caption-3 text-text-subtle">
               {formatPeriod(period.startAt, period.endAt)}
             </p>
           )}
 
           {participants && (
-            <>
-              <div className="mt-2 h-2 w-full rounded bg-gray-200 overflow-hidden">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center mt-1 text-right text-label-8 font-label-8 leading-label-8 tracking-label-8 text-gray-600">
+                <UserFillIcon className="size-4" />
+                <span className="text-text-primary">
+                  {participants.current}
+                </span>
+                /{participants.target ?? 0}
+              </div>
+              <div className="mt-1 h-3 w-[172px] rounded-xl bg-fill-default overflow-hidden">
                 <div
-                  className="h-full bg-gray-500"
+                  className="h-full bg-starcandy-mint"
                   style={{ width: `${pct}%` }}
                 />
               </div>
-              <div className="mt-1 text-right text-[11px] text-gray-600">
-                {participants.current}/{participants.target ?? 0}
-              </div>
-            </>
+            </div>
           )}
         </div>
       </button>

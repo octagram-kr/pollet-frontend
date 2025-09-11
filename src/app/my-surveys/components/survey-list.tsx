@@ -26,7 +26,7 @@ export default function SurveyList({
   }
   if (view === 'grid') {
     return (
-      <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="grid gap-6 grid-cols-4">
         {showNewTile && <CreateSurveyTile />}
         {items.map((it) => (
           <SurveyTile

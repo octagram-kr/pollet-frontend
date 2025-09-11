@@ -1,4 +1,7 @@
 'use client'
+
+import { SearchIcon } from '@/components/icons'
+
 // import { Search } from 'lucide-react'
 
 interface Props {
@@ -16,7 +19,7 @@ export default function SearchInput({
   action = '.',
   defaultValue = '',
   name = 'q',
-  placeholder = '내 설문 검색',
+  placeholder = '검색어를 입력하세요',
   hiddenParams,
 }: Props) {
   return (
@@ -37,14 +40,16 @@ export default function SearchInput({
             />
           ) : null,
         )}
-      {/* <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-500" /> */}
-      <input
-        name={name}
-        defaultValue={defaultValue}
-        className="w-full pl-9 pr-3 py-2 rounded-md border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-gray-300"
-        placeholder={placeholder}
-        aria-label="내 설문 검색"
-      />
+      <div>
+        <SearchIcon className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-5 w-6 text-text-default" />
+        <input
+          name={name}
+          defaultValue={defaultValue}
+          className="w-[241px] pl-5 py-2 rounded-xl bg-fill-subtle text-body-5 font-body-5 leading-body-5 tracking-body-5"
+          placeholder={placeholder}
+          aria-label="내 설문 검색"
+        />
+      </div>
     </form>
   )
 }

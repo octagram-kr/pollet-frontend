@@ -1,14 +1,16 @@
 import Link from 'next/link'
-// import { Plus } from 'lucide-react'
+import { PlusIcon } from '@/components/icons'
 
 export default function CreateSurveyTile() {
   return (
     <Link href="/my-surveys/create">
-      <div className="w-full h-full rounded-md border-2 border-gray-300 bg-white hover:border-gray-400 hover:bg-gray-50 transition px-6 py-5 flex flex-col items-center justify-center gap-3">
-        <span className="inline-flex h-25 w-25 items-center justify-center rounded-full bg-gray-200">
-          {/* <Plus className="size-6 text-gray-700" /> */}
+      <div className="w-[282px] h-[348px] rounded-sm border-2 border-dashed border-stroke-subtle bg-fill-white hover:border-gray-400 transition px-4 py-3 flex flex-col items-center justify-center gap-5">
+        <span className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-fill-default">
+          <PlusIcon className="size-16 fill-fill-active" />
         </span>
-        <span className="text-gray-700">새 설문 만들기</span>
+        <span className="text-body-1 font-body-1 leading-body-1 tracking-body-1 text-default">
+          새 설문 만들기
+        </span>
       </div>
     </Link>
   )

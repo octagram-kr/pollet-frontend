@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import { useState } from 'react'
-import { StarcandyFillIcon, BellIcon, DotIcon, UserIcon } from '../icons'
+import { StarcandyFillIcon, BellIcon, UserIcon } from '../icons'
 import ProfilePanel from '@/components/layout/profile-panel'
 
 function NavLink({ href, label }: { href: string; label: string }) {
@@ -28,7 +28,6 @@ function NavLink({ href, label }: { href: string; label: string }) {
 
 export default function SiteHeader() {
   const points = 21700
-  const hasNotification = true
   const [openProfile, setOpenProfile] = useState(false)
   const isAuthed = true
 

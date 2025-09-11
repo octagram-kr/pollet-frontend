@@ -11,14 +11,14 @@ export default function StatusBadge({
   widthClass = 'w-[70px]',
 }: Props) {
   const isOngoing = status === 'ongoing'
-  const label = isOngoing ? '진행 중' : '종료'
-  const base = `rounded px-3 py-1 text-xs font-semibold inline-flex items-center justify-center shrink-0 ${widthClass}`
+  const label = isOngoing ? '진행중' : '종료'
+  const base = `rounded-xl border px-3 py-0.5 inline-flex items-center justify-center shrink-0 ${widthClass}`
   return (
     <span
       className={
         isOngoing
-          ? `${base} bg-gray-700 text-white`
-          : `${base} bg-gray-300 text-gray-700`
+          ? `${base} bg-fill-primary-subtle border-stroke-primary text-text-strong`
+          : `${base} bg-gray-300 border-stroke-default text-text-strong`
       }
     >
       {label}

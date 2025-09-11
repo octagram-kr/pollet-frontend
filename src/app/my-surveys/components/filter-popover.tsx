@@ -1,3 +1,4 @@
+import { FilterIcon } from '@/components/icons'
 import Link from 'next/link'
 // import { Filter } from 'lucide-react'
 
@@ -27,36 +28,29 @@ function buildHref(
 export default function FilterPopover({ path, q, view, status }: Props) {
   const isOngoing = status === 'ongoing'
   const isClosed = status === 'closed'
-  const label =
-    status === 'ongoing'
-      ? '필터: 진행중'
-      : status === 'closed'
-        ? '필터: 종료'
-        : '필터'
   return (
     <details className="relative inline-block z-10">
-      <summary className="list-none cursor-pointer inline-flex items-center gap-2 rounded-md px-3 py-2 hover:bg-gray-100 whitespace-nowrap">
-        {/* <Filter className="size-5" /> */}
-        <span className="hidden sm:inline">{label}</span>
+      <summary className="list-none cursor-pointer inline-flex items-center whitespace-nowrap">
+        <FilterIcon className="size-7 text-fill-deep" />
       </summary>
-      <div className="absolute right-0 mt-2 w-40 rounded-md border bg-white shadow">
+      <div className="absolute right-0 top-10 mt-2 w-40 rounded-sm border border-stroke-subtle bg-fill-white shadow">
         <Link
           href={buildHref(path, { q, view, status: 'ongoing' })}
           aria-current={isOngoing ? 'page' : undefined}
-          className={`block px-3 py-2 text-sm hover:bg-gray-50 ${
-            isOngoing ? 'text-gray-900 font-medium' : 'text-gray-700'
+          className={`block rounded-t-sm px-3 py-2 text-caption-3 font-caption-3 leading-caption-3 tracking-caption-3 hover:bg-gray-50 ${
+            isOngoing ? 'text-gray-900 ' : 'text-gray-700'
           }`}
         >
-          진행중만
+          진행 중 설문
         </Link>
         <Link
           href={buildHref(path, { q, view, status: 'closed' })}
           aria-current={isClosed ? 'page' : undefined}
-          className={`block px-3 py-2 text-sm hover:bg-gray-50 ${
+          className={`block rounded-b-sm px-3 py-2 text-caption-3 font-caption-3 leading-caption-3 tracking-caption-3 hover:bg-gray-50 ${
             isClosed ? 'text-gray-900 font-medium' : 'text-gray-700'
           }`}
         >
-          종료만
+          종료된 설문
         </Link>
       </div>
     </details>
