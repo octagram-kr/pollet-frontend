@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 interface EditProfileModalProps {
   /** 모달이 열려있는지 여부 */
@@ -16,7 +16,7 @@ interface EditProfileModalProps {
     phoneNumber: string
   }
   /** 폼 제출 시 호출되는 함수 */
-  onSubmit?: (data: ProfileData) => void
+  onSubmit?: (data: ProfileData) => Promise<void> | void
 }
 
 interface ProfileData {
@@ -51,23 +51,36 @@ export default function EditProfileModal({
   initialData,
   onSubmit,
 }: EditProfileModalProps) {
-  const [formData, setFormData] = useState<ProfileData>(
-    initialData || {
-      nickname: '',
-      gender: null,
-      birthYear: '',
-      job: null,
-      phoneNumber: '',
-    },
-  )
+  const DEFAULT_DATA: ProfileData = {
+    nickname: '',
+    gender: null,
+    birthYear: '',
+    job: null,
+    phoneNumber: '',
+  }
+  const [formData, setFormData] = useState<ProfileData>(initialData || DEFAULT_DATA)
 
-  const handleSubmit = () => {
-    if (onSubmit) {
-      onSubmit(formData)
-    } else {
-      console.log('회원 정보 수정 데이터:', formData)
+  useEffect(() => {
+    if (isOpen) setFormData(initialData || DEFAULT_DATA)
+  }, [isOpen, initialData])
+
+  const handleSubmit = async () => {
+    const data = {
+      ...formData,
+      nickname: formData.nickname.trim(),
+      phoneNumber: formData.phoneNumber.replace(/\D/g, ''),
     }
-    onClose()
+    // 최소 유효성: 닉네임(1~10자), 출생년도(4자리), 연락처(10~11자리)
+    if (!data.nickname || data.nickname.length > 10) return
+    if (data.birthYear && !/^\d{4}$/.test(data.birthYear)) return
+    if (data.phoneNumber && !/^\d{10,11}$/.test(data.phoneNumber)) return
+    try {
+      if (onSubmit) await Promise.resolve(onSubmit(data))
+      else console.log('회원 정보 수정 데이터:', data)
+      onClose()
+    } catch (e) {
+      // TODO: 에러 토스트/메시지 표시
+    }
   }
 
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,7 +110,7 @@ export default function EditProfileModal({
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" role="dialog" aria-modal="true" aria-labelledby="edit-profile-title">
       <div className="bg-white rounded-[40px] shadow-[0px_0px_8px_0px_rgba(0,0,0,0.12),0px_1px_4px_0px_rgba(0,0,0,0.08),0px_0px_2px_0px_rgba(0,0,0,0.04)] overflow-hidden max-w-[486px] w-full mx-4">
         <div className="flex flex-col gap-8 items-center justify-start px-12 py-12">
           <div className="flex flex-col gap-5 h-[446px] items-center justify-center w-full">

@@ -22,13 +22,18 @@ export default function MembershipCard() {
     progressPercentage: 95, // 38/40 * 100 = 95%
   }
 
+  // 진행률 클램프 및 등급 이니셜 계산
+  const progress =
+    Math.min(100, Math.max(0, membershipData.progressPercentage ?? 0))
+  const levelInitial = membershipData.currentLevel?.charAt(0) ?? '?'
+
   return (
     <div className="bg-white rounded-[32px] p-8 shadow-[0px_0px_8px_0px_rgba(0,0,0,0.12),0px_1px_4px_0px_rgba(0,0,0,0.08),0px_0px_2px_0px_rgba(0,0,0,0.04)]">
       <div className="flex gap-8 items-center">
         {/* Level Icon */}
         <div className="w-[100px] h-[100px] flex-shrink-0">
           <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 rounded-full flex items-center justify-center">
-            <span className="text-white text-2xl font-bold">S</span>
+            <span className="text-white text-2xl font-bold" aria-hidden="true">{levelInitial}</span>
           </div>
         </div>
 
@@ -95,11 +100,18 @@ export default function MembershipCard() {
             </div>
 
             {/* Progress Bar */}
-            <div className="relative h-3 w-full">
+            <div
+              className="relative h-3 w-full"
+              role="progressbar"
+              aria-valuenow={progress}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-label="다음 등급까지 진행률"
+            >
               <div className="absolute bg-[#e8e9eb] h-3 rounded-[16px] w-full"></div>
               <div
                 className="bg-[#5ed7c3] h-3 rounded-[16px] transition-all duration-300"
-                style={{ width: `${membershipData.progressPercentage}%` }}
+                style={{ width: `${progress}%` }}
               ></div>
             </div>
           </div>

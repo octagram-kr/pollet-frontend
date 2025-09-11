@@ -63,7 +63,17 @@ export default function PointHistoryCard({
   activeTab,
   onTabChange,
 }: PointHistoryCardProps) {
-  const [currentMonth, setCurrentMonth] = useState(9) // September
+  const today = new Date()
+  const [currentMonth, setCurrentMonth] = useState(today.getMonth() + 1)
+  const [currentYear, setCurrentYear] = useState(today.getFullYear())
+
+  const formatKR = (d: Date) =>
+    `${String(d.getFullYear()).slice(2)}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}.`
+  const monthRange = (() => {
+    const start = new Date(currentYear, currentMonth - 1, 1)
+    const end = new Date(currentYear, currentMonth, 0)
+    return `${formatKR(start)} ~ ${String(end.getMonth() + 1).padStart(2, '0')}.${String(end.getDate()).padStart(2, '0')}.`
+  })()
 
   // Mock data - will be replaced with real data later
   const currentPoints = 21700
@@ -133,7 +143,7 @@ export default function PointHistoryCard({
     },
   ]
 
-  const getAmountColor = (type: string) => {
+  const getAmountColor = (type: PointTransaction['type']) => {
     switch (type) {
       case 'earned':
       case 'charged':
@@ -145,7 +155,7 @@ export default function PointHistoryCard({
     }
   }
 
-  const getAmountText = (type: string, amount: number) => {
+  const getAmountText = (type: PointTransaction['type'], amount: number) => {
     switch (type) {
       case 'earned':
         return `${amount.toLocaleString()}을 획득했습니다.`
@@ -158,15 +168,34 @@ export default function PointHistoryCard({
     }
   }
 
+  const getAmountSuffix = (type: PointTransaction['type']) => {
+    switch (type) {
+      case 'earned':
+        return '을 획득했습니다.'
+      case 'charged':
+        return '을 충전했습니다.'
+      case 'used':
+        return '을 사용했습니다.'
+      default:
+        return ''
+    }
+  }
+
   const handlePreviousMonth = () => {
     if (currentMonth > 1) {
       setCurrentMonth(currentMonth - 1)
+    } else if (currentYear > 2020) {
+      setCurrentMonth(12)
+      setCurrentYear(currentYear - 1)
     }
   }
 
   const handleNextMonth = () => {
     if (currentMonth < 12) {
       setCurrentMonth(currentMonth + 1)
+    } else if (currentYear < today.getFullYear()) {
+      setCurrentMonth(1)
+      setCurrentYear(currentYear + 1)
     }
   }
 
@@ -231,7 +260,7 @@ export default function PointHistoryCard({
           </button>
         </div>
         <span className="text-[#91959c] text-[12px] font-normal">
-          25.09.01. ~ 09.30.
+          {monthRange}
         </span>
       </div>
 
@@ -259,10 +288,7 @@ export default function PointHistoryCard({
                         {transaction.amount.toLocaleString()}
                       </span>
                       <span className="text-[#292a2c] text-[16px] font-medium">
-                        {getAmountText(
-                          transaction.type,
-                          transaction.amount,
-                        ).replace(transaction.amount.toLocaleString(), '')}
+                        {getAmountSuffix(transaction.type)}
                       </span>
                     </div>
                     <div className="flex items-center gap-0.5 text-[#434447] text-[12px] font-normal">
