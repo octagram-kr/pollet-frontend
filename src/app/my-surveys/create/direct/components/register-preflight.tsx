@@ -1,7 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useMemo } from 'react'
 import type { QuestionForm, ChoiceOption } from './form/types'
 import type { PrivacyAgreementValue } from './basic-info/privacy-agreement-card'
 

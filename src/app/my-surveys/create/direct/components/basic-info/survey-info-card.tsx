@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PeriodModal, { PeriodValue } from './period-modal'
 import { CheckboxDefaultIcon, CheckboxFillIcon } from '@/components/icons'
 
@@ -8,7 +8,7 @@ type SurveyMeta = {
   title: string
   description: string
   purpose: string
-  period: {
+  period?: {
     startNow?: boolean
     endUntilClosed?: boolean
     startAt?: string // ISO
@@ -32,25 +32,60 @@ const PURPOSES = [
 ] as const
 type Purpose = (typeof PURPOSES)[number]
 
+function fmtDate(d: Date): string {
+  const y = d.getFullYear()
+  const m = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${y}-${m}-${day}`
+}
+
+function toDraft(p?: SurveyMeta['period']): PeriodValue {
+  return {
+    startNow: !!p?.startNow,
+    endUntilClose: !!p?.endUntilClosed,
+    startDate: p?.startAt ? new Date(p.startAt) : null,
+    startTime: p?.startAt ? p.startAt.slice(11, 16) : null,
+    endDate: p?.endAt ? new Date(p.endAt) : null,
+    endTime: p?.endAt ? p.endAt.slice(11, 16) : null,
+  }
+}
+
+function fromDraft(v: PeriodValue): NonNullable<SurveyMeta['period']> {
+  return {
+    startNow: !!v.startNow,
+    endUntilClosed: !!v.endUntilClose,
+    startAt:
+      v.startDate && v.startTime
+        ? `${fmtDate(v.startDate)}T${v.startTime}`
+        : undefined,
+    endAt:
+      v.endDate && v.endTime ? `${fmtDate(v.endDate)}T${v.endTime}` : undefined,
+  }
+}
+
+function isPurpose(x: string): x is Purpose {
+  return (PURPOSES as readonly string[]).includes(x)
+}
+
 export default function SurveyInfoCard({
   className,
   nickname = '닉네임',
+  value,
+  onChange,
 }: Props) {
-  const [title, setTitle] = useState('')
-  const [purpose, setPurpose] = useState<Purpose | ''>('')
-  const [purposeCustom, setPurposeCustom] = useState('')
-  const [desc, setDesc] = useState('')
   const [openPeriod, setOpenPeriod] = useState(false)
+  const [periodDraft, setPeriodDraft] = useState<PeriodValue>(
+    toDraft(value.period),
+  )
 
-  // 기간 값은 부모가 보유 → 모달 열었다 닫아도 값 유지
-  const [period, setPeriod] = useState<PeriodValue>({
-    startNow: false,
-    endUntilClose: false,
-    startDate: null,
-    startTime: null,
-    endDate: null,
-    endTime: null,
-  })
+  useEffect(() => {
+    if (openPeriod) setPeriodDraft(toDraft(value.period))
+  }, [openPeriod, value.period])
+
+  const selectedPurposeKey: Purpose =
+    isPurpose(value.purpose) && value.purpose !== '직접 입력'
+      ? value.purpose
+      : '직접 입력'
 
   return (
     <div
@@ -62,8 +97,8 @@ export default function SurveyInfoCard({
       {/* 설문 제목 작성 */}
       <input
         type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        value={value.title}
+        onChange={(e) => onChange({ title: e.target.value })}
         placeholder="설문 조사 제목을 작성해주세요"
         className="
             block w-full bg-transparent p-0
@@ -97,8 +132,9 @@ export default function SurveyInfoCard({
           <div className="flex items-center gap-3">
             {PURPOSES.map((p) => {
               const id = `purpose-${p}`
-              const selected = purpose === p
               const isCustom = p === '직접 입력'
+              const selected = selectedPurposeKey === p
+
               return (
                 <label
                   key={p}
@@ -111,7 +147,15 @@ export default function SurveyInfoCard({
                     name="purpose"
                     className="sr-only peer"
                     checked={selected}
-                    onChange={() => setPurpose(p)}
+                    onChange={() => {
+                      if (!isCustom) {
+                        onChange({ purpose: p })
+                      } else {
+                        if (isPurpose(value.purpose)) {
+                          onChange({ purpose: '' })
+                        }
+                      }
+                    }}
                   />
                   <span>
                     {selected ? (
@@ -125,8 +169,8 @@ export default function SurveyInfoCard({
                       <input
                         autoFocus
                         type="text"
-                        value={purposeCustom}
-                        onChange={(e) => setPurposeCustom(e.target.value)}
+                        value={value.purpose}
+                        onChange={(e) => onChange({ purpose: e.target.value })}
                         className="w-44 text-body-5 font-body-5 leading-body-5 tracking-body-5 text-text-default outline-none"
                       />
                     ) : (
@@ -164,14 +208,16 @@ export default function SurveyInfoCard({
       {/* 설문 설명 */}
       <div className="rounded-xs border border-stroke-subtler px-4 py-3">
         <textarea
-          value={desc}
-          onChange={(e) => setDesc(e.target.value.slice(0, 500))}
+          value={value.description}
+          onChange={(e) =>
+            onChange({ description: e.target.value.slice(0, 500) })
+          }
           placeholder="설문조사에 대한 설명을 작성해주세요"
           className="h-28 w-full resize-none text-body-5 font-body-5 leading-body-5 tracking-body-5 text-text-default outline-none placeholder:text-text-subtler"
         />
       </div>
       <div className="mt-1 flex justify-end text-label-6 font-label-6 leading-label-6 text-text-subtle">
-        <p className="text-text-primary">{desc.length}</p>
+        <p className="text-text-primary">{value.description.length}</p>
         /500
       </div>
 
@@ -179,11 +225,12 @@ export default function SurveyInfoCard({
       {openPeriod && (
         <PeriodModal
           open={openPeriod}
-          value={period}
+          value={periodDraft}
           onClose={() => setOpenPeriod(false)}
           onCancel={() => setOpenPeriod(false)}
           onConfirm={(v) => {
-            setPeriod(v)
+            setPeriodDraft(v)
+            onChange({ period: fromDraft(v) })
             setOpenPeriod(false)
           }}
         />

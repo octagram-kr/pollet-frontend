@@ -21,12 +21,11 @@ export default function Page() {
   const [primary, setPrimary] = useState('#22C1B4')
   const [detailBg, setDetailBg] = useState('#FFFFFF')
 
-  const [meta, setMeta] = useState({
+  const [meta, setMeta] = useState<SurveyDraft['meta']>({
     title: '',
     description: '',
     purpose: '',
-    period: undefined as any,
-    thumbnail: null as string | null,
+    thumbnail: null,
   })
   const [privacy, setPrivacy] = useState<PrivacyAgreementValue>({
     consentType: '',
@@ -36,11 +35,13 @@ export default function Page() {
     retention: '',
     retentionCustom: '',
   })
+
   const [screening, setScreening] = useState<{
     question: string
     options: ChoiceOption[]
     enabledIds: string[]
   } | null>(null)
+
   const [settings, setSettings] = useState({
     gender: '전체',
     age: '전체',
@@ -49,6 +50,7 @@ export default function Page() {
   })
 
   const [openPreflight, setOpenPreflight] = useState(false)
+
   const draft: SurveyDraft = {
     meta,
     privacy,

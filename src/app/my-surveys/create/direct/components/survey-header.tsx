@@ -11,7 +11,6 @@ export default function SurveyHeader({
   onRegister,
   disabled = false,
   registering = false,
-  className = '',
 }: Props) {
   return (
     <div className="flex items-center justify-between pb-4">
