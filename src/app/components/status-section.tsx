@@ -1,77 +1,134 @@
 import Link from 'next/link'
-import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
-// import { ArrowRight } from 'lucide-react'
+import { RightIcon, StarcandyFillIcon } from '@/components/icons'
 
 export function StatusSection({
+  nickname,
   newResponseCount,
   newResponseSurveyTitle,
   weeklyPoints,
   responseHref = '/my-surveys',
   pointsHref = '/my-page',
-  cardHeightClass = 'h-28 md:h-32',
+  hasSurveys = true,
 }: {
+  nickname: string
   newResponseCount: number
   newResponseSurveyTitle?: string
   weeklyPoints: number
   responseHref?: string
   pointsHref?: string
-  cardHeightClass?: string
+  hasSurveys?: boolean
 }) {
+  const formattedResponses = newResponseCount.toLocaleString()
+  const formattedPoints = weeklyPoints.toLocaleString()
+
   const CardInner = ({
-    title,
-    value,
-    sub,
+    top,
+    bottom,
+    accent = false,
   }: {
-    title: string
-    value: string
-    sub?: string
+    top: React.ReactNode
+    bottom: React.ReactNode
+    accent?: boolean
   }) => (
-    <Card
+    <div
       className={cn(
-        'flex items-stretch justify-between', // 좌/우 배치
-        cardHeightClass, // 🔒 고정 높이
+        'block rounded-sm border-2 px-4 py-3 hover:shadow-md',
+        accent
+          ? 'border-stroke-primary bg-fill-primary-disabled'
+          : 'border-stroke-subtle bg-fill-white',
       )}
     >
-      {/* 왼쪽 텍스트 영역: 세로 정렬 + 자리 채우기 */}
-      <div className="flex min-w-0 flex-1 flex-col justify-center">
-        <p className="text-sm text-gray-600">{title}</p>
-        <p className="mt-1 text-2xl font-semibold leading-tight">{value}</p>
-        {sub && (
-          <p className="mt-1 line-clamp-1 text-sm text-gray-500">{sub}</p>
-        )}
+      <div className="flex items-stretch justify-between">
+        {/* 왼쪽 텍스트 */}
+        <div className="flex min-w-0 flex-1 flex-col justify-center">
+          <div>{top}</div>
+          <div className="mt-1 items-center leading-tight">{bottom}</div>
+        </div>
+        {/* 오른쪽 아이콘 */}
+        <div className="flex items-center">
+          <RightIcon className="size-16 fill-fill-primary" />
+        </div>
       </div>
-
-      {/* 오른쪽 아이콘: 세로 가운데 정렬 */}
-      <div className="ml-3 flex items-center">
-        {/* <ArrowRight className="h-5 w-5 flex-shrink-0 text-gray-400" /> */}
-      </div>
-    </Card>
+    </div>
   )
   return (
     <section>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Link
-          href={responseHref}
-          className="group"
-        >
-          <CardInner
-            title="새 응답"
-            value={`${newResponseCount.toLocaleString()}개`}
-            sub={newResponseSurveyTitle}
-          />
-        </Link>
+      {hasSurveys ? (
+        <div className="flex justify-center gap-6">
+          <div className="hidden md:col-span-2 md:block" />
+          <Link
+            href={responseHref}
+            className="col-span-1 mx-auto w-[486px] md:col-span-4 md:mx-0"
+          >
+            <CardInner
+              top={
+                <>
+                  <div className="flex flex-col">
+                    <span className="item-center text-body-1 font-body-1 leading-body-1 tracking-body-1 text-text-default">
+                      새 설문 응답이
+                      <span className="text-label-1 font-label-1 leading-label-1 tracking-label-1 text-text-primary">
+                        {' '}
+                        {formattedResponses}
+                      </span>
+                      개 들어왔어요!
+                    </span>
+                    {`${newResponseSurveyTitle ? newResponseSurveyTitle : ''}`}
+                  </div>
+                </>
+              }
+              bottom={'' /* 두 줄 구성이라 아래 줄은 비움 */}
+            />
+          </Link>
 
-        <Link
-          href={pointsHref}
-          className="group"
-        >
-          <CardInner
-            title="이번 주 누적 포인트"
-            value={`${weeklyPoints.toLocaleString()} P`}
-          />
-        </Link>
-      </div>
+          <Link
+            href={pointsHref}
+            className="col-span-1 mx-auto w-[486px] md:col-span-4 md:mx-0"
+          >
+            <CardInner
+              top={`${nickname} 님의 일주일 누적 포인트`}
+              bottom={
+                <>
+                  <span className="flex tabular-nums text-label-1 font-label-1 leading-label-1">
+                    <StarcandyFillIcon className="fill-fill-primary-active" />
+                    {formattedPoints}
+                    <span className="text-label-2 font-label-2 leading-label-2">
+                      개
+                    </span>
+                  </span>
+                </>
+              }
+              accent
+            />
+          </Link>
+          <div className="hidden md:col-span-2 md:block" />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-12">
+          <div className="hidden md:col-span-3 md:block" />
+          <Link
+            href={pointsHref}
+            className="col-span-1 mx-auto w-full max-w-[640px] md:col-span-6"
+          >
+            <CardInner
+              top={`${nickname} 님은 일주일 동안`}
+              bottom={
+                <>
+                  <span className="flex tabular-nums text-label-1 font-label-1 leading-label-1">
+                    <StarcandyFillIcon className="fill-fill-primary-active" />
+                    {formattedPoints}
+                  </span>
+                  <span className="text-label-2 font-label-2 leading-label-2">
+                    개 를 모았어요!
+                  </span>
+                </>
+              }
+              accent
+            />
+          </Link>
+          <div className="hidden md:col-span-3 md:block" />
+        </div>
+      )}
     </section>
   )
 }

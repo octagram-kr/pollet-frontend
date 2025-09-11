@@ -2,6 +2,7 @@
 import { useEffect, useRef } from 'react'
 // import { X, User } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { CloseIcon } from '../icons'
 
 interface Props {
   open: boolean
@@ -21,7 +22,7 @@ export default function ProfilePanel({ open, onClose, isAuthed }: Props) {
   const logout = () => {
     // TODO: 실제 로그아웃 로직으로 교체 (예: next-auth signOut())
     onClose()
-    router.push('/logout')
+    router.push('/')
   }
 
   // ESC 닫기 + 스크롤 락 + 포커스 이동
@@ -52,7 +53,7 @@ export default function ProfilePanel({ open, onClose, isAuthed }: Props) {
       <div
         className={`fixed inset-0 z-40 transition-opacity duration-200 ${
           open
-            ? 'opacity-100 pointer-events-auto bg-black/20'
+            ? 'opacity-100 pointer-events-auto bg-dim'
             : 'opacity-0 pointer-events-none'
         }`}
         onClick={onClose}
@@ -62,18 +63,15 @@ export default function ProfilePanel({ open, onClose, isAuthed }: Props) {
       {/* 패널 */}
       <aside
         ref={panelRef}
-        className={`fixed right-0 top-0 z-50 h-dvh w-80 max-w-[90vw] bg-white shadow-2xl flex flex-col transform transition-transform duration-300 ease-out will-change-transform
+        className={`fixed right-0 top-0 z-50 h-dvh w-80 max-w-[90vw] bg-gray-50 shadow-2xl flex flex-col transform transition-transform duration-300 ease-out will-change-transform
           ${open ? 'translate-x-0' : 'translate-x-full'}`}
         role="dialog"
         aria-modal="true"
         aria-label="프로필 메뉴"
         aria-hidden={!open}
       >
-        <div className="flex items-center justify-between px-5 h-14 border-b">
-          <div className="flex items-center gap-2 text-gray-900">
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gray-200">
-              {/* <User className="size-4 text-gray-700" /> */}
-            </span>
+        <div className="flex items-center justify-between px-5 h-[70px] border-b border-stroke-default">
+          <div className="flex items-center gap-2 text-text-default">
             <span className="font-medium">
               {isAuthed ? '내 계정' : '시작하기'}
             </span>
@@ -83,7 +81,7 @@ export default function ProfilePanel({ open, onClose, isAuthed }: Props) {
             onClick={onClose}
             className="p-2 rounded hover:bg-gray-100"
           >
-            {/* <X className="size-5" /> */}
+            <CloseIcon />
           </button>
         </div>
 
@@ -92,13 +90,13 @@ export default function ProfilePanel({ open, onClose, isAuthed }: Props) {
             <>
               <button
                 onClick={() => go('/my-page')}
-                className="w-full rounded-md border px-4 py-3 text-left hover:bg-gray-50"
+                className="cursor-pointer w-full rounded-sm border border-stroke-subtle bg-fill-subtle text-text-default px-4 py-3 hover:bg-gray-100"
               >
                 마이페이지
               </button>
               <button
                 onClick={logout}
-                className="w-full rounded-md bg-gray-900 text-white px-4 py-3 hover:opacity-90"
+                className="cursor-pointer w-full rounded-sm bg-fill-primary text-text-default px-4 py-3 hover:bg-fill-primary-active"
               >
                 로그아웃
               </button>
@@ -106,14 +104,14 @@ export default function ProfilePanel({ open, onClose, isAuthed }: Props) {
           ) : (
             <>
               <button
-                onClick={() => go('/login')}
-                className="w-full rounded-md bg-gray-900 text-white px-4 py-3 hover:opacity-90"
+                onClick={() => go('/auth/login')}
+                className="cursor-pointer w-full rounded-sm bg-fill-primary text-text-default px-4 py-3 hover:opacity-90"
               >
                 로그인
               </button>
               <button
-                onClick={() => go('/signup')}
-                className="w-full rounded-md border px-4 py-3 hover:bg-gray-50"
+                onClick={() => go('/auth/login')}
+                className="cursor-pointer w-full rounded-sm border border-stroke-subtle bg-fill-subtle text-text-default px-4 py-3 hover:bg-gray-100"
               >
                 회원가입
               </button>

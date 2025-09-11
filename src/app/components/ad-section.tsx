@@ -9,7 +9,6 @@ export interface BannerItem {
   id: string
   image: string
   alt: string
-  href?: string
 }
 
 export function AdSection({
@@ -28,16 +27,22 @@ export function AdSection({
 
   const go = useCallback((next: number) => setIdx(next), [])
   const next = useCallback(() => setIdx((v) => v + 1), [])
-  const prev = useCallback(() => setIdx((v) => v - 1), [])
   const safeIdx = useMemo(
     () => (max > 0 ? ((idx % max) + max) % max : 0),
     [idx, max],
+  )
+  const prevIdx = useMemo(
+    () => (max > 0 ? (safeIdx - 1 + max) % max : 0),
+    [safeIdx, max],
+  )
+  const nextIdx = useMemo(
+    () => (max > 0 ? (safeIdx + 1) % max : 0),
+    [safeIdx, max],
   )
   const current = useMemo(
     () => (max > 0 ? items[safeIdx] : undefined),
     [items, safeIdx, max],
   )
-  const containerRef = useRef<HTMLDivElement>(null)
 
   // auto-play
   useEffect(() => {
@@ -50,6 +55,7 @@ export function AdSection({
   }, [canAuto, intervalMs, next])
 
   // pause on hover
+  const containerRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const el = containerRef.current
     if (!el || !canAuto) return
@@ -73,61 +79,38 @@ export function AdSection({
       ref={containerRef}
       aria-roledescription="carousel"
     >
-      <div className="relative h-40 w-full overflow-hidden rounded-2xl sm:h-56 md:h-64">
-        {current?.href ? (
-          <Link
-            href={current.href}
-            aria-label={current.alt}
-          >
-            <Image
-              src={current.image}
-              alt={current.alt}
-              fill
-              className="object-cover"
-              priority
-            />
-          </Link>
-        ) : (
-          <Image
-            src={current!.image}
-            alt={current!.alt}
-            fill
-            className="object-cover"
-            priority
+      <div className="relative h-110 w-full overflow-visible px-3 rounded-md">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-center gap-4">
+          <SlideCard
+            item={items[prevIdx]}
+            emphasis="preview"
+            ariaLabel={`${safeIdx}번째 배너(이전 미리보기)`}
           />
-        )}
+          {/* Current */}
+          <SlideCard
+            item={items[safeIdx]}
+            emphasis="current"
+            ariaLabel={`${safeIdx + 1}번째 배너(현재)`}
+          />
+          {/* Right preview */}
+          <SlideCard
+            item={items[nextIdx]}
+            emphasis="preview"
+            ariaLabel={`${safeIdx + 2 > max ? 1 : safeIdx + 2}번째 배너(다음 미리보기)`}
+          />
+        </div>
       </div>
-
-      {/* Prev / Next */}
-      {max > 1 && (
-        <>
-          <button
-            onClick={prev}
-            className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/40 px-2 py-2 text-white backdrop-blur hover:bg-black/60"
-            aria-label="이전 배너"
-          >
-            ‹
-          </button>
-          <button
-            onClick={next}
-            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/40 px-2 py-2 text-white backdrop-blur hover:bg-black/60"
-            aria-label="다음 배너"
-          >
-            ›
-          </button>
-        </>
-      )}
 
       {/* 인디케이터 */}
       {max > 1 && (
-        <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-2">
+        <div className="absolute bottom-7 left-1/2 flex -translate-x-1/2 gap-6">
           {items.map((_, i) => (
             <button
               key={items[i]?.id ?? i}
               onClick={() => go(i)}
               className={cn(
-                'h-2 w-2 rounded-full bg-white/60',
-                i === safeIdx && 'w-5 bg-white',
+                'h-5 w-5 rounded-full bg-gray-600/30',
+                i === safeIdx && 'bg-gray-600/70',
               )}
               aria-label={`${i + 1}번째 배너로 이동`}
               aria-current={i === safeIdx ? 'true' : undefined}
@@ -136,5 +119,42 @@ export function AdSection({
         </div>
       )}
     </section>
+  )
+}
+
+function SlideCard({
+  item,
+  emphasis,
+  ariaLabel,
+}: {
+  item: BannerItem
+  emphasis: 'current' | 'preview'
+  ariaLabel?: string
+}) {
+  const isCurrent = emphasis === 'current'
+  const base =
+    'relative overflow-hidden rounded-md shadow-sm transition-all duration-300 ease-out'
+  const size = isCurrent ? 'basis-[70%] h-110' : 'basis-[35%] h-100'
+  const fx = isCurrent ? 'opacity-100' : 'opacity-70'
+  const ring = isCurrent ? 'ring-0' : 'ring-0'
+
+  const content = (
+    <Image
+      src={item.image}
+      alt={item.alt}
+      fill
+      className={cn('object-cover', isCurrent ? '' : 'scale-[1.00]')}
+      priority={isCurrent}
+      sizes={isCurrent ? '(min-width: 768px) 70vw, 80vw' : '20vw'}
+    />
+  )
+
+  return (
+    <div
+      className={cn(base, size, fx, ring)}
+      aria-label={ariaLabel}
+    >
+      {content}
+    </div>
   )
 }
