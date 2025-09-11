@@ -2,6 +2,14 @@
 
 import { StarcandyIcon } from '@/components/icons'
 
+/**
+ * 사용자의 멤버십 정보를 표시하는 카드 컴포넌트
+ * 
+ * 현재 회원 등급, 참여한 설문 수, 누적 포인트, 다음 등급까지의 진행률을 표시합니다.
+ * 피그마 디자인에 맞춰 구현되었으며, 등급별 색상과 진행률 바를 포함합니다.
+ * 
+ * @returns {JSX.Element} 멤버십 카드 컴포넌트
+ */
 export default function MembershipCard() {
   // Mock data - will be replaced with real data later
   const membershipData = {

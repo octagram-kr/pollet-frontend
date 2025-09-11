@@ -3,8 +3,11 @@
 import { useState } from 'react'
 
 interface EditProfileModalProps {
+  /** 모달이 열려있는지 여부 */
   isOpen: boolean
+  /** 모달을 닫을 때 호출되는 함수 */
   onClose: () => void
+  /** 폼 초기화에 사용할 기존 사용자 데이터 */
   initialData?: {
     nickname: string
     gender: 'male' | 'female' | null
@@ -12,17 +15,36 @@ interface EditProfileModalProps {
     job: string | null
     phoneNumber: string
   }
+  /** 폼 제출 시 호출되는 함수 */
   onSubmit?: (data: ProfileData) => void
 }
 
 interface ProfileData {
+  /** 사용자 닉네임 */
   nickname: string
+  /** 사용자 성별 */
   gender: 'male' | 'female' | null
+  /** 출생년도 */
   birthYear: string
+  /** 직업 */
   job: string | null
+  /** 휴대폰 번호 */
   phoneNumber: string
 }
 
+/**
+ * 회원 정보 수정을 위한 모달 컴포넌트
+ * 
+ * 사용자의 닉네임, 성별, 나이, 직업, 연락처 정보를 수정할 수 있는 폼을 제공합니다.
+ * 기존 회원가입 폼과 동일한 구조로 재사용 가능하도록 설계되었습니다.
+ * 
+ * @param props - EditProfileModalProps 객체
+ * @param props.isOpen - 모달이 열려있는지 여부
+ * @param props.onClose - 모달을 닫을 때 호출되는 함수
+ * @param props.initialData - 폼 초기화에 사용할 기존 사용자 데이터
+ * @param props.onSubmit - 폼 제출 시 호출되는 함수
+ * @returns {JSX.Element | null} 회원 정보 수정 모달 컴포넌트 또는 null
+ */
 export default function EditProfileModal({
   isOpen,
   onClose,

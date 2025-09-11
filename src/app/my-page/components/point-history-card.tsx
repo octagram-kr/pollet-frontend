@@ -4,32 +4,61 @@ import { useState } from 'react'
 import { StarcandyIcon } from '@/components/icons'
 
 interface PointHistoryCardProps {
+  /** 현재 활성화된 탭 ('points' 또는 'gifts') */
   activeTab: 'points' | 'gifts'
+  /** 탭 변경 시 호출되는 함수 */
   onTabChange: (tab: 'points' | 'gifts') => void
 }
 
 interface PointTransaction {
+  /** 거래 고유 ID */
   id: string
+  /** 거래 유형 */
   type: 'earned' | 'charged' | 'used'
+  /** 포인트 금액 */
   amount: number
+  /** 거래 설명 */
   description: string
+  /** 거래 카테고리 */
   category: string
+  /** 거래 날짜 */
   date: string
+  /** 거래 시간 */
   time: string
 }
 
 interface GiftTransaction {
+  /** 거래 고유 ID */
   id: string
+  /** 거래 유형 */
   type: 'earned' | 'used'
+  /** 기프티콘 상품명 */
   productName: string
+  /** 상품 이미지 URL */
   productImage: string
+  /** 거래 카테고리 */
   category: string
+  /** 거래 날짜 */
   date: string
+  /** 거래 시간 */
   time: string
+  /** 기프티콘 상태 */
   status: 'pending' | 'completed' | 'expired'
+  /** 발송 알림 제목 */
   title: string
 }
 
+/**
+ * 포인트 및 기프티콘 내역을 표시하는 카드 컴포넌트
+ * 
+ * 포인트 내역과 기프티콘 내역 탭을 제공하며, 각각의 거래 내역을 표시합니다.
+ * 피그마 디자인에 맞춰 구현되었으며, 스크롤 인디케이터와 함께 제공됩니다.
+ * 
+ * @param props - PointHistoryCardProps 객체
+ * @param props.activeTab - 현재 활성화된 탭
+ * @param props.onTabChange - 탭 변경 시 호출되는 함수
+ * @returns {JSX.Element} 포인트 내역 카드 컴포넌트
+ */
 export default function PointHistoryCard({
   activeTab,
   onTabChange,
