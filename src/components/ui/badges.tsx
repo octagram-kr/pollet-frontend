@@ -50,11 +50,11 @@ export function GifticonBadge({ name }: { name: string }) {
 
 export function MinuteBadge({ minutes }: { minutes: number }) {
   return (
-    <div className="border-stroke-subtle rounded-xl bg-fill-white px-2 text-text-default text-label-6 font-label-6 leading-label-6">
+    <span className="border border-stroke-subtle rounded-xl bg-fill-white px-2 py-1 text-text-default text-label-6 font-label-6 leading-label-6">
       <span className="text-label-5 font-label-5 leading-label-5 tracking-label-5 text-text-secondary">
         {minutes}
       </span>
       분
-    </div>
+    </span>
   )
 }

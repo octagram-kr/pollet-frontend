@@ -30,7 +30,7 @@ export function TagList(props: Props) {
         (props.tags ?? [])
           .filter((t): t is string => typeof t === 'string' && t.length > 0)
           .map((raw) => {
-            const label = String(raw)
+            const label = String(raw).trim().replace(/^#+/, '')
             const tone: Tone = isDemographicTag(label) ? 'mint' : 'pink'
             return { label, tone }
           })
@@ -47,11 +47,11 @@ export function TagList(props: Props) {
             },
             { label: String(props.job ?? ''), tone: 'mint' as const },
             {
-              label: props.tag1 ? `#${props.tag1}` : '',
+              label: props.tag1 ?? '',
               tone: 'pink' as const,
             },
             {
-              label: props.tag2 ? `#${props.tag2}` : '',
+              label: props.tag2 ?? '',
               tone: 'pink' as const,
             },
           ] as const
