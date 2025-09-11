@@ -5,10 +5,10 @@ import EditProfileModal from './edit-profile-modal'
 
 /**
  * 사용자 프로필을 표시하는 카드 컴포넌트
- * 
+ *
  * 사용자의 프로필 이미지, 닉네임, 태그 정보를 표시하고
  * 수정하기 버튼을 통해 회원 정보 수정 모달을 열 수 있습니다.
- * 
+ *
  * @returns {JSX.Element} 프로필 카드 컴포넌트
  */
 export default function ProfileCard() {

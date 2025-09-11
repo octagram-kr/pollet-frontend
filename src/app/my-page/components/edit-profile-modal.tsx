@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 
 interface EditProfileModalProps {
   /** 모달이 열려있는지 여부 */
@@ -34,10 +34,10 @@ interface ProfileData {
 
 /**
  * 회원 정보 수정을 위한 모달 컴포넌트
- * 
+ *
  * 사용자의 닉네임, 성별, 나이, 직업, 연락처 정보를 수정할 수 있는 폼을 제공합니다.
  * 기존 회원가입 폼과 동일한 구조로 재사용 가능하도록 설계되었습니다.
- * 
+ *
  * @param props - EditProfileModalProps 객체
  * @param props.isOpen - 모달이 열려있는지 여부
  * @param props.onClose - 모달을 닫을 때 호출되는 함수
@@ -51,18 +51,23 @@ export default function EditProfileModal({
   initialData,
   onSubmit,
 }: EditProfileModalProps) {
-  const DEFAULT_DATA: ProfileData = {
-    nickname: '',
-    gender: null,
-    birthYear: '',
-    job: null,
-    phoneNumber: '',
-  }
-  const [formData, setFormData] = useState<ProfileData>(initialData || DEFAULT_DATA)
+  const DEFAULT_DATA: ProfileData = useMemo(
+    () => ({
+      nickname: '',
+      gender: null,
+      birthYear: '',
+      job: null,
+      phoneNumber: '',
+    }),
+    [],
+  )
+  const [formData, setFormData] = useState<ProfileData>(
+    initialData || DEFAULT_DATA,
+  )
 
   useEffect(() => {
     if (isOpen) setFormData(initialData || DEFAULT_DATA)
-  }, [isOpen, initialData])
+  }, [isOpen, initialData, DEFAULT_DATA])
 
   const handleSubmit = async () => {
     const data = {
@@ -78,8 +83,9 @@ export default function EditProfileModal({
       if (onSubmit) await Promise.resolve(onSubmit(data))
       else console.log('회원 정보 수정 데이터:', data)
       onClose()
-    } catch (e) {
+    } catch (error) {
       // TODO: 에러 토스트/메시지 표시
+      console.error('프로필 수정 중 오류 발생:', error)
     }
   }
 
@@ -110,7 +116,12 @@ export default function EditProfileModal({
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" role="dialog" aria-modal="true" aria-labelledby="edit-profile-title">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="edit-profile-title"
+    >
       <div className="bg-white rounded-[40px] shadow-[0px_0px_8px_0px_rgba(0,0,0,0.12),0px_1px_4px_0px_rgba(0,0,0,0.08),0px_0px_2px_0px_rgba(0,0,0,0.04)] overflow-hidden max-w-[486px] w-full mx-4">
         <div className="flex flex-col gap-8 items-center justify-start px-12 py-12">
           <div className="flex flex-col gap-5 h-[446px] items-center justify-center w-full">

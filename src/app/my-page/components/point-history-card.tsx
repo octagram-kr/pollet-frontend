@@ -50,10 +50,10 @@ interface GiftTransaction {
 
 /**
  * 포인트 및 기프티콘 내역을 표시하는 카드 컴포넌트
- * 
+ *
  * 포인트 내역과 기프티콘 내역 탭을 제공하며, 각각의 거래 내역을 표시합니다.
  * 피그마 디자인에 맞춰 구현되었으며, 스크롤 인디케이터와 함께 제공됩니다.
- * 
+ *
  * @param props - PointHistoryCardProps 객체
  * @param props.activeTab - 현재 활성화된 탭
  * @param props.onTabChange - 탭 변경 시 호출되는 함수
@@ -152,19 +152,6 @@ export default function PointHistoryCard({
         return 'text-[#e200cb]'
       default:
         return 'text-[#434447]'
-    }
-  }
-
-  const getAmountText = (type: PointTransaction['type'], amount: number) => {
-    switch (type) {
-      case 'earned':
-        return `${amount.toLocaleString()}을 획득했습니다.`
-      case 'charged':
-        return `${amount.toLocaleString()}을 충전했습니다.`
-      case 'used':
-        return `${amount.toLocaleString()}을 사용했습니다.`
-      default:
-        return `${amount.toLocaleString()}`
     }
   }
 

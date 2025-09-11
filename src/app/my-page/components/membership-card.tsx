@@ -4,10 +4,10 @@ import { StarcandyIcon } from '@/components/icons'
 
 /**
  * 사용자의 멤버십 정보를 표시하는 카드 컴포넌트
- * 
+ *
  * 현재 회원 등급, 참여한 설문 수, 누적 포인트, 다음 등급까지의 진행률을 표시합니다.
  * 피그마 디자인에 맞춰 구현되었으며, 등급별 색상과 진행률 바를 포함합니다.
- * 
+ *
  * @returns {JSX.Element} 멤버십 카드 컴포넌트
  */
 export default function MembershipCard() {
@@ -23,8 +23,10 @@ export default function MembershipCard() {
   }
 
   // 진행률 클램프 및 등급 이니셜 계산
-  const progress =
-    Math.min(100, Math.max(0, membershipData.progressPercentage ?? 0))
+  const progress = Math.min(
+    100,
+    Math.max(0, membershipData.progressPercentage ?? 0),
+  )
   const levelInitial = membershipData.currentLevel?.charAt(0) ?? '?'
 
   return (
@@ -33,7 +35,12 @@ export default function MembershipCard() {
         {/* Level Icon */}
         <div className="w-[100px] h-[100px] flex-shrink-0">
           <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 rounded-full flex items-center justify-center">
-            <span className="text-white text-2xl font-bold" aria-hidden="true">{levelInitial}</span>
+            <span
+              className="text-white text-2xl font-bold"
+              aria-hidden="true"
+            >
+              {levelInitial}
+            </span>
           </div>
         </div>
 
