@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
 
@@ -38,10 +37,6 @@ export function AdSection({
   const nextIdx = useMemo(
     () => (max > 0 ? (safeIdx + 1) % max : 0),
     [safeIdx, max],
-  )
-  const current = useMemo(
-    () => (max > 0 ? items[safeIdx] : undefined),
-    [items, safeIdx, max],
   )
 
   // auto-play
