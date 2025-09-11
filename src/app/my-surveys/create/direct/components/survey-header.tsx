@@ -1,4 +1,18 @@
-export default function SurveyHeader() {
+'use client'
+
+type Props = {
+  onRegister?: () => void
+  disabled?: boolean
+  registering?: boolean
+  className?: string
+}
+
+export default function SurveyHeader({
+  onRegister,
+  disabled = false,
+  registering = false,
+  className = '',
+}: Props) {
   return (
     <div className="flex items-center justify-between pb-4">
       {/* 제목/설명 */}
@@ -13,13 +27,23 @@ export default function SurveyHeader() {
 
       {/* 버튼 그룹 */}
       <div className="mt-4 flex justify-end gap-6">
-        <button className="w-[88px] rounded-xs px-1 py-3 bg-fill-default text-label-7 font-label-7 leading-label-7 text-text-default hover:bg-gray-100">
+        <button
+          disabled={disabled}
+          className="w-[88px] rounded-xs px-1 py-3 bg-fill-default text-label-7 font-label-7 leading-label-7 text-text-default hover:bg-gray-100"
+        >
           미리보기
         </button>
-        <button className="w-[88px] rounded-xs px-1 py-3 bg-fill-default text-label-7 font-label-7 leading-label-7 text-text-default hover:bg-gray-100">
+        <button
+          disabled={disabled}
+          className="w-[88px] rounded-xs px-1 py-3 bg-fill-default text-label-7 font-label-7 leading-label-7 text-text-default hover:bg-gray-100"
+        >
           임시저장
         </button>
-        <button className="w-[88px] rounded-xs px-1 py-3 bg-fill-primary text-label-7 font-label-7 leading-label-7 text-text-default hover:bg-starcandy-mint/90">
+        <button
+          onClick={onRegister}
+          disabled={disabled || registering}
+          className="w-[88px] rounded-xs px-1 py-3 bg-fill-primary text-label-7 font-label-7 leading-label-7 text-text-default hover:bg-starcandy-mint/90"
+        >
           등록
         </button>
       </div>

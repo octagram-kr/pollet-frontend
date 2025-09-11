@@ -4,9 +4,23 @@ import { useState } from 'react'
 import PeriodModal, { PeriodValue } from './period-modal'
 import { CheckboxDefaultIcon, CheckboxFillIcon } from '@/components/icons'
 
+type SurveyMeta = {
+  title: string
+  description: string
+  purpose: string
+  period: {
+    startNow?: boolean
+    endUntilClosed?: boolean
+    startAt?: string // ISO
+    endAt?: string // ISO
+  }
+}
+
 type Props = {
   className?: string
   nickname?: string // 로그인한 설문자 닉네임
+  value: SurveyMeta
+  onChange: (patch: Partial<SurveyMeta>) => void
 }
 
 const PURPOSES = [

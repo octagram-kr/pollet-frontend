@@ -26,7 +26,6 @@ export type CollectionItem = (typeof COLLECTION_ITEMS)[number]
 export const RETENTION_OPTIONS = ['3개월', '6개월', '1년', '직접 입력'] as const
 export type RetentionOption = (typeof RETENTION_OPTIONS)[number] | ''
 
-/* 값 타입(부모 제어용) */
 export type PrivacyAgreementValue = {
   consentType: ConsentType
   collectPurpose: string
@@ -38,15 +37,11 @@ export type PrivacyAgreementValue = {
 
 type Props = {
   className?: string
-  /** 완전 제어형으로 쓰고 싶을 때 */
   value?: PrivacyAgreementValue
-  /** 내부 상태로 쓸 때 초기값 */
   defaultValue?: Partial<PrivacyAgreementValue>
-  /** 값 변경 콜백 */
   onChange?: (v: PrivacyAgreementValue) => void
 }
 
-/** 개인정보 수집 및 이용 동의 카드 */
 export default function PrivacyAgreementCard({
   className,
   value,
@@ -63,7 +58,7 @@ export default function PrivacyAgreementCard({
     ...defaultValue,
   }))
 
-  /* 제어형 동기화 */
+  /* 외부 제어값과 동기화 */
   useEffect(() => {
     if (value) setState(value)
   }, [value])
@@ -74,15 +69,44 @@ export default function PrivacyAgreementCard({
     onChange?.(next)
   }
 
+  const disabled = state.consentType === '수집하지 않음'
+
+  const handleConsentChange = (t: ConsentType) => {
+    if (t === '수집하지 않음') {
+      // ‘수집하지 않음’ 선택 시 관련 필드 초기화 + 비활성화
+      update({
+        consentType: t,
+        collectPurpose: '',
+        collectItems: [],
+        collectItemsCustom: '',
+        retention: '',
+        retentionCustom: '',
+      })
+    } else {
+      update({ consentType: t })
+    }
+  }
+
   const isItemChecked = (v: CollectionItem) => state.collectItems.includes(v)
+
   const toggleItem = (v: CollectionItem) => {
+    if (disabled) return
     const has = isItemChecked(v)
     const nextItems = has
       ? state.collectItems.filter((x) => x !== v)
       : [...state.collectItems, v]
-    const patch: Partial<PrivacyAgreementValue> = { collectItems: nextItems }
-    if (v === '직접 입력' && has) patch.collectItemsCustom = '' // 직접입력 해제 시 값 초기화
-    update(patch)
+    update({
+      collectItems: nextItems,
+      ...(v === '직접 입력' && has ? { collectItemsCustom: '' } : null),
+    })
+  }
+
+  const selectRetention = (opt: RetentionOption) => {
+    if (disabled) return
+    update({
+      retention: opt,
+      ...(opt !== '직접 입력' ? { retentionCustom: '' } : null),
+    })
   }
 
   return (
@@ -105,37 +129,35 @@ export default function PrivacyAgreementCard({
           <div className="flex flex-wrap items-center gap-3">
             {CONSENT_TYPES.map((t) => {
               const id = `consent-${t}`
+              const selected = state.consentType === t
               return (
                 <label
                   key={t}
                   htmlFor={id}
-                  className="inline-flex items-center gap-1 text-body-5 font-body-5 tracking-body-5 text-text-subtle"
+                  className="inline-flex cursor-pointer items-center gap-1 text-body-5 font-body-5 tracking-body-5 text-text-subtle"
                 >
                   <input
                     id={id}
                     type="radio"
                     name="consentType"
                     className="sr-only peer"
-                    checked={state.consentType === t}
-                    onChange={() => update({ consentType: t })}
+                    checked={selected}
+                    onChange={() => handleConsentChange(t)}
                   />
-
                   <span>
-                    {state.consentType === t ? (
+                    {selected ? (
                       <RadioFillIcon className="w-[18px] text-primary" />
                     ) : (
                       <RadioDefaultIcon className="w-[18px]" />
                     )}
                   </span>
-                  <p
+                  <span
                     className={
-                      state.consentType === t
-                        ? 'text-text-default'
-                        : 'text-text-subtle'
+                      selected ? 'text-text-default' : 'text-text-subtle'
                     }
                   >
                     {t}
-                  </p>
+                  </span>
                 </label>
               )
             })}
@@ -143,7 +165,10 @@ export default function PrivacyAgreementCard({
         </div>
 
         {/* 2) 개인정보 수집 목적 */}
-        <div className="flex items-center gap-4">
+        <div
+          className={`flex items-center gap-4 ${disabled ? 'opacity-60' : ''}`}
+          aria-disabled={disabled}
+        >
           <div className="w-44 shrink-0 text-body-4 font-body-4 leading-body-4 tracking-body-4 text-text-default">
             개인정보 수집 목적
           </div>
@@ -152,16 +177,26 @@ export default function PrivacyAgreementCard({
             value={state.collectPurpose}
             onChange={(e) => update({ collectPurpose: e.target.value })}
             placeholder="수집 목적을 작성해주세요 (예: 추후 인터뷰 모집, 기프트콘 전달 등)"
-            className="w-full appearance-none border-none bg-transparent text-body-5 font-body-5 leading-body-5 tracking-body-5 text-text-default outline-none placeholder:text-text-subtle"
+            disabled={disabled}
+            className={`w-full appearance-none border-none bg-transparent text-body-5 font-body-5 leading-body-5 tracking-body-5 outline-none ${
+              disabled
+                ? 'cursor-not-allowed text-text-subtler'
+                : 'text-text-default placeholder:text-text-subtle'
+            }`}
           />
         </div>
 
         {/* 3) 개인정보 수집 항목 */}
-        <div className="flex items-start gap-4">
+        <div
+          className={`flex items-start gap-4 ${disabled ? 'opacity-60' : ''}`}
+          aria-disabled={disabled}
+        >
           <div className="w-44 shrink-0 text-body-4 font-body-4 leading-body-4 tracking-body-4 text-text-default">
             개인정보 수집 항목
           </div>
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+          <div
+            className={`flex flex-wrap items-center gap-x-5 gap-y-2 ${disabled ? 'pointer-events-none' : ''}`}
+          >
             {COLLECTION_ITEMS.map((it) => {
               const id = `collect-${it}`
               const checked = isItemChecked(it)
@@ -177,6 +212,7 @@ export default function PrivacyAgreementCard({
                     type="checkbox"
                     className="sr-only peer"
                     checked={checked}
+                    disabled={disabled}
                     onChange={() => toggleItem(it)}
                   />
                   {checked ? (
@@ -194,10 +230,21 @@ export default function PrivacyAgreementCard({
                           update({ collectItemsCustom: e.target.value })
                         }
                         placeholder="항목 입력"
-                        className="w-40 min-w-[8rem] appearance-none border-none bg-transparent text-body-5 font-body-5 leading-body-5 tracking-body-5 text-text-default outline-none placeholder:text-gray-400"
+                        disabled={disabled}
+                        className={`w-40 min-w-[8rem] appearance-none border-none bg-transparent outline-none ${
+                          disabled
+                            ? 'cursor-not-allowed text-text-subtler'
+                            : 'text-body-5 font-body-5 leading-body-5 tracking-body-5 text-text-default placeholder:text-gray-400'
+                        }`}
                       />
                     ) : (
-                      <span>직접 입력</span>
+                      <span
+                        className={
+                          checked ? 'text-text-default' : 'text-text-subtle'
+                        }
+                      >
+                        직접 입력
+                      </span>
                     )
                   ) : (
                     <span
@@ -214,12 +261,17 @@ export default function PrivacyAgreementCard({
           </div>
         </div>
 
-        {/* 4) 개인정보 보유 및 이용 기간 (단일 선택 + '직접 입력' 선택 시 인풋 노출) */}
-        <div className="flex items-start gap-4">
+        {/* 4) 개인정보 보유 및 이용 기간 */}
+        <div
+          className={`flex items-start gap-4 ${disabled ? 'opacity-60' : ''}`}
+          aria-disabled={disabled}
+        >
           <div className="w-44 shrink-0 text-body-4 font-body-4 leading-body-4 tracking-body-4 text-text-default">
             개인정보 보유 및 이용 기간
           </div>
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+          <div
+            className={`flex flex-wrap items-center gap-x-5 gap-y-2 ${disabled ? 'pointer-events-none' : ''}`}
+          >
             {RETENTION_OPTIONS.map((opt) => {
               const id = `retention-${opt}`
               const selected = state.retention === opt
@@ -236,7 +288,8 @@ export default function PrivacyAgreementCard({
                     name="retention"
                     className="sr-only peer"
                     checked={selected}
-                    onChange={() => update({ retention: opt })}
+                    disabled={disabled}
+                    onChange={() => selectRetention(opt)}
                   />
                   {selected ? (
                     <RadioFillIcon className="w-[18px] text-primary" />
@@ -253,7 +306,12 @@ export default function PrivacyAgreementCard({
                           update({ retentionCustom: e.target.value })
                         }
                         placeholder="기간 입력"
-                        className="w-28 min-w-[7rem] appearance-none border-none bg-transparent text-text-default outline-none placeholder:text-text-subtle"
+                        disabled={disabled}
+                        className={`w-28 min-w-[7rem] appearance-none border-none bg-transparent outline-none ${
+                          disabled
+                            ? 'cursor-not-allowed text-text-subtler'
+                            : 'text-text-default placeholder:text-text-subtle'
+                        }`}
                       />
                     ) : (
                       <span>직접 입력</span>

@@ -412,7 +412,7 @@ export default function GuidePanel({
                       { id: crypto.randomUUID(), label: '' },
                     ])
                   }
-                  className="rounded-xs w-full bg-fill-primary px-4 py-2 text-label-7 font-label-7 leading-label-7 text-text-default hover:opacity-90 grid place-items-center"
+                  className="cursor-pointer rounded-xs w-full bg-fill-primary px-4 py-2 text-label-7 font-label-7 leading-label-7 text-text-default hover:opacity-90 grid place-items-center"
                 >
                   항목 추가
                 </button>
@@ -425,7 +425,7 @@ export default function GuidePanel({
                       enabledIds,
                     })
                   }
-                  className="rounded-xs w-full bg-fill-primary px-4 py-2 text-label-7 font-label-7 leading-label-7 text-text-default hover:opacity-90 grid place-items-center"
+                  className="cursor-pointer rounded-xs w-full bg-fill-primary px-4 py-2 text-label-7 font-label-7 leading-label-7 text-text-default hover:opacity-90 grid place-items-center"
                 >
                   적용하기
                 </button>
@@ -542,7 +542,7 @@ export default function GuidePanel({
                     tags,
                   })
                 }
-                className="rounded-xs w-full bg-fill-primary px-4 py-2 text-label-7 font-label-7 leading-label-7 text-text-default hover:opacity-90"
+                className="cursor-pointer rounded-xs w-full bg-fill-primary px-4 py-2 text-label-7 font-label-7 leading-label-7 text-text-default hover:opacity-90"
               >
                 적용하기
               </button>

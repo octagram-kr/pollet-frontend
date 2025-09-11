@@ -6,6 +6,8 @@ import { PlusIcon, ImageIcon, TrashIcon } from '@/components/icons'
 
 type Props = {
   className?: string
+  value?: string | null
+  onChange?: (url: string | null) => void
 }
 
 /** 썸네일 카드(업로드/변경 모달 포함) */
