@@ -1,5 +1,5 @@
 import Link from 'next/link'
-// import { Grid2X2 } from 'lucide-react'
+import { SingleIcon, ShowGridIcon } from '@/components/icons'
 import FilterPopover from '@/app/my-surveys/components/filter-popover'
 
 interface Props {
@@ -30,6 +30,9 @@ function buildHref(
   // status 미지정이면 제거
   if (status) sp.set('status', status)
   else sp.delete('status')
+
+  sp.delete('page')
+
   const qs = sp.toString()
   return qs ? `${base}?${qs}` : base
 }
@@ -41,38 +44,38 @@ export default function ToolbarControls({
   status,
 }: Props) {
   const isGrid = view === 'grid'
+  const isList = !isGrid
 
-  // Grid 토글
-  const gridHref = isGrid
-    ? buildHref(path, { q, view: 'list', status }) // 다시 리스트로
-    : buildHref(path, { q, view: 'grid', status })
+  const listHref = buildHref(path, { q, view: 'list', status })
+  const gridHref = buildHref(path, { q, view: 'grid', status })
 
-  // 전체 보기 (status 제거)
-  const allHref = buildHref(path, { q, view })
+  const baseBtn = 'inline-flex items-center gap-2 transition-colors'
+  const active = 'text-fill-primary hover:opacity/80'
+  const inactive = 'text-fill-deep hover:opacity/80'
 
   return (
     <div className="flex items-center gap-3">
-      {/* 1) 바둑판 보기 토글 */}
+      {/* 바둑판 보기 토글 */}
+
+      <Link
+        href={listHref}
+        aria-label="리스트 보기"
+        aria-pressed={isList}
+        className={`${baseBtn} ${isList ? active : inactive}`}
+      >
+        <SingleIcon className="size-7" />
+      </Link>
+
       <Link
         href={gridHref}
-        aria-label="바둑판 보기 전환"
-        className={`inline-flex items-center gap-2 rounded-md px-3 py-2 hover:bg-gray-100 ${isGrid ? 'text-gray-900' : 'text-gray-700'}`}
+        aria-label="바둑판 보기"
+        aria-pressed={isGrid}
+        className={`${baseBtn} ${isGrid ? active : inactive}`}
       >
-        {/* <Grid2X2 className="size-5" /> */}
-        <span className="hidden whitespace-nowrap sm:inline">
-          {isGrid ? '리스트 보기' : '바둑판 보기'}
-        </span>
+        <ShowGridIcon className="size-7" />
       </Link>
 
-      {/* 2) 전체 보기 (필터 제거) */}
-      <Link
-        href={allHref}
-        className="inline-flex items-center px-3 py-2 rounded-md hover:bg-gray-100 whitespace-nowrap"
-      >
-        전체 보기
-      </Link>
-
-      {/* 3) 필터 (진행중/종료) */}
+      {/* 필터 (진행중/종료) */}
       <FilterPopover
         path={path}
         q={q}
