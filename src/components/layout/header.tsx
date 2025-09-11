@@ -83,11 +83,6 @@ export default function SiteHeader() {
             className="relative inline-block"
           >
             <BellIcon className="size-8 fill-fill-deep" />
-            {hasNotification && (
-              <div className="absolute right-1 top-1">
-                <DotIcon className="text-secondary" />
-              </div>
-            )}
           </button>
 
           <button
