@@ -4,7 +4,7 @@ import Link from 'next/link'
 export default function CreateSurveyCard() {
   return (
     <Link
-      href="/surveys/create"
+      href="/my-surveys/create"
       className="flex flex-col items-center justify-center"
     >
       <div className="w-full h-full rounded-md border-2 border-gray-300 bg-white hover:border-gray-400 hover:bg-gray-50 transition px-6 py-5 flex items-center justify-center gap-3">

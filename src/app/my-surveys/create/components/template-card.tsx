@@ -18,15 +18,16 @@ export default function TemplateCard({ layout = 'wide' }: TemplateCardProps) {
           <Image
             src={'/icons/survey/search-template-icon.svg'}
             alt="Template Create"
+            className="opacity-80"
             width={56}
             height={56}
           />
         </div>
         <div className="flex-1">
-          <h3 className="text-text-strong text-title-2 font-title-2 leading-title-2">
+          <h3 className="text-text-subtle text-title-2 font-title-2 leading-title-2">
             템플릿 사용하기
           </h3>
-          <p className="text-text-default text-body-6 font-body-6 tracking-body-6 leading-body-6">
+          <p className="text-text-subtle text-body-6 font-body-6 tracking-body-6 leading-body-6">
             복잡한 과정 없이 손쉽게 설문을 시작하세요.
           </p>
         </div>
