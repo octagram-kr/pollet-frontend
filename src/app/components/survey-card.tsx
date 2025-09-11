@@ -2,20 +2,13 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { Card } from '@/components/ui/card'
 import { TagList } from '@/app/components/tag-list'
 import { CountdownTimer } from '@/app/components/countdown-timer'
 import { ProgressSection } from '@/app/components/progress-section'
-import { QuestionList } from '@/app/components/question-list'
 import { AnswerSection } from '@/app/components/answer-section'
 import { PointBadge, MinuteBadge, GifticonBadge } from '@/components/ui/badges'
-import { cn } from '@/lib/utils'
 
-export type SurveyCardVariant =
-  | 'default'
-  | 'withQuestions'
-  | 'withAnswers'
-  | 'urgent'
+export type SurveyCardVariant = 'default' | 'withAnswers' | 'urgent'
 
 export interface SurveyCardProps {
   id: string
@@ -29,7 +22,6 @@ export interface SurveyCardProps {
   countdownUntil?: string | Date
   progress?: { rate: number; current: number; target: number }
   variant?: SurveyCardVariant
-  heightClass?: string // ex) 'h-[360px] md:h-[380px] lg:h-[400px]'
 }
 
 export function SurveyCard({
@@ -39,12 +31,10 @@ export function SurveyCard({
   reward,
   duration,
   tags = [],
-  questions = [],
   answers = [],
   countdownUntil,
   progress,
   variant = 'default',
-  heightClass = 'h-[360px] md:h-[380px] lg:h-[400px]',
 }: SurveyCardProps) {
   const isUrgent = variant === 'urgent'
 
@@ -53,8 +43,6 @@ export function SurveyCard({
     switch (variant) {
       case 'withAnswers':
         return answers.length ? <AnswerSection items={answers} /> : null
-      case 'withQuestions':
-        return questions.length ? <QuestionList items={questions} /> : null
       case 'urgent':
         return (
           <div className="space-y-2">
@@ -68,19 +56,19 @@ export function SurveyCard({
             )}
           </div>
         )
-      default: // 'default'
+      default:
         return tags.length ? <TagList tags={tags} /> : null
     }
   }
 
   return (
-    <Card className={cn('flex flex-col', heightClass)}>
+    <div className="flex flex-col border border-stroke-subtler bg-fill-white rounded-sm">
       <Link
-        href={`/survey/${id}`}
+        href={`/surveys/${id}`}
         className="block"
       >
         {/* 썸네일(고정 높이) */}
-        <div className="relative h-40 w-full overflow-hidden rounded-xl">
+        <div className="relative rounded-t-sm h-40 w-full overflow-hidden">
           <Image
             src={thumbnail}
             alt={title}
@@ -110,14 +98,13 @@ export function SurveyCard({
           )}
         </div>
 
-        {/* 본문 */}
-        <div className="flex min-h-0 flex-1 flex-col gap-2 pt-3">
-          {/* 제목은 2줄 고정 */}
-          <h3 className="line-clamp-2 text-base font-semibold">{title}</h3>
-          {/* 분기 렌더 */}
+        <div className="flex flex-col gap-3 p-4">
+          <h3 className="h-[52px] line-clamp-2 text-text-strong text-title-3 font-title-3 leading-title-3">
+            {title}
+          </h3>
           {renderBody()}
         </div>
       </Link>
-    </Card>
+    </div>
   )
 }

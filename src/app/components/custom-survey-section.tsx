@@ -3,13 +3,7 @@ import { SectionHeader } from '@/app/components/section-header'
 import { ResponsiveSliderGrid } from '@/components/ui/responsive-slider-grid'
 import { SurveyItem } from '@/types/survey'
 
-export function CustomSurveySection({
-  items,
-  cardHeightClass = 'h-[380px] md:h-[400px] lg:h-[420px]',
-}: {
-  items: SurveyItem[]
-  cardHeightClass?: string
-}) {
+export function CustomSurveySection({ items }: { items: SurveyItem[] }) {
   return (
     <section>
       <SectionHeader
@@ -27,7 +21,6 @@ export function CustomSurveySection({
             duration={s.duration}
             tags={s.tags}
             variant="default"
-            heightClass={cardHeightClass}
           />
         ))}
       </ResponsiveSliderGrid>

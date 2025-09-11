@@ -20,19 +20,16 @@ const banners: BannerItem[] = [
     id: 'b1',
     image: '/images/sample-1.png',
     alt: '신규 설문 오픈',
-    href: '/surveys?tab=newest',
   },
   {
     id: 'b2',
     image: '/images/sample-2.png',
     alt: '리워드샵 특가',
-    href: '/reward-shop',
   },
   {
     id: 'b3',
     image: '/images/sample-3.png',
     alt: '맞춤 설문 추천',
-    href: '/surveys/for-you',
   },
 ]
 
@@ -43,7 +40,7 @@ const customSurveys: SurveyItem[] = [
     thumbnail: '/images/sample-1.png',
     reward: { type: 'gifticon', value: 1, giftName: '커피' },
     duration: 3,
-    tags: ['영화', '취향'],
+    tags: ['여자', '취향'],
   },
   {
     id: 'c-2',
@@ -51,7 +48,7 @@ const customSurveys: SurveyItem[] = [
     thumbnail: '/images/sample-3.png',
     reward: { type: 'point', value: 700 },
     duration: 4,
-    tags: ['스포츠'],
+    tags: ['20대'],
   },
   {
     id: 'c-3',
@@ -276,29 +273,31 @@ const newestSurveys: (SurveyItem & { answers: string[] })[] = [
 const bestProducts: ProductItem[] = [
   {
     id: 'pr-1',
-    name: '스타벅스 아메리카노 T',
-    image: '/images/sample-2.png',
-    pricePoint: 5000,
-    discountPoint: 4500,
+    brandname: '[컴포즈커피]',
+    name: '아이스 아메리카노',
+    image: '/images/rewards/ComposeIceAmericano.png',
+    pricePoint: 1800,
   },
   {
     id: 'pr-2',
-    name: '편의점 기프티콘 5천P',
-    image: '/images/sample-1.png',
+    brandname: '[스타벅스]',
+    name: '아이스 아메리카노 T',
+    image: '/images/rewards/StarbucksColdblew.png',
     pricePoint: 5000,
   },
   {
     id: 'pr-3',
-    name: '배달앱 쿠폰 1만원',
-    image: '/images/sample-2.png',
-    pricePoint: 10000,
-    discountPoint: 9000,
+    brandname: '[롯데리아]',
+    name: '리아 불고기버거 세트',
+    image: '/images/rewards/LotteriaBurgerSet.png',
+    pricePoint: 7300,
   },
   {
     id: 'pr-4',
-    name: '영화 관람권',
-    image: '/images/sample-3.png',
-    pricePoint: 12000,
+    brandname: '[BHC]',
+    name: '후라이드+콜라 1.25L',
+    image: '/images/rewards/ChickenSet.png',
+    pricePoint: 21500,
   },
 ]
 
@@ -306,23 +305,20 @@ const bestProducts: ProductItem[] = [
 export default function Page() {
   return (
     <>
-      <main className="mx-auto max-w-6xl px-6 py-8 space-y-10">
+      <main className="mx-auto max-w-7xl mb-32 px-6 pt-8 space-y-10">
         {/* 광고 배너 캐러셀 */}
         <AdSection items={banners} />
 
         {/* 상태 요약 카드 */}
         <StatusSection
+          nickname="dd"
           newResponseCount={7}
           newResponseSurveyTitle="신제품 사용성 평가"
           weeklyPoints={4320}
-          cardHeightClass="h-28"
         />
 
         {/* 맞춤 설문조사 */}
-        <CustomSurveySection
-          items={customSurveys}
-          cardHeightClass="h-[300px]"
-        />
+        <CustomSurveySection items={customSurveys} />
 
         {/* 마감임박 섹션 */}
         <UrgentCarouselSection items={urgentList} />
@@ -331,10 +327,7 @@ export default function Page() {
         <SurveyPreviewSection items={previewList} />
 
         {/* BEST! 리워드 추천 상품 */}
-        <BestRewardProductsSection
-          items={bestProducts}
-          cardHeightClass="h-[300px]"
-        />
+        <BestRewardProductsSection items={bestProducts} />
 
         {/* 응답자를 기다리고 있어요 */}
         <WaitingSurveySection items={waitingSurveys} />

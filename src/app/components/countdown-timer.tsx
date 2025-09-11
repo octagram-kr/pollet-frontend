@@ -1,5 +1,6 @@
 'use client'
 
+import { TimeIcon } from '@/components/icons'
 import { useEffect, useMemo, useState } from 'react'
 
 export function CountdownTimer({ until }: { until: string | Date }) {
@@ -34,7 +35,7 @@ export function CountdownTimer({ until }: { until: string | Date }) {
   if (left === null)
     return (
       <span
-        className="rounded-full px-3 py-1 text-xs font-semibold shadow-sm bg-gray-300 text-black"
+        className="rounded-xl px-2 text-label-5 font-label-5 tracking-label-5 text-text-default"
         aria-live="polite"
         style={{ visibility: 'hidden' }}
         suppressHydrationWarning
@@ -56,11 +57,12 @@ export function CountdownTimer({ until }: { until: string | Date }) {
   return (
     <span
       className={[
-        'rounded-full px-3 py-1 text-xs font-semibold shadow-sm',
-        isOver ? 'bg-gray-200 text-gray-600' : 'bg-gray-300 text-black',
+        'flex gap-1 rounded-xl px-2 text-label-5 font-label-5 tracking-label-5 border border-stroke-subtle bg-fill-white',
+        isOver ? ' text-gray-600' : 'text-text-default',
       ].join(' ')}
       aria-live="polite"
     >
+      <TimeIcon className="w-[18px]" />
       {isOver ? '마감' : formatted}
     </span>
   )
