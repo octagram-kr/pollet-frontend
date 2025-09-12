@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { StarcandyFillIcon, BellIcon, UserIcon } from '../icons'
 import ProfilePanel from '@/components/layout/profile-panel'
+import NotificationPanel from './notification-panel'
 
 function NavLink({ href, label }: { href: string; label: string }) {
   const pathname = usePathname()
@@ -29,6 +30,7 @@ function NavLink({ href, label }: { href: string; label: string }) {
 export default function SiteHeader() {
   const points = 21700
   const [openProfile, setOpenProfile] = useState(false)
+  const [openNotice, setOpenNotice] = useState(false)
   const isAuthed = true
 
   return (
@@ -79,7 +81,10 @@ export default function SiteHeader() {
 
           <button
             type="button"
-            className="relative inline-block"
+            aria-haspopup="dialog"
+            aria-expanded={openNotice}
+            onClick={() => setOpenNotice((v) => !v)}
+            className="relative inline-block cursor-pointer"
           >
             <BellIcon className="size-8 fill-fill-deep" />
           </button>
@@ -87,6 +92,7 @@ export default function SiteHeader() {
           <button
             aria-label="내 프로필"
             onClick={() => setOpenProfile(true)}
+            className="cursor-pointer"
           >
             <UserIcon className="size-8 fill-fill-deep" />
           </button>
@@ -97,6 +103,10 @@ export default function SiteHeader() {
         open={openProfile}
         onClose={() => setOpenProfile(false)}
         isAuthed={isAuthed}
+      />
+      <NotificationPanel
+        open={openNotice}
+        onClose={() => setOpenNotice(false)}
       />
     </header>
   )

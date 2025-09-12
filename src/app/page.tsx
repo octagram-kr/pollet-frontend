@@ -18,17 +18,17 @@ type UrgentItem = SurveyItem & {
 const banners: BannerItem[] = [
   {
     id: 'b1',
-    image: '/images/sample-1.png',
+    image: '/images/thumbnails/Travel.png',
     alt: '신규 설문 오픈',
   },
   {
     id: 'b2',
-    image: '/images/sample-2.png',
+    image: '/images/thumbnails/Healthcare.png',
     alt: '리워드샵 특가',
   },
   {
     id: 'b3',
-    image: '/images/sample-3.png',
+    image: '/images/thumbnails/Pet.png',
     alt: '맞춤 설문 추천',
   },
 ]
@@ -36,27 +36,35 @@ const banners: BannerItem[] = [
 const customSurveys: SurveyItem[] = [
   {
     id: 'c-1',
-    title: '영화 취향 조사',
-    thumbnail: '/images/sample-1.png',
+    title: '20대 여성을 위한 여행 계획 서비스 수요 조사',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'gifticon', value: 1, giftName: '커피' },
     duration: 3,
-    tags: ['여자', '취향'],
+    tags: ['여자', '20대', '여행'],
   },
   {
     id: 'c-2',
-    title: '스포츠 관람 트렌드',
-    thumbnail: '/images/sample-3.png',
+    title: 'AI를 활용한 여행 계획 서비스 준비를 위한 설문 조사 ',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 700 },
     duration: 4,
-    tags: ['20대'],
+    tags: ['20대', '여행', '커머스'],
   },
   {
     id: 'c-3',
-    title: '음악 플랫폼 이용 행태',
-    thumbnail: '/images/sample-3.png',
+    title: 'MZ세대의 AI 의존도 연구를 위한 설문조사',
+    thumbnail: '/images/thumbnails/AI.png',
+    reward: { type: 'point', value: 1, giftName: '커피' },
+    duration: 3,
+    tags: ['20대', '대학생', 'AI'],
+  },
+  {
+    id: 'c-4',
+    title: '생성형 AI가 우리 삶에 얼마나 많은 영향을 끼치는가에 대한 설문 조사',
+    thumbnail: '/images/thumbnails/AI.png',
     reward: { type: 'point', value: 650 },
     duration: 3,
-    tags: ['음악'],
+    tags: ['20대', '대학생', 'AI'],
   },
 ]
 
@@ -64,7 +72,7 @@ const urgentList: UrgentItem[] = [
   {
     id: 'u-1',
     title: '신제품 사용성 평가',
-    thumbnail: '/images/sample-1.png',
+    thumbnail: '/images/thumbnails/AI.png',
     reward: { type: 'point', value: 1200 },
     duration: 4,
     tags: ['IT'],
@@ -74,41 +82,41 @@ const urgentList: UrgentItem[] = [
   {
     id: 'u-2',
     title: '모바일 UX 설문',
-    thumbnail: '/images/sample-2.png',
+    thumbnail: '/images/thumbnails/AI.png',
     reward: { type: 'point', value: 900 },
     duration: 3,
     tags: ['모바일'],
-    countdownUntil: '2025-08-27T18:00:00+09:00',
+    countdownUntil: '2025-09-21T18:00:00+09:00',
     progress: { rate: 38, current: 76, target: 200 },
   },
   {
     id: 'u-3',
     title: '식음료 패키지 평가',
-    thumbnail: '/images/sample-3.png',
+    thumbnail: '/images/thumbnails/AI.png',
     reward: { type: 'point', value: 700 },
     duration: 3,
     tags: ['F&B'],
-    countdownUntil: '2025-08-27T20:00:00+09:00',
+    countdownUntil: '2025-09-21T20:00:00+09:00',
     progress: { rate: 55, current: 110, target: 200 },
   },
   {
     id: 'u-4',
     title: '여행 앱 사용성',
-    thumbnail: '/images/sample-2.png',
+    thumbnail: '/images/thumbnails/AI.png',
     reward: { type: 'point', value: 800 },
     duration: 4,
     tags: ['여행'],
-    countdownUntil: '2025-08-27T21:30:00+09:00',
+    countdownUntil: '2025-09-21T21:30:00+09:00',
     progress: { rate: 20, current: 40, target: 200 },
   },
   {
     id: 'u-5',
     title: '배달앱 결제 만족도',
-    thumbnail: '/images/sample-3.png',
+    thumbnail: '/images/thumbnails/AI.png',
     reward: { type: 'point', value: 600 },
     duration: 3,
     tags: ['배달'],
-    countdownUntil: '2025-08-27T22:00:00+09:00',
+    countdownUntil: '2025-10-11T22:00:00+09:00',
     progress: { rate: 66, current: 132, target: 200 },
   },
   {
@@ -157,7 +165,7 @@ const previewList: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'p-1',
     title: '커피 취향 설문',
-    thumbnail: '/images/sample-1.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 400 },
     duration: 2,
     tags: ['카페', '취향'],
@@ -166,7 +174,7 @@ const previewList: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'p-2',
     title: '영화 관람 패턴',
-    thumbnail: '/images/sample-2.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 500 },
     duration: 3,
     tags: ['영화'],
@@ -175,7 +183,7 @@ const previewList: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'p-3',
     title: '헬스케어 앱 사용',
-    thumbnail: '/images/sample-3.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 600 },
     duration: 3,
     tags: ['건강'],
@@ -184,7 +192,7 @@ const previewList: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'p-4',
     title: '여행 예산대',
-    thumbnail: '/images/sample-1.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 700 },
     duration: 4,
     tags: ['여행'],
@@ -196,7 +204,7 @@ const waitingSurveys: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'w-1',
     title: '커피 브랜드 선호도',
-    thumbnail: '/images/sample-1.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'gifticon', value: 1 },
     duration: 2,
     tags: ['카페'],
@@ -205,7 +213,7 @@ const waitingSurveys: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'w-2',
     title: '배달 앱 사용 빈도',
-    thumbnail: '/images/sample-2.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 350 },
     duration: 2,
     tags: ['배달'],
@@ -214,7 +222,7 @@ const waitingSurveys: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'w-3',
     title: '패션 쇼핑 채널',
-    thumbnail: '/images/sample-3.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 420 },
     duration: 3,
     tags: ['패션'],
@@ -223,7 +231,7 @@ const waitingSurveys: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'w-4',
     title: '디지털 구독 서비스',
-    thumbnail: '/images/sample-1.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 500 },
     duration: 3,
     tags: ['구독'],
@@ -235,7 +243,7 @@ const newestSurveys: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'n-1',
     title: '쇼핑 성향',
-    thumbnail: '/images/sample-3.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 300 },
     duration: 2,
     tags: ['쇼핑'],
@@ -244,7 +252,7 @@ const newestSurveys: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'n-2',
     title: '여행 계획',
-    thumbnail: '/images/sample-2.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 800 },
     duration: 5,
     tags: ['여행'],
@@ -253,7 +261,7 @@ const newestSurveys: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'n-3',
     title: '디저트 취향',
-    thumbnail: '/images/sample-1.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 250 },
     duration: 2,
     tags: ['디저트'],
@@ -262,7 +270,7 @@ const newestSurveys: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'n-4',
     title: '스마트워치 사용',
-    thumbnail: '/images/sample-2.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 700 },
     duration: 3,
     tags: ['디바이스'],
