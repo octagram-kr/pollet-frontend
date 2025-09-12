@@ -30,7 +30,7 @@ export default function ThumbnailCard({ className, value, onChange }: Props) {
     {
       id: 'ai',
       name: 'AI',
-      images: [{ id: 'ai-1', src: '/images/thumbnails/AI.png.', alt: 'AI 1' }],
+      images: [{ id: 'ai-1', src: '/images/thumbnails/AI.png', alt: 'AI 1' }],
     },
     {
       id: 'edu',
@@ -83,11 +83,11 @@ export default function ThumbnailCard({ className, value, onChange }: Props) {
       ],
     },
     {
-      id: 'commmerce',
+      id: 'commerce',
       name: '커머스',
       images: [
         {
-          id: 'cum-1',
+          id: 'com-1',
           src: '/images/thumbnails/Commerce.png',
           alt: '커머스 1',
         },

@@ -48,7 +48,7 @@ const customSurveys: SurveyItem[] = [
     thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 700 },
     duration: 4,
-    tags: ['20대', '여헹', '커머스'],
+    tags: ['20대', '여행', '커머스'],
   },
   {
     id: 'c-3',
