@@ -14,6 +14,7 @@ interface Props {
   gifticon: Gifticon
   // 합계(원)
   totalWon: number
+  totalGifticonWon: number
 }
 
 export function UsedForRewardSection({
@@ -24,51 +25,58 @@ export function UsedForRewardSection({
   gifticonCount,
   gifticon,
   totalWon,
+  totalGifticonWon,
 }: Props) {
-  const won = (n: number) => `${n.toLocaleString()}원`
+  const won = (n: number) => `${n.toLocaleString()}P`
+  const gifticonUnits = gifticonCount > 0 ? targetCount / gifticonCount : 0
 
   return (
-    <section className="mb-6">
-      <h2 className="mb-2 text-lg font-semibold">리워드 지급 비용</h2>
-
-      <div className="rounded-xl border border-gray-200 bg-white p-4">
-        <div className="flex flex-col gap-2">
+    <section className="mb-12">
+      <div className="rounded-sm border border-stroke-subtle bg-fill-white px-6 py-3">
+        <div className="flex items-center justify-between gap-2">
           {/* 수식 영역 */}
-          <div className="text-base leading-relaxed text-gray-700">
+          <div className="text-left text-text-default">
             {rewardType === 'point' ? (
-              <>
-                <span className="text-gray-500">목표 인원 수 </span>
-                <b className="text-gray-900">
-                  {targetCount.toLocaleString()}명
-                </b>
-                <span className="mx-1 text-gray-400">×</span>
-                <span className="text-gray-500">예상 시간 </span>
-                <b className="text-gray-900">{estimatedMinutes}분</b>
-                <span className="mx-1 text-gray-400">×</span>
-                <span className="text-gray-500">1분 당 지급 포인트 </span>
-                <b className="text-gray-900">{pointPerMinute}p</b>
-              </>
+              <span className="text-body-5 font-body-5 leading-body-5 tracking-body-5">
+                목표 인원 수{' '}
+                <span className="text-body-1 font-body-1 leading-body-1 tracking-body-1">
+                  {targetCount.toLocaleString()}
+                </span>
+                명 &nbsp;×&nbsp; 예상 소요 시간{' '}
+                <span className="text-body-1 font-body-1 leading-body-1 tracking-body-1">
+                  {estimatedMinutes}
+                </span>
+                분 &nbsp;×&nbsp; 지급 포인트{' '}
+                <span className="text-body-1 font-body-1 leading-body-1 tracking-body-1">
+                  {pointPerMinute}
+                </span>
+                P
+              </span>
             ) : (
               <>
-                <span className="text-gray-500">기프티콘 지급 인원 수 </span>
-                <b className="text-gray-900">
-                  {gifticonCount.toLocaleString()}명
-                </b>
-                <span className="mx-1 text-gray-400">×</span>
-                <span className="text-gray-900">{gifticon.name} </span>
-                <b className="text-gray-900">{won(gifticon.price)}</b>
+                <span className="text-body-5 font-body-5 leading-body-5 tracking-body-5">
+                  리워드 지급 인원&nbsp;{' '}
+                  <span className="text-body-1 font-body-1 leading-body-1 tracking-body-1">
+                    {gifticonUnits.toLocaleString()}
+                  </span>
+                  명 &nbsp;×&nbsp; 기프티콘 비용&nbsp;{' '}
+                  <span className="text-body-1 font-body-1 leading-body-1 tracking-body-1">
+                    {won(gifticon.price)}
+                  </span>
+                </span>
               </>
             )}
           </div>
 
-          {/* = 금액 (우측 하단 배치) */}
-          <div className="flex justify-end">
-            <div className="inline-flex min-w-[180px] items-center gap-6 rounded bg-gray-100 px-8 py-3">
-              <span className="text-xl font-semibold text-gray-600">=</span>
-              <span className="text-2xl font-bold text-gray-900">
-                {won(totalWon)}
-              </span>
-            </div>
+          {/* 금액 */}
+
+          <div className="flex justify-between w-[258px] h-11 items-center gap-6 rounded bg-bg-white border border-stroke-subtler px-6 py-3">
+            <span className="text-body-5 font-body-5 leading-body-5 tracking-body-5 text-text-default">
+              총
+            </span>
+            <span className="text-body-2 font-body-2 leading-body-2 tracking-body-2 text-text-default">
+              {rewardType === 'point' ? won(totalWon) : won(totalGifticonWon)}
+            </span>
           </div>
         </div>
       </div>

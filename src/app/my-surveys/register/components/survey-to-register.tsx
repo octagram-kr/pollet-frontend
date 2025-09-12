@@ -21,24 +21,22 @@ interface Props {
 /** 좌측 큰 카드: 등록할 설문(썸네일 + 우측 제목) */
 export function SurveyToRegister({ survey }: Props) {
   return (
-    <section className="mb-8">
-      <h2 className="mb-3 text-lg font-semibold">등록할 설문</h2>
-
-      <div className="flex gap-4 rounded-xl border border-gray-200 bg-white p-4">
-        <div className="aspect-[16/9] w-60 shrink-0 overflow-hidden rounded-lg bg-gray-100">
+    <section className="my-12">
+      <div className="h-[175px] flex gap-6 rounded-sm border border-stroke-default fill-fill-white px-6 py-5">
+        <div className="w-[180px] shrink-0 overflow-hidden bg-gray-100">
           {/* 썸네일 */}
           <Image
             src={survey.thumbnailUrl}
             alt="설문 썸네일"
-            width={300}
-            height={112}
+            width={45}
+            height={36.25}
             className="object-cover"
           />
         </div>
 
         {/* 제목 */}
         <div className="flex min-w-0 items-center">
-          <h3 className="line-clamp-2 text-base font-semibold leading-6 text-gray-900">
+          <h3 className="line-clamp-2 text-body-2 font-body-2 leading-body-2 tracking-body-2 text-text-default">
             {survey.title}
           </h3>
         </div>

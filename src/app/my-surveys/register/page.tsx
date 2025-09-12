@@ -1,12 +1,12 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import type { RewardType } from '@/types/survey'
 import {
   SurveyToRegister,
   type SurveySummary,
 } from './components/survey-to-register'
-import { RegistrationPreview } from './components/registration-preview'
 import { RewardTypeSelector } from './components/reward-type-selector'
 import {
   RewardDetailSection,
@@ -18,6 +18,7 @@ import { PointPaymentSummary } from './components/point-payment-summary'
 import { PaymentButtonSection } from './components/payment-button-section'
 
 export default function SurveyRegisterPage() {
+  const router = useRouter()
   const [rewardType, setRewardType] = useState<RewardType>('point')
 
   // ====== 설문/리워드 입력값 ======
@@ -30,27 +31,31 @@ export default function SurveyRegisterPage() {
     () => [
       {
         id: 'g1',
-        name: '컴포즈커피 아이스 아메리카노',
+        brand: '[컴포즈커피]',
+        name: '아이스 아메리카노',
         price: 1800,
-        imageUrl: '/images/gift-1.png',
+        imageUrl: '/images/rewards/ComposeIceAmericano.png',
       },
       {
         id: 'g2',
-        name: '스타벅스 아아T',
+        brand: '[스타벅스]',
+        name: '아이스 아메리카노T',
         price: 4700,
-        imageUrl: '/images/gift-2.png',
+        imageUrl: '/images/rewards/StarbucksColdblew.png',
       },
       {
         id: 'g3',
-        name: '맘스터치 싸이버거 세트',
+        brand: '[롯데리아]',
+        name: '리아 불고기버거 세트',
         price: 7300,
-        imageUrl: '/images/gift-3.png',
+        imageUrl: '/images/rewards/LotteriaBurgerSet.png',
       },
       {
         id: 'g4',
-        name: 'BHC 콜라+25L',
-        price: 19500,
-        imageUrl: '/images/gift-4.png',
+        brand: '[BHC]',
+        name: '후라이드+콜라1.25L',
+        price: 21500,
+        imageUrl: '/images/rewards/ChickenSet.png',
       },
     ],
     [],
@@ -63,24 +68,22 @@ export default function SurveyRegisterPage() {
     [gifticons, selectedGifticonId],
   )
 
-  // 뱃지 연동값
-  const pointPerPerson = useMemo(
-    () => Math.max(0, estimatedMinutes) * Math.max(0, pointPerMinute),
-    [estimatedMinutes, pointPerMinute],
-  )
-
   // ====== 플랫폼 사용료(기간은 편집기에서 전달받는다고 가정: 데모 값) ======
-  const [periodStart] = useState('2025-05-01')
-  const [periodEnd] = useState('2025-05-03')
+  const [periodStart] = useState('2025-07-21')
+  const [periodEnd] = useState('2025-07-23')
   const [platformFeeWon, setPlatformFeeWon] = useState(0)
 
   // ====== 비용 합계(원) ======
+  const gifticonUnits =
+    rewardType === 'gifticon' && gifticonCount > 0
+      ? Math.max(0, targetCount) / Math.max(0, gifticonCount)
+      : 0
   const usedForRewardWon =
     rewardType === 'point'
       ? Math.max(0, targetCount) *
         Math.max(0, estimatedMinutes) *
         Math.max(0, pointPerMinute)
-      : Math.max(0, gifticonCount) * Math.max(0, selectedGifticon.price)
+      : gifticonUnits * Math.max(0, selectedGifticon.price)
 
   const [usablePoints, setUsablePoints] = useState(100_000) // ‘원’과 1:1이라고 가정
   const totalPaymentPoints = usedForRewardWon + platformFeeWon
@@ -101,72 +104,68 @@ export default function SurveyRegisterPage() {
   }
 
   return (
-    <main className="mx-auto max-w-5xl p-6">
-      <SurveyToRegister survey={survey} />
-      <RegistrationPreview
-        survey={survey}
-        rewardType={rewardType}
-        pointValue={pointPerPerson}
-        gifticonName={selectedGifticon.name}
-        estimatedMinutes={estimatedMinutes}
-      />
-
-      <RewardTypeSelector
-        value={rewardType}
-        onChange={setRewardType}
-      />
-
-      <RewardDetailSection
-        rewardType={rewardType}
-        targetCount={targetCount}
-        onChangeTargetCount={setTargetCount}
-        estimatedMinutes={estimatedMinutes}
-        onChangeEstimatedMinutes={setEstimatedMinutes}
-        // point
-        pointPerMinute={pointPerMinute}
-        onChangePointPerMinute={setPointPerMinute}
-        // gifticon
-        gifticonCount={gifticonCount}
-        onChangeGifticonCount={setGifticonCount}
-        gifticons={gifticons}
-        selectedGifticonId={selectedGifticonId}
-        onChangeSelectedGifticonId={setSelectedGifticonId}
-      />
-
-      <UsedForRewardSection
-        rewardType={rewardType}
-        // point
-        targetCount={targetCount}
-        estimatedMinutes={estimatedMinutes}
-        pointPerMinute={pointPerMinute}
-        // gifticon
-        gifticonCount={gifticonCount}
-        gifticon={selectedGifticon}
-        // 합계
-        totalWon={usedForRewardWon}
-      />
-
-      <PlatformFeeSection
-        startDate={periodStart}
-        endDate={periodEnd}
-        targetCount={targetCount}
-        onComputedChange={setPlatformFeeWon}
-      />
-
-      <PointPaymentSummary
-        usablePoints={usablePoints}
-        onChangeUsablePoints={setUsablePoints}
-        usedForRewardPoints={usedForRewardWon} // 원 단위
-        platformFeePoints={platformFeeWon} // 원 단위
-        totalPaymentPoints={totalPaymentPoints} // 원 단위
-        remainingPoints={remainingPoints} // 원 단위
-      />
-
-      <PaymentButtonSection
-        disabled={remainingPoints < 0}
-        totalPaymentPoints={totalPaymentPoints}
-        onSubmit={() => alert('결제 요청이 전송되었습니다.')}
-      />
-    </main>
+    <>
+      <main className="mx-auto max-w-[792px]">
+        <h1 className="mt-16 text-title-1 font-title-1 leading-title-1 text-text-strong">
+          설문 조사 등록 및 결제
+        </h1>
+        <SurveyToRegister survey={survey} />
+        <RewardTypeSelector
+          value={rewardType}
+          onChange={setRewardType}
+        />
+        <RewardDetailSection
+          rewardType={rewardType}
+          targetCount={targetCount}
+          onChangeTargetCount={setTargetCount}
+          estimatedMinutes={estimatedMinutes}
+          onChangeEstimatedMinutes={setEstimatedMinutes}
+          // point
+          pointPerMinute={pointPerMinute}
+          onChangePointPerMinute={setPointPerMinute}
+          // gifticon
+          gifticonCount={gifticonCount}
+          onChangeGifticonCount={setGifticonCount}
+          gifticons={gifticons}
+          selectedGifticonId={selectedGifticonId}
+          onChangeSelectedGifticonId={setSelectedGifticonId}
+        />
+        <UsedForRewardSection
+          rewardType={rewardType}
+          // point
+          targetCount={targetCount}
+          estimatedMinutes={estimatedMinutes}
+          pointPerMinute={pointPerMinute}
+          // gifticon
+          gifticonCount={gifticonCount}
+          gifticon={selectedGifticon}
+          // 합계
+          totalWon={usedForRewardWon}
+          totalGifticonWon={usedForRewardWon}
+        />
+        <PlatformFeeSection
+          startDate={periodStart}
+          endDate={periodEnd}
+          targetCount={targetCount}
+          onComputedChange={setPlatformFeeWon}
+        />
+        <PointPaymentSummary
+          usablePoints={usablePoints}
+          onChangeUsablePoints={setUsablePoints}
+          usedForRewardPoints={usedForRewardWon} // 원 단위
+          platformFeePoints={platformFeeWon} // 원 단위
+          totalPaymentPoints={totalPaymentPoints} // 원 단위
+          remainingPoints={remainingPoints} // 원 단위
+        />
+        <PaymentButtonSection
+          disabled={remainingPoints < 0}
+          totalPaymentPoints={totalPaymentPoints}
+          onSubmit={() => {
+            alert('서베이 등록 완료!')
+            router.push('/my-surveys')
+          }}
+        />
+      </main>
+    </>
   )
 }

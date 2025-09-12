@@ -17,17 +17,21 @@ export function PointPaymentSummary({
   totalPaymentPoints,
   remainingPoints,
 }: Props) {
-  const won = (n: number) => `${n.toLocaleString()}원`
+  const won = (n: number) => `${n.toLocaleString()}P`
   const deficit = remainingPoints < 0
 
   return (
-    <section className="mb-6">
-      <h2 className="mb-2 text-lg font-semibold">포인트 결제 내역</h2>
+    <section className="mb-[140px]">
+      <h2 className="mb-4 text-heading-2 font-heading-2 leading-heading-2 tracking-heading-2 text-text-strong">
+        최종 결제 내역
+      </h2>
 
-      <div className="rounded-xl border border-gray-200 bg-white p-4">
+      <div className="rounded-sm border border-stroke-subtle bg-fill-white px-6 py-5">
         {/* 사용 가능 포인트 */}
-        <div className="mb-2 flex items-center justify-between">
-          <span className="text-sm text-gray-700">사용 가능 포인트</span>
+        <div className="mb-5 flex items-center justify-between">
+          <span className="text-body-4 font-body-4 leading-body-4 tracking-body-4 text-text-default">
+            사용 가능 포인트
+          </span>
           <input
             type="number"
             min={0}
@@ -35,15 +39,17 @@ export function PointPaymentSummary({
             onChange={(e) => onChangeUsablePoints(Number(e.target.value || 0))}
             className="hidden" /* 값은 상단/다른 곳에서 세팅, 표시는 숫자만 */
           />
-          <div className="text-2xl font-bold text-gray-900">
+          <div className="text-body-1 font-body-1 leading-body-1 tracking-body-1 text-text-default">
             {won(usablePoints)}
           </div>
         </div>
 
         {/* 총 결제 포인트 */}
         <div className="mb-2 flex items-center justify-between">
-          <span className="text-sm text-gray-700">총 결제 포인트</span>
-          <div className="text-2xl font-bold text-gray-900">
+          <span className="text-body-4 font-body-4 leading-body-4 tracking-body-4 text-text-default">
+            총 결제 포인트
+          </span>
+          <div className="text-body-1 font-body-1 leading-body-1 tracking-body-1 text-text-default">
             {won(totalPaymentPoints)}
           </div>
         </div>
@@ -51,7 +57,7 @@ export function PointPaymentSummary({
         {/* 내역 상세 (세로 가이드) */}
         <div className="mb-3 ml-1 border-l-2 border-gray-200 pl-4">
           <Row
-            label="리워드 지급 비용"
+            label="서베이 리워드 지급 비용"
             value={won(usedForRewardPoints)}
             muted
           />
@@ -62,14 +68,21 @@ export function PointPaymentSummary({
           />
         </div>
 
-        {/* 결제 후 남은 포인트 */}
-        <div className="mt-2 rounded-md bg-gray-100 px-3 py-2">
+        <hr className="my-5 border-stroke-subtle" />
+
+        {/* 최종 결제 포인트 */}
+        <div className="mt-2">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-800">결제 후 남은 포인트</span>
-            <div
-              className={`text-2xl font-bold ${deficit ? 'text-red-600' : 'text-gray-900'}`}
-            >
-              {won(remainingPoints)}
+            <span className="text-body-4 font-body-4 leading-body-4 tracking-body-4 text-text-default">
+              총 결제 포인트
+            </span>
+            <div className="inline-flex min-w-[258px] items-center justify-between gap-6 rounded-xs bg-bg-white px-4 py-1 border border-stroke-subtler">
+              <span className="text-body-5 font-body-5 leading-body-5 tracking-body-5 text-text-default">
+                총
+              </span>
+              <span className="text-body-2 font-body-2 leading-body-2 tracking-body-2 text-text-default">
+                {won(totalPaymentPoints)}
+              </span>
             </div>
           </div>
           {deficit && (
@@ -94,11 +107,13 @@ function Row({
 }) {
   return (
     <div className="flex items-center justify-between py-1">
-      <span className={`text-sm ${muted ? 'text-gray-500' : 'text-gray-700'}`}>
+      <span
+        className={`text-body-5 font-body-5 leading-body-5 tracking-body-5 ${muted ? 'text-text-subtle' : 'text-gray-700'}`}
+      >
         {label}
       </span>
       <span
-        className={`text-base ${muted ? 'text-gray-500' : 'text-gray-900'}`}
+        className={`text-body-1 font-body-1 leading-body-1 tracking-body-1 ${muted ? 'text-text-subtle' : 'text-gray-900'}`}
       >
         {value}
       </span>
