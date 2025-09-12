@@ -20,9 +20,9 @@ export default function MyPage() {
     <div className="min-h-screen bg-[#f3f4f5]">
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-5 py-8">
-        <div className="flex gap-8">
+        <div className="flex flex-col lg:flex-row gap-8">
           {/* Left Sidebar - Profile Card */}
-          <div className="w-[282px] flex-shrink-0">
+          <div className="w-full lg:w-[282px] flex-shrink-0">
             <ProfileCard />
           </div>
 
