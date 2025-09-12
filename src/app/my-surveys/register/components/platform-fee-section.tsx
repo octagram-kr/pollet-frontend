@@ -46,72 +46,71 @@ export function PlatformFeeSection({
   }, [finalFee, onComputedChange])
 
   // helpers
-  const won = (n: number) => `${n.toLocaleString('ko-KR')}원`
+  const won = (n: number) => `${n.toLocaleString('ko-KR')}P`
 
   return (
-    <section className="mb-6">
-      <h2 className="mb-2 text-lg font-semibold">플랫폼 사용료</h2>
+    <section className="mb-12">
+      <h2 className="mb-4 text-heading-2 font-heading-2 leading-heading-2 tracking-heading-2 text-text-strong">
+        플랫폼 사용료
+      </h2>
 
-      <div className="rounded-xl border border-gray-200 bg-white p-4">
+      <div className="rounded-sm border border-stroke-subtle bg-fill-white px-6 py-5">
         {/* 설문 기간 줄 */}
-        <div className="mb-3 flex flex-wrap items-center gap-2 text-sm">
-          <span className="font-semibold text-gray-800">설문 기간</span>
-          <span className="rounded bg-gray-50 px-3 py-1 text-gray-900">
+        <div className="mb-3 flex flex-wrap items-center gap-2">
+          <span className="text-body-4 font-body-4 leading-body-4 tracking-body-4 text-text-default">
+            설문 기간
+          </span>
+          <span className="flex items-center gap-1">
+            <HelpTooltip
+              message={
+                '종료 기간이 5일 미만인 설문은 등록 즉시 마감 임박 설문에 노출되고,\n사용료가 2배로 적용됩니다.'
+              }
+            />
+          </span>
+          <span className="px-1 text-body-5 font-body-5 leading-body-5 tracking-body-5 text-text-subtle">
             {startDate} ~ {endDate}
           </span>
-          <span className="font-semibold text-gray-800">
-            (총 {totalDays}일)
+          <span className="text-body-5 font-body-5 leading-body-5 tracking-body-5 text-text-subtle">
+            ( {totalDays}일 )
           </span>
-          {isDouble && (
-            <span className="flex items-center justify-center gap-1 rounded bg-gray-300 px-2.5 py-1 text-[12px] font-semibold text-gray-800 leading-none">
-              플랫폼 사용료 2배 적용
-              <HelpTooltip
-                message={
-                  '목표 인원 수 50명 이하는 기본 플랫폼 사용료 3,000원이 적용되며,\n50명 초과시 10명 단위로 올림하여 플랫폼 사용료 1,000원이 추가됩니다.'
-                }
-              />
-            </span>
-          )}
         </div>
 
         {/* 라벨 */}
-        <div className="mb-2 text-base text-gray-800">
+        <div className="text-body-4 font-body-4 leading-body-4 tracking-body-4 text-text-default">
           <span className="flex items-center gap-1">
             플랫폼 사용료
             <HelpTooltip
               message={
-                '목표 인원 수 50명 이하는 기본 플랫폼 사용료 3,000원이 적용되며,\n50명 초과시 10명 단위로 올림하여 플랫폼 사용료 1,000원이 추가됩니다.'
+                '목표 인원 수 50명 이하일 경우 기본 사용료는 3,000원이며,\n초과 시 10명 단위로 올림하여 10명당 1,000원이 추가됩니다.'
               }
             />
           </span>
         </div>
 
         {/* 수식 박스 */}
-        <div className="flex flex-col gap-2">
+        <div className="flex justify-between items-center gap-2">
           {/* 수식 */}
-          <div className="text-lg text-gray-700">
+          <div className="text-body-5 font-body-5 leading-body-5 tracking-body-5 text-text-default">
             <span>기본 요금 </span>
-            <b className="text-gray-900">{won(baseFee)}</b>
-            <span className="mx-1 text-gray-400"> + </span>
+            <span className="text-gray-900">{won(baseFee)}</span>
+            <span className="mx-1"> + </span>
             <span>추가 요금 </span>
-            <b className="text-gray-900">{won(extraFee)}</b>
-            <span className="text-sm text-gray-500">
-              {' '}
-              (추가 인원 {extraPeople.toLocaleString()}명)
-            </span>
+            <span className="text-gray-900">{won(extraFee)}</span>
             {isDouble && (
               <>
-                <span className="mx-1 text-gray-400"> × </span>
-                <b className="text-gray-900">2 배</b>
+                <span className="mx-1"> × </span>
+                <span className="">2 배</span>
               </>
             )}
           </div>
 
           {/* 금액 박스 */}
-          <div className="flex justify-end">
-            <div className="inline-flex min-w-[180px] items-center gap-6 rounded bg-gray-100 px-8 py-3">
-              <span className="text-xl font-semibold text-gray-600">=</span>
-              <span className="text-2xl font-bold text-gray-900">
+          <div className="flex items-center">
+            <div className="inline-flex min-w-[258px] items-center justify-between gap-6 rounded-xs bg-bg-white px-4 py-1 border border-stroke-subtler">
+              <span className="text-body-5 font-body-5 leading-body-5 tracking-body-5 text-text-default">
+                총
+              </span>
+              <span className="text-body-2 font-body-2 leading-body-2 tracking-body-2 text-text-default">
                 {won(finalFee)}
               </span>
             </div>

@@ -3,11 +3,13 @@
 import Image from 'next/image'
 import type { RewardType } from '@/types/survey'
 import HelpTooltip from './help-tooltip'
+import { StarcandyFillIcon } from '@/components/icons'
 
 export type Gifticon = {
   id: string
+  brand: string
   name: string
-  price: number // 원
+  price: number
   imageUrl?: string
 }
 
@@ -50,19 +52,25 @@ export function RewardDetailSection({
   const pointPerPerson =
     Math.max(0, estimatedMinutes) * Math.max(0, pointPerMinute)
 
-  return (
-    <section className="mb-6">
-      <h2 className="mb-2 text-lg font-semibold">리워드 지급 상세</h2>
+  const maxGificonCount = gifticonCount > 0 ? targetCount / gifticonCount : 0
 
-      <div className="rounded-xl border border-gray-200 bg-white p-4">
+  return (
+    <section className="mb-12">
+      <h2 className="mb-4 text-heading-2 font-heading-2 leading-heading-2 tracking-heading-2 text-text-strong">
+        서베이 리워드 지불 비용
+      </h2>
+
+      <div className="rounded-sm border border-stroke-subtle bg-fill-white px-6 py-5">
         {/* ==== 폼 행: 좌 라벨 / 우 입력 ==== */}
         <div className="space-y-3">
           {/* 목표 인원 수 */}
           <Row
             label={
               <span className="flex items-center gap-1">
-                목표 인원 수
-                <HelpTooltip message="목표 인원 수에 도달하면 설문이 자동 종료됩니다." />
+                <span className="text-body-4 font-body-4 leading-body-4 tracking-body-4 text-text-default">
+                  목표 인원 수
+                </span>
+                <HelpTooltip message="목표 인원 수를 충족하면 해당 설문 조사는 자동으로 종료됩니다" />
               </span>
             }
           >
@@ -77,10 +85,12 @@ export function RewardDetailSection({
           <Row
             label={
               <span className="flex items-center gap-1">
-                예상 시간
+                <span className="text-body-4 font-body-4 leading-body-4 tracking-body-4 text-text-default">
+                  예상 시간
+                </span>
                 <HelpTooltip
                   message={
-                    '응답자의 실제 설문 시간과 평균 2분 이상 차이가\n발생할 경우, 응답자에게 경고창이 노출됩니다.'
+                    '참여자의 실제 설문 소요 시간과 예상 소요 시간이\n2분 이상 차이가 날 경우, 참여자에게 안내창이 노출됩니다'
                   }
                 />
               </span>
@@ -98,10 +108,12 @@ export function RewardDetailSection({
             <Row
               label={
                 <span className="flex items-center gap-1">
-                  1분 당 지급 포인트
+                  <span className="text-body-4 font-body-4 leading-body-4 tracking-body-4 text-text-default">
+                    분 당 지급할 포인트
+                  </span>
                   <HelpTooltip
                     message={
-                      '2025년 기준 10분 최저 시급은 1671원이며, 150p 이상 설정 시\n목표 인원 수를 채우지 못할 경우 남은 금액 환불이 가능합니다.'
+                      '2025년 기준, 10분 당 최저 시급은 약 1,670원입니다.\n1분 당 지급 포인트를 150P 이상 설정 시, 남은 포인트 환불이 가능합니다'
                     }
                   />
                 </span>
@@ -117,10 +129,12 @@ export function RewardDetailSection({
             <Row
               label={
                 <span className="flex items-center gap-1">
-                  기프티콘 지급 인원 수
+                  <span className="text-body-4 font-body-4 leading-body-4 tracking-body-4 text-text-default">
+                    기프티콘 증정 단위
+                  </span>
                   <HelpTooltip
                     message={
-                      '목표 인원 수에 도달하지 못할 경우, 비율에 따라 지급되며\n남은 기프티콘 금액 만큼 환불이 가능합니다.'
+                      '목표 인원과 기프티콘 증정 기준 (n명당 1개)을 설정하면\n필요한 최대 기프티콘 수가  자동 계산됩니다.\n목표 인원을 채우지 못할 시, 참여 인원 비율만큼 지급 후\n잔여 기프티콘의 금액은 환불됩니다.'
                     }
                   />
                 </span>
@@ -136,19 +150,30 @@ export function RewardDetailSection({
         </div>
 
         {/* ======= 안내 문구 ======= */}
+
         {rewardType === 'point' ? (
-          <p className="mt-4 text-[15px] text-gray-800">
-            모든 참여자는 약 <b className="text-gray-900">{estimatedMinutes}</b>
-            분 동안 설문 조사에 참여한 후,&nbsp;
-            <b className="text-gray-900">{pointPerPerson.toLocaleString()}</b>p
-            를 지급받습니다.
-          </p>
+          <>
+            <hr className="my-5 border-stroke-subtle" />
+            <p className="text-end mt-5 text-body-5 font-body-5 leading-body-5 tracking-body-5 text-text-default">
+              모든 참여자는{' '}
+              <span className="text-body-3 font-body-4 leading-body-4 tracking-body-4">
+                약 {estimatedMinutes}분
+              </span>{' '}
+              동안 설문 조사에 참여한 후&nbsp;
+              <span className="text-body-3 font-body-4 leading-body-4 tracking-body-4">
+                {pointPerPerson.toLocaleString()}P
+              </span>
+              &nbsp;를 지급 받습니다.
+            </p>
+          </>
         ) : (
           <>
             {/* 기프티콘 선택 그리드 */}
             <div className="mt-4">
-              <p className="mb-2 text-sm font-medium">기프티콘 선택</p>
-              <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+              <p className="mb-2 text-body-4 font-body-4 leading-body-4 tracking-body-4 text-text-default">
+                기프티콘 선택
+              </p>
+              <div className="grid grid-cols-4 gap-3">
                 {gifticons.map((g) => {
                   const selected = g.id === selectedGifticonId
                   return (
@@ -156,30 +181,35 @@ export function RewardDetailSection({
                       type="button"
                       key={g.id}
                       onClick={() => onChangeSelectedGifticonId(g.id)}
-                      className={`rounded border p-2 text-left transition ${
+                      className={`h-66 rounded-xs border transition ${
                         selected
-                          ? 'border-gray-900 ring-2 ring-gray-200'
-                          : 'border-gray-200 hover:border-gray-300'
+                          ? 'border-stroke-primary'
+                          : 'border-stroke-subtler'
                       }`}
                     >
-                      <div className="h-28 w-full overflow-hidden rounded bg-gray-100">
-                        {g.imageUrl ? (
-                          <Image
-                            src={g.imageUrl}
-                            alt={g.name}
-                            width={300}
-                            height={112}
-                            className="object-cover"
-                          />
-                        ) : null}
-                      </div>
-                      <div className="mt-2">
-                        <p className="line-clamp-2 text-sm text-gray-900">
-                          {g.name}
-                        </p>
-                        <p className="text-sm font-semibold text-gray-800">
-                          {won(g.price)}
-                        </p>
+                      <div className="flex flex-col h-66">
+                        <div className="h-[174px] relative w-full overflow-hidden rounded-t-sm">
+                          {g.imageUrl ? (
+                            <Image
+                              src={g.imageUrl}
+                              alt={g.name}
+                              fill
+                              className="h-full w-full object-contain object-top"
+                            />
+                          ) : null}
+                        </div>
+                        <div className="mt-2 p-2 text-left">
+                          <span className="line-clamp-2 text-label-6 font-label-6 leading-label-6 text-text-strong">
+                            <p className="text-label-8 font-label-8 leading-label-8 tracking-label-8 text-text-subtle">
+                              {g.brand}
+                            </p>
+                            {g.name}
+                          </span>
+                          <p className="flex items-center gap-1 text-label-3 font-label-3 leading-label-3 text-text-strong">
+                            <StarcandyFillIcon className="w-5 fill-fill-primary" />
+                            {won(g.price)}
+                          </p>
+                        </div>
                       </div>
                     </button>
                   )
@@ -188,16 +218,19 @@ export function RewardDetailSection({
             </div>
 
             {selectedGifticon && (
-              <p className="mt-4 text-[15px] text-gray-800">
-                전체 참여자 중{' '}
-                <b className="text-gray-900">
-                  {gifticonCount.toLocaleString()}
-                </b>
-                명은 약 <b className="text-gray-900">{estimatedMinutes}</b>분
-                동안 설문 조사에 참여한 후,&nbsp;
-                <b className="text-gray-900">{selectedGifticon.name}</b>{' '}
-                기프티콘을 지급받습니다.
-              </p>
+              <>
+                <hr className="my-5 border-stroke-subtle" />
+                <p className="text-end mt-5 text-body-5 font-body-5 leading-body-5 tracking-body-5 text-text-default">
+                  <span className="text-body-3 font-body-4 leading-body-4 tracking-body-4">
+                    최대 {maxGificonCount.toLocaleString()}개
+                  </span>
+                  의 기프티콘이&nbsp;
+                  <span className="text-body-3 font-body-4 leading-body-4 tracking-body-4">
+                    {gifticonCount.toLocaleString()}명
+                  </span>
+                  &nbsp;당 1개씩 전달됩니다.
+                </p>
+              </>
             )}
           </>
         )}
