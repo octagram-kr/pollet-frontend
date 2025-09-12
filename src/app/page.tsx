@@ -165,7 +165,7 @@ const previewList: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'p-1',
     title: '커피 취향 설문',
-    thumbnail: '/images/sample-1.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 400 },
     duration: 2,
     tags: ['카페', '취향'],
@@ -174,7 +174,7 @@ const previewList: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'p-2',
     title: '영화 관람 패턴',
-    thumbnail: '/images/sample-2.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 500 },
     duration: 3,
     tags: ['영화'],
@@ -183,7 +183,7 @@ const previewList: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'p-3',
     title: '헬스케어 앱 사용',
-    thumbnail: '/images/sample-3.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 600 },
     duration: 3,
     tags: ['건강'],
@@ -192,7 +192,7 @@ const previewList: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'p-4',
     title: '여행 예산대',
-    thumbnail: '/images/sample-1.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 700 },
     duration: 4,
     tags: ['여행'],
@@ -204,7 +204,7 @@ const waitingSurveys: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'w-1',
     title: '커피 브랜드 선호도',
-    thumbnail: '/images/sample-1.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'gifticon', value: 1 },
     duration: 2,
     tags: ['카페'],
@@ -213,7 +213,7 @@ const waitingSurveys: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'w-2',
     title: '배달 앱 사용 빈도',
-    thumbnail: '/images/sample-2.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 350 },
     duration: 2,
     tags: ['배달'],
@@ -222,7 +222,7 @@ const waitingSurveys: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'w-3',
     title: '패션 쇼핑 채널',
-    thumbnail: '/images/sample-3.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 420 },
     duration: 3,
     tags: ['패션'],
@@ -231,7 +231,7 @@ const waitingSurveys: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'w-4',
     title: '디지털 구독 서비스',
-    thumbnail: '/images/sample-1.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 500 },
     duration: 3,
     tags: ['구독'],
@@ -243,7 +243,7 @@ const newestSurveys: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'n-1',
     title: '쇼핑 성향',
-    thumbnail: '/images/sample-3.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 300 },
     duration: 2,
     tags: ['쇼핑'],
@@ -252,7 +252,7 @@ const newestSurveys: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'n-2',
     title: '여행 계획',
-    thumbnail: '/images/sample-2.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 800 },
     duration: 5,
     tags: ['여행'],
@@ -261,7 +261,7 @@ const newestSurveys: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'n-3',
     title: '디저트 취향',
-    thumbnail: '/images/sample-1.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 250 },
     duration: 2,
     tags: ['디저트'],
@@ -270,7 +270,7 @@ const newestSurveys: (SurveyItem & { answers: string[] })[] = [
   {
     id: 'n-4',
     title: '스마트워치 사용',
-    thumbnail: '/images/sample-2.png',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 700 },
     duration: 3,
     tags: ['디바이스'],
