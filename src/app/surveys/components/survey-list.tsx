@@ -13,7 +13,7 @@ const MOCK: Survey[] = Array.from({ length: 100 }).map((_, i) => ({
   rewardType: i % 2 ? 'point' : 'gifticon',
   rewardLabel: i % 2 ? `${(i + 1) * 100}P` : '커피',
   durationMin: [3, 5, 10, 15][i % 4],
-  thumbnail: null,
+  thumbnail: ['AI', '교육', '금융', '헬스케어'][i % 4],
   title: `카드 ${i + 1} — 제목은 두줄까지 보이며 30자 제한`,
   gender: i % 3 === 0 ? 'male' : 'female',
   age: (['10', '20', '30', '40', '50', '60+'] as const)[i % 6],

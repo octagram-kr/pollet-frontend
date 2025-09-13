@@ -16,7 +16,7 @@ import GuidePanel from './components/guide/guide-panel'
 export default function Page() {
   const router = useRouter()
 
-  const nickname = 'ㅇㅇㅇㅇ' // 데모용
+  const nickname = '과제울렁증있음' // 데모용
   const [forms, setForms] = useState<QuestionForm[]>([])
   const [primary, setPrimary] = useState('#22C1B4')
   const [detailBg, setDetailBg] = useState('#FFFFFF')

@@ -69,53 +69,6 @@ export function RegistrationPreview({
             </div>
           )}
         </article>
-
-        {/* 카드 2: 썸네일 + 제목 + 첫 질문 */}
-        <article className="rounded-xl border border-gray-200 bg-white p-3">
-          <div className="relative">
-            <div className="absolute left-2 top-2">{RewardBadge}</div>
-            <div className="absolute right-2 top-2">
-              <MinuteBadge minutes={estimatedMinutes} />
-            </div>
-
-            <div className="h-36 w-full overflow-hidden rounded-md bg-gray-100">
-              <Image
-                src={survey.thumbnailUrl}
-                alt="설문 썸네일"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-            </div>
-          </div>
-
-          <h3 className="mt-3 line-clamp-2 text-sm font-semibold leading-5 text-gray-900">
-            {survey.title}
-          </h3>
-
-          {survey.previewQuestions?.[0] && (
-            <div className="mt-2">
-              <p className="mb-2 text-[13px] text-gray-800">
-                {survey.previewQuestions[0].question}
-              </p>
-              <ul className="space-y-1.5">
-                {survey.previewQuestions[0].options.map((opt, idx) => (
-                  <li
-                    key={idx}
-                    className="flex items-center rounded-md border border-gray-300 gap-2 p-0.5"
-                  >
-                    <input
-                      disabled
-                      type="radio"
-                      className="h-4 w-4"
-                    />
-                    <span className="text-[13px] text-gray-700">{opt}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </article>
       </div>
     </section>
   )
