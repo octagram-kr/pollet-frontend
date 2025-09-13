@@ -91,8 +91,8 @@ export default function SurveyRegisterPage() {
 
   // ====== 데모 설문 ======
   const survey: SurveySummary = {
-    thumbnailUrl: '/images/sample-thumbnail.jpg',
-    title: '설문조사 제목',
+    thumbnailUrl: '/images/thumbnails/Education.png',
+    title: '대학생 취업 준비 현황과 지원 필요도 조사',
     tags: ['20대', '헬스케어', '테크', '최대', '5개까지만'],
     previewQuestions: [
       {

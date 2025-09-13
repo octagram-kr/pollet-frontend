@@ -5,6 +5,7 @@ import { SurveyCard } from './survey-card'
 import { SectionHeader } from '@/app/components/section-header'
 import { cn } from '@/lib/utils'
 import type { SurveyItem } from '@/types/survey'
+import { LeftIcon, RightIcon } from '@/components/icons'
 
 type UrgentItem = SurveyItem & {
   countdownUntil: string | Date
@@ -12,12 +13,12 @@ type UrgentItem = SurveyItem & {
 }
 
 export function UrgentCarouselSection({
-  items, // 9개 이상 권장
+  items,
   visible = { base: 1, sm: 2, lg: 3 },
   className,
 }: {
   items: UrgentItem[]
-  visible?: { base: number; sm: number; lg: number } // 반응형 가시 카드 수
+  visible?: { base: number; sm: number; lg: number }
   className?: string
 }) {
   const [start, setStart] = useState(0)
@@ -66,18 +67,18 @@ export function UrgentCarouselSection({
         type="button"
         onClick={stepPrev}
         aria-label="이전 설문"
-        className="absolute left-0 top-1/2 z-10 hidden -translate-x-1/2 rounded-full bg-black/40 px-3 py-2 text-white backdrop-blur hover:bg-black/60 lg:block"
+        className="absolute left-0 top-1/2 z-10 hidden -translate-x-1/2 text-text-subtle lg:block"
       >
-        ‹
+        <LeftIcon className="mr-16 size-23" />
       </button>
 
       <button
         type="button"
         onClick={stepNext}
         aria-label="다음 설문"
-        className="absolute right-0 top-1/2 z-10 hidden translate-x-1/2 rounded-full bg-black/40 px-3 py-2 text-white backdrop-blur hover:bg-black/60 lg:block"
+        className="absolute right-0 top-1/2 z-10 hidden translate-x-1/2 text-text-subtle lg:block"
       >
-        ›
+        <RightIcon className="ml-14 size-23" />
       </button>
 
       <div className="hidden lg:grid lg:grid-cols-3 lg:gap-6">

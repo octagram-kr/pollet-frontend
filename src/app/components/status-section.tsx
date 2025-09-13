@@ -33,7 +33,7 @@ export function StatusSection({
   }) => (
     <div
       className={cn(
-        'block rounded-sm border-2 px-4 py-3 hover:shadow-md',
+        'block rounded-sm border-2 pl-8 pr-4 py-3 hover:shadow-md',
         accent
           ? 'border-stroke-primary bg-fill-primary-disabled'
           : 'border-stroke-subtle bg-fill-white',
@@ -89,7 +89,7 @@ export function StatusSection({
               top={`${nickname} 님의 일주일 누적 포인트`}
               bottom={
                 <>
-                  <span className="flex tabular-nums text-label-1 font-label-1 leading-label-1">
+                  <span className="flex items-center tabular-nums text-label-1 font-label-1 leading-label-1">
                     <StarcandyFillIcon className="fill-fill-primary-active" />
                     {formattedPoints}
                     <span className="text-label-2 font-label-2 leading-label-2">

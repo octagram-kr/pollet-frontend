@@ -205,9 +205,10 @@ export default function SurveyCard({
           {/* 썸네일 이미지 자리(있으면 Image 대체) */}
           {survey.thumbnail ? (
             <Image
-              src={'/images/sample-1.png'}
+              src={'/images/thumbnails/Lifestyle.png'}
               alt=""
               fill
+              className="rounded-t-sm"
             />
           ) : null}
 

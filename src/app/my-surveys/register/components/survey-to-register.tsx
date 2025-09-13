@@ -28,7 +28,7 @@ export function SurveyToRegister({ survey }: Props) {
           <Image
             src={survey.thumbnailUrl}
             alt="설문 썸네일"
-            width={45}
+            width={555}
             height={36.25}
             className="object-cover"
           />

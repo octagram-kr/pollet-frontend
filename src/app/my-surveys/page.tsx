@@ -10,23 +10,30 @@ import { LeftIcon, RightIcon } from '@/components/icons'
 const mock: SurveyItem[] = [
   {
     id: '1',
-    title: '여름 아이스커피 취향 설문',
-    thumbnail: '/images/sample-1.png',
+    title: '대학생의 금융 서비스(계좌, 주식, 간편결제) 이용 실태 조사',
+    thumbnail: '/images/thumbnails/Finance.png',
     reward: { type: 'gifticon', value: 1, giftName: '커피' },
     duration: 3,
     tags: ['음료', '취향'],
   },
   {
     id: '2',
-    title: '앱 사용성 만족도 조사',
-    thumbnail: '/images/sample-2.png',
+    title: 'OTT 플랫폼 광고(넷플릭스, 웨이브 등)에 대한 시청자 태도 조사',
+    thumbnail: '/images/thumbnails/Entertainment.png',
     reward: { type: 'point', value: 500 },
     duration: 5,
   },
   {
     id: '3',
-    title: '주간 뉴스레터 피드백',
-    thumbnail: '/images/sample-3.png',
+    title: 'MZ세대의 온라인 쇼핑몰 이용 패턴 분석',
+    thumbnail: '/images/thumbnails/Commerce.png',
+    reward: { type: 'point', value: 300 },
+    duration: 4,
+  },
+  {
+    id: '4',
+    title: '친환경 호텔 정책에 대한 대학생 인식 조사',
+    thumbnail: '/images/thumbnails/Travel.png',
     reward: { type: 'point', value: 300 },
     duration: 4,
   },
@@ -40,11 +47,16 @@ const extrasById: Record<string, SurveyCardExtras> = {
     participants: { current: 120, target: 200 },
   },
   '2': {
+    status: 'ongoing',
+    period: { startAt: '2025-01-01', endAt: null },
+    participants: { current: 120, target: 200 },
+  },
+  '3': {
     status: 'closed',
     period: { startAt: '2025-02-01', endAt: '2025-03-01' },
     participants: { current: 80, target: 80 },
   },
-  '3': {
+  '4': {
     status: 'closed',
     period: { startAt: '2025-03-10', endAt: '2025-03-31' },
     participants: { current: 45, target: 100 },
