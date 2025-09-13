@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import {
   GiftIcon,
@@ -65,6 +66,8 @@ export default function SurveyCard({
   slots?: SurveyCardSlots
   showUrgentUI?: boolean
 }) {
+  const router = useRouter()
+
   // 질문 선택 결과: 'unknown' 최초, 이후 'eligible' | 'ineligible'
   const [result, setResult] = useState<'unknown' | 'eligible' | 'ineligible'>(
     'unknown',
@@ -146,11 +149,33 @@ export default function SurveyCard({
     [survey.options],
   )
 
+  // 상세페이지로 이동하는 헬퍼 (설문하러 가기 버튼/카드 클릭에서 사용)
+  const goDetail = () => router.push(`/surveys/${survey.id}`)
+
+  // 다른 설문 목록으로 이동하는 헬퍼 (다른 설문 보러 가기)
+  const goOthers = () => router.push('/surveys')
+
+  // qview 모드에 따라 루트 래퍼를 분기:
+  // - off: 카드 전체가 링크(클릭 시 상세로 이동)
+  // - on: 카드 자체는 이동 X(내부 퀴즈/버튼에서만 이동)
+  const RootWrapper: React.FC<{ children: React.ReactNode }> =
+    qview === 'off'
+      ? ({ children }) => (
+          // qview off → Link로 전체 래핑(카드 클릭 시 상세 이동)
+          <Link
+            href={`/surveys/${survey.id}`}
+            className="block"
+          >
+            {children}
+          </Link>
+        )
+      : ({ children }) => (
+          // qview on → div로 감싸서 카드 클릭만으로는 이동하지 않음
+          <div className="block">{children}</div>
+        )
+
   return (
-    <Link
-      href={`/surveys/${survey.id}`}
-      className="block"
-    >
+    <RootWrapper>
       <article className="rounded-sm border-2 border-stroke-subtler bg-fill-white shadow-md hover:cursor-pointer">
         {/* 썸네일 + 좌/우 상단 뱃지 */}
         <div className="relative aspect-[4/3]">
@@ -218,13 +243,15 @@ export default function SurveyCard({
                 // 지금은 짝수 인덱스 선택 → eligible, 홀수 → ineligible
                 setResult(idx % 2 === 0 ? 'eligible' : 'ineligible')
               }}
+              onGoDetail={goDetail} // "설문하러 가기" 클릭 시 이동
+              onGoOthers={goOthers} // "다른 설문 보러 가기" 클릭 시 이동
             />
           )}
           {/* 마감임박용 진행도 */}
           {showUrgentUI && slots?.footer}
         </div>
       </article>
-    </Link>
+    </RootWrapper>
   )
 }
 
@@ -263,10 +290,14 @@ function QuizArea({
   options,
   result,
   onPick,
+  onGoDetail, // "설문하러 가기" 버튼 핸들러
+  onGoOthers, // "다른 설문 보러 가기" 버튼 핸들러
 }: {
   options: string[]
   result: 'unknown' | 'eligible' | 'ineligible'
   onPick: (idx: number) => void
+  onGoDetail: () => void
+  onGoOthers: () => void
 }) {
   if (result !== 'unknown') {
     const ok = result === 'eligible'
@@ -292,15 +323,29 @@ function QuizArea({
         </p>
 
         <div className="mt-2 text-center">
-          <a
-            href="#"
-            className={cn(
-              'inline-flex items-center gap-1 text-label-8 font-label-8 leading-label-8 tracking-label-8 text-text-primary hover:cursor-pointer underline',
-            )}
-          >
-            {ok ? '설문하러 가기' : '다른 설문보러 가기'}
-            <RightIcon className="w-4 fill-fill-deep" />
-          </a>
+          {ok ? (
+            <button
+              type="button"
+              onClick={onGoDetail} // 상세로 이동 실행
+              className={cn(
+                'inline-flex items-center gap-1 text-label-8 font-label-8 leading-label-8 tracking-label-8 text-text-primary hover:cursor-pointer underline',
+              )}
+            >
+              설문하러 가기
+              <RightIcon className="w-4 fill-fill-deep" />
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={onGoOthers} // 목록으로 이동 실행
+              className={cn(
+                'inline-flex items-center gap-1 underline text-label-8 font-label-8 leading-label-8 tracking-label-8 text-text-primary hover:cursor-pointer',
+              )}
+            >
+              다른 설문 보러 가기
+              <RightIcon className="w-4 fill-fill-deep" />
+            </button>
+          )}
         </div>
       </div>
     )
